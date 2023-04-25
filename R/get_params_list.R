@@ -2,7 +2,8 @@
 #' @export
 get_params_list <- function(kin_dat,
                             peptide_list,
-                            control, start_1,lower_1, upper_1, start_3,lower_3, upper_3){
+                            control, start_1,lower_1, upper_1, start_3,lower_3, upper_3,
+                            trace = F){
 
   params <- apply(peptide_list, 1, function(peptide){
 
@@ -17,7 +18,8 @@ get_params_list <- function(kin_dat,
                     upper_3 = upper_3,
                     start_1 = start_1,
                     lower_1 = lower_1,
-                    upper_1 = upper_1)
+                    upper_1 = upper_1,
+                    trace = trace)
 
   }) %>% bind_rows()
 
@@ -45,7 +47,8 @@ fit_two_methods <- function(kin_dat, ## temporarly we are using aggregated value
                             upper_3 = c(n_1 = 2, k_1 = 30, n_2 = 2, k_2 = 1.5, n_3 = 2, k_3 = 0.5),
                             start_1 = c(n = 0.5, k = 0.8),
                             lower_1 = c(n = 0, k = 0),
-                            upper_1 = c(n = 2, k = 30)
+                            upper_1 = c(n = 2, k = 30),
+                            trace = F
 ){
 
   fit_dat <- kin_dat %>%
@@ -80,7 +83,7 @@ fit_two_methods <- function(kin_dat, ## temporarly we are using aggregated value
       lower = lower_3,
       upper = upper_3,
       control = control,
-      trace = T)
+      trace = trace)
 
     r2_3 <-  round(sum(residuals(mod)^2), 4)
     n_1 <- coef(mod)["n_1"]
@@ -106,7 +109,7 @@ fit_two_methods <- function(kin_dat, ## temporarly we are using aggregated value
                              lower = lower_1,
                              upper = upper_1,
                              control = control,
-                             trace = T)
+                             trace = trace)
 
     r2_1 <-  round(sum(residuals(mod)^2), 4)
     n <- coef(mod)["n"]
