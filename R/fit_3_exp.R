@@ -4,12 +4,15 @@
 #' @export
 
 fit_3_exp <- function(kin_dat,
-                      state,
                       sequence,
                       start, end,
                       control,
-                      start_fit,
-                      lower, upper){
+                      fit_k_params,
+                      trace = F){
+
+  ## should kin_dat be filtered here of before? probably. TODO
+
+  fit_dat <- filter(kin_dat, Sequence == sequence, Start == start, End == end)
 
   class_name <- detect_class(fit_dat)
 
@@ -21,15 +24,16 @@ fit_3_exp <- function(kin_dat,
   k_3 <- -1
   r2_3 <- 9999
 
+  fit_params <- rbind(fit_k_params, get_3_n_params())
+
   tryCatch({
-    mod <- minpack.lm::nlsLM( # frac_deut_uptake ~ n_1*(1-exp(-k_1*Exposure)) + n_2*(1-exp(-k_2*Exposure)) + n_3*(1-exp(-k_3*Exposure)),
-      frac_deut_uptake ~ 1 - n_1*exp(-k_1*Exposure) - n_2*exp(-k_2*Exposure) - n_3*exp(-k_3*Exposure),
+    mod <- minpack.lm::nlsLM(frac_deut_uptake ~ n_1*(1-exp(-k_1*Exposure)) + n_2*(1-exp(-k_2*Exposure)) + n_3*(1-exp(-k_3*Exposure)),
       data = fit_dat,
-      start = start_3,
-      lower = lower_3,
-      upper = upper_3,
+      start = deframe(rownames_to_column(fit_params["start"])),
+      lower = deframe(rownames_to_column(fit_params["lower"])),
+      upper = deframe(rownames_to_column(fit_params["upper"])),
       control = control,
-      trace = T)
+      trace = trace)
 
     r2_3 <-  round(sum(residuals(mod)^2), 4)
     n_1 <- coef(mod)["n_1"]
@@ -46,6 +50,7 @@ fit_3_exp <- function(kin_dat,
              state = state,
              start = start,
              end = end,
+             class_name = class_name,
              n_1 = n_1,
              k_1 = k_1,
              n_2 = n_2,
@@ -53,6 +58,6 @@ fit_3_exp <- function(kin_dat,
              n_3 = n_3,
              k_3 = k_3,
              r2_3 = r2_3,
-             class_name = class_name
+             fit = 3
   )
 }

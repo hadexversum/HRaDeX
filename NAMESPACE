@@ -3,6 +3,7 @@
 export(fit_1_exp)
 export(fit_3_exp)
 export(fix_params_list)
+export(get_fit_values_info)
 export(get_params_list)
 export(get_params_summary_image)
 export(get_peptide_list)

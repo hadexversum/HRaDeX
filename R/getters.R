@@ -6,6 +6,7 @@
 #   upper = c(k_1 = 30, k_2 = 1, k_3 = 0.1)
 # )
 
+
 get_1_k_params <- function(fit_k_params){
 
   data.frame(
@@ -63,3 +64,23 @@ get_1_n_params <- function(){
 
 }
 
+plot_k_params <- function(fit_k_params){
+
+  n = 0.33
+  x = seq(1, 1500, 1)
+
+  ggplot() +
+    geom_line(aes(x = x, y = (1- exp( -fit_k_params["k_1", "start"] * x))), color = "red", linetype = 1) +
+    geom_line(aes(x = x, y = (1- exp( -fit_k_params["k_1", "upper"] * x))), color = "red", linetype = 2) +
+    geom_line(aes(x = x, y = (1- exp( -fit_k_params["k_1", "lower"] * x))), color = "red", linetype = 2) +
+    geom_line(aes(x = x, y = (1- exp( -fit_k_params["k_2", "start"] * x))), color = "green", linetype = 1) +
+    geom_line(aes(x = x, y = (1- exp( -fit_k_params["k_2", "upper"] * x))), color = "green", linetype = 2) +
+    geom_line(aes(x = x, y = (1- exp( -fit_k_params["k_2", "lower"] * x))), color = "green", linetype = 2) +
+    geom_line(aes(x = x, y = (1- exp( -fit_k_params["k_3", "start"] * x))), color = "blue", linetype = 1) +
+    geom_line(aes(x = x, y = (1- exp( -fit_k_params["k_3", "upper"] * x))), color = "blue", linetype = 2) +
+    geom_line(aes(x = x, y = (1- exp( -fit_k_params["k_3", "lower"] * x))), color = "blue", linetype = 2) +
+    labs(x = "Exposure",
+         y = "Fractional exchange",
+         title = "Comaparison of exchange classes")
+
+}
