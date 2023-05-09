@@ -3,28 +3,23 @@
 #'
 #' @export
 
-fit_1_exp <- function(kin_dat,
-                      sequence,
-                      start, end,
+fit_1_exp <- function(fit_dat,
                       control,
                       fit_k_params,
                       trace = F){
 
 
-  fit_dat <- filter(kin_dat, Sequence == sequence, Start == start, End == end)
+  if(length(unique(fit_dat[["Sequence"]])) > 1){
+    stop("More than one sequence in supplied data!")
+  }
 
-  ## shouldnt be checked before and skipped fitting process??
-
-  class_name <- detect_class(fit_dat)
-
-  n_1 <- -1
-  k_1 <- -1
-  r2_1 <- 9999
+  n_1 = k_1 = -1
+  r2 <- 99999
 
   fit_params <- rbind(get_1_k_params(fit_k_params), get_1_n_params())
 
   tryCatch({
-    mod <- minpack.lm::nlsLM(frac_deut_uptake ~ n_1*(1-exp(-k_1*Exposure))
+    mod <- minpack.lm::nlsLM(frac_deut_uptake ~ n_1*(1-exp(-k_1*Exposure)),
                              data = fit_dat,
                              start = deframe(rownames_to_column(fit_params["start"])),
                              lower = deframe(rownames_to_column(fit_params["lower"])),
@@ -32,29 +27,75 @@ fit_1_exp <- function(kin_dat,
                              control = control,
                              trace = trace)
 
-    r2_3 <-  round(sum(residuals(mod)^2), 4)
+    r2 <-  round(sum(residuals(mod)^2), 4)
     n_1 <- coef(mod)["n_1"]
     k_1 <- coef(mod)["k_1"]
   }, error = function(e){
     print("sorry, error in 1 exp")
   })
 
+  if(n_1 == -1 & k_1 == -1){
 
-  ## fix params fnc applied
+    data.frame(sequence = fit_dat[["Sequence"]][1],
+               start = fit_dat[["Start"]][1],
+               end = fit_dat[["End"]][1],
+               n_1 = -1,
+               k_1 = -1,
+               n_2 = -1,
+               k_2 = -1,
+               n_3 = -1,
+               k_3 = -1,
+               r2 = 99999,
+               class_name = NA,
+               fitted = NA,
+               color = NA )
+  } else{
 
-  data.frame(sequence = sequence,
-             state = state,
-             start = start,
-             end = end,
-             class_name = class_name,
+    fix_1_exp_result(fit_dat,
+                     n = n_1[[1]],
+                     k = k_1[[1]],
+                     r2 = r2,
+                     fit_k_params = fit_k_params)
+  }
+
+}
+
+fix_1_exp_result <- function(fit_dat,
+                             n,
+                             k,
+                             r2,
+                             fit_k_params){
+
+  n_1 = k_1 = n_2 = k_2 = n_3 = k_3 = 0
+
+  if(fit_k_params["k_1", "lower"] < k & k <= fit_k_params["k_1", "upper"]){
+    k_1 = k
+    n_1 = n
+  }
+
+  if(fit_k_params["k_2", "lower"] < k & k <= fit_k_params["k_2", "upper"]){
+    k_2 = k
+    n_2 = n
+  }
+
+  if(fit_k_params["k_3", "lower"] < k & k <= fit_k_params["k_3", "upper"]){
+    k_3 = k
+    n_3 = n
+  }
+
+  data.frame(sequence = fit_dat[["Sequence"]][1],
+             start = fit_dat[["Start"]][1],
+             end = fit_dat[["End"]][1],
              n_1 = n_1,
              k_1 = k_1,
              n_2 = n_2,
              k_2 = k_2,
              n_3 = n_3,
              k_3 = k_3,
-             r2 = r2_3,
-             fit = 1
+             r2 = r2,
+             class_name = NA,
+             fitted = 1,
+             color = rgb(n_1, n_2, n_3)
   )
 
 }

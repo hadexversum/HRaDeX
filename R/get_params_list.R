@@ -138,28 +138,27 @@ fit_two_methods <- function(kin_dat, ## temporarly we are using aggregated value
 
 }
 
-#' @noRd
-detect_class <-  function(fit_dat){
-
-  class_name <- NA
-
-  du_100 <- fit_dat %>%
-    filter(Exposure == max(fit_dat[["Exposure"]])) %>%
-    select(deut_uptake) %>% unlist() %>% mean()
-
-  du_1 <- fit_dat %>%
-    filter(Exposure == min(fit_dat[["Exposure"]])) %>%
-    select(deut_uptake) %>% unlist() %>% mean()
-
-  max_uptake <- unique(fit_dat[["MaxUptake"]])
-
-  if(du_100*0.8 < du_1) class_name <- "szybciak"
-
-  if(du_100 < 1) class_name <- "plaszczak"
-
-  class_name
-
-}
+# detect_class <-  function(fit_dat){
+#
+#   class_name <- NA
+#
+#   du_100 <- fit_dat %>%
+#     filter(Exposure == max(fit_dat[["Exposure"]])) %>%
+#     select(deut_uptake) %>% unlist() %>% mean()
+#
+#   du_1 <- fit_dat %>%
+#     filter(Exposure == min(fit_dat[["Exposure"]])) %>%
+#     select(deut_uptake) %>% unlist() %>% mean()
+#
+#   max_uptake <- unique(fit_dat[["MaxUptake"]])
+#
+#   if(du_100*0.8 < du_1) class_name <- "szybciak"
+#
+#   if(du_100 < 1) class_name <- "plaszczak"
+#
+#   class_name
+#
+# }
 
 #' @export
 fix_params_list <- function(params_list, lower_3, upper_3){

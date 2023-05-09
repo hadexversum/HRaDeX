@@ -6,7 +6,7 @@
 #   upper = c(k_1 = 30, k_2 = 1, k_3 = 0.1)
 # )
 
-
+#' @export
 get_1_k_params <- function(fit_k_params){
 
   data.frame(
@@ -17,6 +17,7 @@ get_1_k_params <- function(fit_k_params){
 
 }
 
+#' @export
 get_2_k_params <- function(fit_k_params){
 
   list(data.frame(
@@ -35,6 +36,7 @@ get_2_k_params <- function(fit_k_params){
 
 }
 
+#' @export
 get_3_n_params <- function(){
 
   data.frame(
@@ -45,6 +47,7 @@ get_3_n_params <- function(){
 
 }
 
+#' @export
 get_2_n_params <- function(){
 
   data.frame(
@@ -54,6 +57,7 @@ get_2_n_params <- function(){
   )
 }
 
+#' @export
 get_1_n_params <- function(){
 
   data.frame(
@@ -64,6 +68,7 @@ get_1_n_params <- function(){
 
 }
 
+#' @export
 plot_k_params <- function(fit_k_params){
 
   n = 0.33
