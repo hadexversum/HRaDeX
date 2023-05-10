@@ -1,3 +1,4 @@
+#' @importFrom dplyr bind_rows
 #' @export
 create_fit_dataset <- function(kin_dat,
                                fit_k_params,
@@ -19,6 +20,7 @@ create_fit_dataset <- function(kin_dat,
                     control = control,
                     trace = trace,
                     workflow = workflow)
-  }) %>% bind_rows()
+  }) %>% bind_rows() %>% mutate(id = 1:nrow(.)) %>% remove_rownames(.) %>%
+    select(id, everything())
 
 }

@@ -14,16 +14,15 @@ plot_class_heatmap <- function(fixed_params){
 
 #' @importFrom ggplot2 geom_line ylim
 #' @export
-plot_start_params <- function(start_1, start_3){
+plot_start_params <- function(fit_k_params){
 
   x = seq(1, 1500, 1)
 
   ggplot()+
-    geom_line(aes(x = x , y = start_3[["n_1"]]*(1-exp(-start_3[["k_1"]]*x)) ), color = "red") +
-    geom_line(aes(x = x , y = start_3[["n_2"]]*(1-exp(-start_3[["k_2"]]*x)) ), color = "green") +
-    geom_line(aes(x = x , y = start_3[["n_3"]]*(1-exp(-start_3[["k_3"]]*x)) ), color = "blue") +
-    geom_line(aes(x = x, y = start_3[["n_1"]]*(1-exp(-start_3[["k_1"]]*x)) + start_3[["n_2"]]*(1-exp(-start_3[["k_2"]]*x)) + start_3[["n_3"]]*(1-exp(-start_3[["k_3"]]*x)))) +
-    geom_line(aes(x = x, y = start_1[["n"]]*(1-exp(-start_1[["k"]]*x))), linetype = "dashed") +
+    geom_line(aes(x = x , y = 0.33*(1-exp(-fit_k_params["k_1", "start"]*x)) ), color = "red") +
+    geom_line(aes(x = x , y = 0.33*(1-exp(-fit_k_params["k_2", "start"]*x)) ), color = "green") +
+    geom_line(aes(x = x , y = 0.33*(1-exp(-fit_k_params["k_3", "start"]*x)) ), color = "blue") +
+    geom_line(aes(x = x, y = 0.33*(1-exp(-fit_k_params["k_1", "start"]*x)) + 0.33*(1-exp(-fit_k_params["k_2", "start"]*x)) + 0.33*(1-exp(-fit_k_params["k_3", "start"]*x)))) +
     ylim(c(0, 1)) +
     labs(x = "Exposure",
          y = "Start for fractional deuterium uptake")
@@ -31,6 +30,7 @@ plot_start_params <- function(start_1, start_3){
 }
 
 #' @importFrom ggplot2 scale_x_log10 scale_y_log10 geom_hline geom_point geom_vline
+#' @importFrom dplyr case_when
 #' @export
 plot_3_exp_map_v2 <- function(fixed_params){
 
@@ -151,7 +151,8 @@ plot_r2_hist <- function(fixed_params){
 plot_n <- function(fixed_params){
 
   fixed_params %>%
-    mutate(diff = abs(1 - n)) %>%
+    mutate(n = n_1 + n_2 + n_3,
+           diff = abs(1 - n)) %>%
     filter(is.na(class_name)) %>%
     ggplot() +
     geom_point(aes(x = id, y = diff)) +

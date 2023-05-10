@@ -1,5 +1,5 @@
 #'
-#' @importFrom tibble deframe rownames_to_column
+#' @importFrom tibble deframe rownames_to_column remove_rownames
 #' @importFrom dplyr %>% filter select arrange
 #'
 #' @export
