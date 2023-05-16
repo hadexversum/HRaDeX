@@ -1,24 +1,36 @@
 #' @importFrom gridExtra grid.arrange
-#' @importFrom ggplot2 stat_function
+#' @importFrom ggplot2 stat_function geom_line annotate
 #' @export
 plot_uc_fit <- function(fit_dat,
                         fit_values,
+                        include_uc = T,
                         triplex = F){
 
   plot_title <- paste0(fit_values[["sequence"]], " (", fit_values[["start"]], "-", fit_values[["end"]], ") ")
 
+  if(include_uc){
+
+    uc_plot <- ggplot(fit_dat, aes(x = Exposure, y = deut_uptake)) +
+      geom_point() +
+      geom_line(linetype = 2) +
+      ylim(c(0, NA)) +
+      labs(title = paste0(plot_title, " without fit"),
+           x = "Exposure [min]",
+           y = "Deuterium uptake [Da]")
+  }
+
   if(!is.na(fit_values[["class_name"]])) {
 
-   plot_title <- paste0(plot_title, fit_values[["class_name"]])
-
-   uc_plot <-  ggplot() +
+   uc_plot_sc <-  ggplot() +
      geom_point(data = fit_dat, aes(x = Exposure, y = frac_deut_uptake)) +
-     labs(title = plot_title,
-          y = "Fractional DU",
+     labs(title = paste0(plot_title, fit_values[["class_name"]],  " exchange scaled"),
+          y = "Fractional DU [%]",
           x = "Exposure [min]") +
    ylim(c(0, 1.1))
 
-   return(uc_plot)
+   if(include_uc) { return(grid.arrange(uc_plot, uc_plot_sc, nrow = 1)) }
+
+   return(uc_plot_sc)
 
   }
 
@@ -31,17 +43,18 @@ plot_uc_fit <- function(fit_dat,
 
   uc_fit_plot <- ggplot() +
     geom_point(data = fit_dat, aes(x = Exposure, y = frac_deut_uptake)) +
-    labs(title = plot_title,
+    labs(title = paste0(plot_title, " scaled"),
          y = "Fractional DU [%]",
          x = "Exposure [min]") +
     stat_function(fun=function(x){n_1*(1-exp(-k_1*x)) + n_2*(1-exp(-k_2*x)) + n_3*(1-exp(-k_3*x))}) +
+    annotate(geom = "text", x = 1000, y = 0.2, label = paste0("R2: ", round(fit_values[["r2"]], 4))) +
     ylim(c(0, 1.1))
 
   if(triplex){
 
     uc_fit_plot_log <- ggplot() +
       geom_point(data = fit_dat, aes(x = Exposure, y = frac_deut_uptake)) +
-      labs(title = plot_title,
+      labs(title = paste0(plot_title, " in log scale"),
            y = "Fractional DU [%]",
            x = "Exposure [min]") +
       stat_function(fun=function(x){n_1*(1-exp(-k_1*x)) + n_2*(1-exp(-k_2*x)) + n_3*(1-exp(-k_3*x))}) +
@@ -58,11 +71,17 @@ plot_uc_fit <- function(fit_dat,
            x = "Exposure [min]",
            y = "Fractional DU [%]")
 
-    return(grid.arrange(uc_fit_plot, uc_fit_plot_log, fit_components_plot, nrow = 1))
+    if(include_uc){
+      return(grid.arrange(uc_plot, uc_fit_plot, uc_fit_plot_log, fit_components_plot, nrow = 1))
+    } else {
+      return(grid.arrange(uc_fit_plot, uc_fit_plot_log, fit_components_plot, nrow = 1))
+
+    }
 
   } else {
 
-    return(uc_fit_plot)
+    if(include_uc) {return(grid.arrange(uc_plot, uc_fit_plot, nrow = 1)) }
+    else { return(uc_fit_plot)}
 
   }
 
