@@ -4,6 +4,7 @@
 plot_uc_fit <- function(fit_dat,
                         fit_values,
                         include_uc = T,
+                        duplex = T,
                         triplex = F){
 
   plot_title <- paste0(fit_values[["sequence"]], " (", fit_values[["start"]], "-", fit_values[["end"]], ") ")
@@ -23,10 +24,11 @@ plot_uc_fit <- function(fit_dat,
 
    uc_plot_sc <-  ggplot() +
      geom_point(data = fit_dat, aes(x = Exposure, y = frac_deut_uptake)) +
-     labs(title = paste0(plot_title, fit_values[["class_name"]],  " exchange scaled"),
+     labs(title = paste0(plot_title, fit_values[["class_name"]],  " exchange scaled in log"),
           y = "Fractional DU [%]",
           x = "Exposure [min]") +
-   ylim(c(0, 1.1))
+     scale_x_log10() +
+     ylim(c(0, 1.1))
 
    if(include_uc) { return(grid.arrange(uc_plot, uc_plot_sc, nrow = 1)) }
 
@@ -77,6 +79,24 @@ plot_uc_fit <- function(fit_dat,
       return(grid.arrange(uc_fit_plot, uc_fit_plot_log, fit_components_plot, nrow = 1))
 
     }
+
+  } else if(duplex){
+
+    uc_fit_plot_log_components <- ggplot() +
+      geom_point(data = fit_dat, aes(x = Exposure, y = frac_deut_uptake)) +
+      labs(title = paste0(plot_title, " scaled in log with fit components"),
+           y = "Fractional DU [%]",
+           x = "Exposure [min]") +
+      stat_function(fun=function(x){n_1*(1-exp(-k_1*x)) + n_2*(1-exp(-k_2*x)) + n_3*(1-exp(-k_3*x))}) +
+      ylim(c(0, 1.1)) +
+      stat_function(fun = function(x){n_1*(1-exp(-k_1*x))}, color = "red") +
+      stat_function(fun = function(x){n_2*(1-exp(-k_2*x))}, color = "green") +
+      stat_function(fun = function(x){n_3*(1-exp(-k_3*x))}, color = "blue") +
+      geom_hline(yintercept = 1, linetype = "dotted", alpha = 0.3) +
+      scale_x_log10()
+
+    return(grid.arrange(uc_plot, uc_fit_plot_log_components, nrow = 1))
+
 
   } else {
 
