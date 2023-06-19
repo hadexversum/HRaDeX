@@ -34,7 +34,7 @@ fit_2_exp <- function(fit_dat,
                                control = control,
                                trace = trace)
 
-      r2 <-  round(sum(residuals(mod)^2), 4)
+      r2 <- sum(residuals(mod)^2)
       n_1 <- coef(mod)["n_1"]
       k_1 <- coef(mod)["k_1"]
       n_2 <- coef(mod)["n_2"]
