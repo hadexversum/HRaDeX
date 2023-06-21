@@ -20,19 +20,29 @@ get_1_k_params <- function(fit_k_params){
 #' @noRd
 get_2_k_params <- function(fit_k_params){
 
-  list(data.frame(
+  k_12 <- data.frame(
     start = c(k_1 = fit_k_params["k_1", "start"], k_2 = fit_k_params["k_2", "start"]),
     lower = c(k_1 = fit_k_params["k_1", "lower"], k_2 = fit_k_params["k_2", "lower"]),
     upper = c(k_1 = fit_k_params["k_1", "upper"], k_2 = fit_k_params["k_2", "upper"])
-  ), data.frame(
+  )
+
+  k_13 <- data.frame(
     start = c(k_1 = fit_k_params["k_1", "start"], k_2 = fit_k_params["k_3", "start"]),
     lower = c(k_1 = fit_k_params["k_1", "lower"], k_2 = fit_k_params["k_3", "lower"]),
     upper = c(k_1 = fit_k_params["k_1", "upper"], k_2 = fit_k_params["k_3", "upper"])
-  ), data.frame(
+  )
+
+  k_23 <- data.frame(
     start = c(k_1 = fit_k_params["k_2", "start"], k_2 = fit_k_params["k_3", "start"]),
     lower = c(k_1 = fit_k_params["k_2", "lower"], k_2 = fit_k_params["k_3", "lower"]),
     upper = c(k_1 = fit_k_params["k_2", "upper"], k_2 = fit_k_params["k_3", "upper"])
-  ))
+  )
+
+  attr(k_12, "groups") <- 12
+  attr(k_13, "groups") <- 13
+  attr(k_23, "groups") <- 23
+
+  list(k_12, k_13, k_23)
 
 }
 
