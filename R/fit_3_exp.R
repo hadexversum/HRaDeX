@@ -36,7 +36,8 @@ fit_3_exp <- function(fit_dat,
     k_2 <- coef(mod)["k_2"]
     n_3 <- coef(mod)["n_3"]
     k_3 <- coef(mod)["k_3"]
-    rgb_color <- rgb(n_1, n_2, n_3)
+    n <- n_1 + n_2 + n_3
+    rgb_color <- rgb(n_1/n, n_2/n, n_3/n)
     fitted <- 3
   }, error = function(e){
     print("sorry, error in 3 exp fit")

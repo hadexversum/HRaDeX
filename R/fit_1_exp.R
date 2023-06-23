@@ -83,6 +83,8 @@ fix_1_exp_result <- function(fit_dat,
     n_3 = n
   }
 
+  n <- n_1 + n_2 + n_3
+
   data.frame(sequence = fit_dat[["Sequence"]][1],
              start = fit_dat[["Start"]][1],
              end = fit_dat[["End"]][1],
@@ -95,7 +97,7 @@ fix_1_exp_result <- function(fit_dat,
              r2 = r2,
              class_name = NA,
              fitted = 1,
-             color = rgb(n_1, n_2, n_3)
+             color = rgb(n_1/n, n_2/n, n_3/n)
   )
 
 }
