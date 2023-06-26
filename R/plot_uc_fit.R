@@ -1,5 +1,5 @@
 #' @importFrom gridExtra grid.arrange
-#' @importFrom ggplot2 stat_function geom_line annotate
+#' @importFrom ggplot2 stat_function geom_line annotate theme_bw
 #' @export
 plot_uc_fit <- function(fit_dat,
                         fit_values,

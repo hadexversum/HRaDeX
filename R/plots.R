@@ -10,6 +10,7 @@ plot_class_heatmap <- function(fixed_params){
     labs(y = "",
          title = "class components")
 
+
 }
 
 #' @importFrom ggplot2 geom_line ylim
@@ -131,7 +132,8 @@ plot_cov_class <- function(fixed_params){
           axis.ticks.y = element_blank(),
           axis.text.y = element_blank()) +
     labs(title = "class components on coverage",
-         x = "Position")
+         x = "Position") +
+    theme_bw()
 
 }
 

@@ -117,7 +117,7 @@ fix_class_result <- function(fit_dat,
     k_1 = max(fit_k_params[["upper"]])
     n_1 = 1
     k_2 = n_2 = k_3 = n_3 = 0
-    color = "#FF0000"
+    color = "#FFFF00"
   }
 
   if(class_name == "none"){
