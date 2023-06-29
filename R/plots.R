@@ -122,12 +122,16 @@ plot_cov_class <- function(fixed_params){
   }
 
   fixed_params[["ID"]] <- levels
+
+  fixed_params <- fixed_params %>%
+    mutate(alpha = case_when( n_1 + n_2 + n_3 > 1.25 ~ 0.5, T ~  1))
   ## end of levels
 
   ggplot(data = fixed_params,
          mapping = aes(xmin = start, xmax = end + 1,
                        ymin = ID, ymax = ID - 1)) +
-    geom_rect(fill = fixed_params[["color"]]) +
+    geom_rect(fill = fixed_params[["color"]],
+              alpha = fixed_params[["alpha"]]) +
     theme(legend.position = "bottom",
           axis.ticks.y = element_blank(),
           axis.text.y = element_blank()) +

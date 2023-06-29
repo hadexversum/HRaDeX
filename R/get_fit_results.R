@@ -140,7 +140,7 @@ fix_class_result <- function(fit_dat,
              k_2 = k_2,
              n_3 = n_3,
              k_3 = k_3,
-             r2 = 99999,
+             r2 = NA,
              class_name = class_name,
              fitted = 0,
              color = color)
