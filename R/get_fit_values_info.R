@@ -4,6 +4,10 @@ get_fit_values_info <- function(fixed_params){
 
   n_total <- nrow(fixed_params)
 
+  n_invalid <- fixed_params %>%
+    filter(class_name == "invalid") %>%
+    nrow(.)
+
   n_three <- fixed_params %>%
     filter(fitted == 3 & is.na(class_name)) %>%
     nrow(.)
@@ -21,7 +25,8 @@ get_fit_values_info <- function(fixed_params){
     nrow(.)
 
   paste0("Number of peptides: ", n_total, "\n",
-         "Extreme cases: ", n_class_name, "\n",
+         "Invalid peptide data: ", n_invalid, "\n",
+         "Extreme cases: ", n_class_name - n_invalid, "\n",
          "Fitted three exponents: ", n_three, "\n",
          "Fitted two exponents: ", n_two, "\n",
          "Fitted one exponent: ", n_one, "\n")

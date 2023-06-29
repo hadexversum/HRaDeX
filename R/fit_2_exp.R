@@ -44,7 +44,7 @@ fit_2_exp <- function(fit_dat,
       k_2 <- coef(mod)["k_2"]
 
       groups <- attr(fit_2_params, "groups")
-      print(paste(n_1, k_1, n_2, k_2, r2, groups))
+      # print(paste(n_1, k_1, n_2, k_2, r2, groups))
 
     }, error = function(e){
       print(e)

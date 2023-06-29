@@ -3,7 +3,8 @@ get_fit_results <- function(fit_dat,
                             fit_k_params,
                             control = list(maxiter = 1000,  scale = "levenberg"),
                             trace = F,
-                            workflow = 31){
+                            workflow = 31,
+                            edge_times = c(min(fit_dat[["Exposure"]]), max(fit_dat[["Exposure"]]))){
 
   workflow <- match.arg(as.character(workflow), choices = c(31, 21, 321))
   # to do: 321 workflow
@@ -12,7 +13,7 @@ get_fit_results <- function(fit_dat,
     stop("More than one sequence in supplied data!")
   }
 
-  class_name <- detect_class(fit_dat)
+  class_name <- detect_class(fit_dat, edge_times)
 
   # if extreme case is detected, we stop here
   if(!is.na(class_name)){
@@ -125,6 +126,11 @@ fix_class_result <- function(fit_dat,
     color = "#000000"
   }
 
+  if(class_name == "invalid"){
+    k_1 = n_1 = k_2 = n_2 = k_3 = n_3 = NA
+    color = "#808080"
+  }
+
   data.frame(sequence = fit_dat[["Sequence"]][1],
              start = fit_dat[["Start"]][1],
              end = fit_dat[["End"]][1],
@@ -143,7 +149,7 @@ fix_class_result <- function(fit_dat,
 ##
 
 #' @export
-detect_class <-  function(fit_dat){
+detect_class <-  function(fit_dat, edge_times = NULL){
 
   class_name <- NA
 
@@ -160,6 +166,10 @@ detect_class <-  function(fit_dat){
   if(du_100*0.8 < du_1) class_name <- "immediate"
 
   if(du_100 < 1) class_name <- "none"
+
+  if(!is.null(edge_times)) {
+    if(sum(fit_dat[["Exposure"]] %in% edge_times)!=2) class_name <- "invalid"
+  }
 
   class_name
 

@@ -10,6 +10,8 @@ create_fit_dataset <- function(kin_dat,
     select(Sequence, Start, End) %>%
     unique(.)
 
+  edge_times <- c(min(kin_dat[["Exposure"]]), max(kin_dat[["Exposure"]]))
+
   apply(peptide_list, 1, function(peptide){
 
     filter(kin_dat, Sequence == peptide[[1]],
@@ -19,7 +21,8 @@ create_fit_dataset <- function(kin_dat,
                     fit_k_params = fit_k_params,
                     control = control,
                     trace = trace,
-                    workflow = workflow)
+                    workflow = workflow,
+                    edge_times = edge_times)
   }) %>% bind_rows() %>% mutate(id = 1:nrow(.)) %>% remove_rownames(.) %>%
     select(id, everything())
 
