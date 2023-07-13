@@ -13,20 +13,24 @@ plot_class_heatmap <- function(fixed_params){
 
 }
 
-#' @importFrom ggplot2 geom_line ylim
+#' @importFrom ggplot2 geom_line ylim geom_ribbon
 #' @export
 plot_start_params <- function(fit_k_params){
 
-  x = seq(1, 1500, 1)
+  x = seq(0, 1500, 0.1)
 
-  ggplot()+
-    geom_line(aes(x = x , y = 0.33*(1-exp(-fit_k_params["k_1", "start"]*x)) ), color = "red") +
-    geom_line(aes(x = x , y = 0.33*(1-exp(-fit_k_params["k_2", "start"]*x)) ), color = "green") +
-    geom_line(aes(x = x , y = 0.33*(1-exp(-fit_k_params["k_3", "start"]*x)) ), color = "blue") +
-    geom_line(aes(x = x, y = 0.33*(1-exp(-fit_k_params["k_1", "start"]*x)) + 0.33*(1-exp(-fit_k_params["k_2", "start"]*x)) + 0.33*(1-exp(-fit_k_params["k_3", "start"]*x)))) +
-    ylim(c(0, 1)) +
+  ggplot() +
+    geom_line(aes(x = x, y = 0.33*(1-exp(-fit_k_params[1, "start"]*x))), color = "red") +
+    geom_ribbon(aes(x = x, ymin=0.33*(1-exp(-fit_k_params[1, "lower"]*x)), ymax=0.33*(1-exp(-fit_k_params[1, "upper"]*x))), fill = "red", alpha = 0.1) +
+    geom_line(aes(x = x, y = 0.33*(1-exp(-fit_k_params[2, "start"]*x))), color = "green") +
+    geom_ribbon(aes(x = x, ymin=0.33*(1-exp(-fit_k_params[2, "lower"]*x)), ymax=0.33*(1-exp(-fit_k_params[2, "upper"]*x))), fill = "green", alpha = 0.1) +
+    geom_line(aes(x = x, y = 0.33*(1-exp(-fit_k_params[3, "start"]*x))), color = "blue") +
+    geom_ribbon(aes(x = x, ymin=0.33*(1-exp(-fit_k_params[3, "lower"]*x)), ymax=0.33*(1-exp(-fit_k_params[3, "upper"]*x))), fill = "blue", alpha = 0.1)+
+    scale_x_log10() +
+    ylim(c(0, .35)) +
+    theme_bw() +
     labs(x = "Exposure",
-         y = "Start for fractional deuterium uptake")
+         y = "Initial exchange values with bounds")
 
 }
 
