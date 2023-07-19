@@ -28,7 +28,7 @@ plot_uc_fit <- function(fit_dat,
           y = "Fractional DU [%]",
           x = "Exposure [min]") +
      scale_x_log10() +
-     ylim(c(0, 1.1))
+     ylim(c(0, 1.25))
 
    if(include_uc) { return(grid.arrange(uc_plot, uc_plot_sc, nrow = 1)) }
 
@@ -50,7 +50,7 @@ plot_uc_fit <- function(fit_dat,
          x = "Exposure [min]") +
     stat_function(fun=function(x){n_1*(1-exp(-k_1*x)) + n_2*(1-exp(-k_2*x)) + n_3*(1-exp(-k_3*x))}) +
     annotate(geom = "text", x = 1000, y = 0.2, label = paste0("R2: ", round(fit_values[["r2"]], 4))) +
-    ylim(c(0, 1.1))
+    ylim(c(0, 1.25))
 
   if(triplex){
 
@@ -60,7 +60,7 @@ plot_uc_fit <- function(fit_dat,
            y = "Fractional DU [%]",
            x = "Exposure [min]") +
       stat_function(fun=function(x){n_1*(1-exp(-k_1*x)) + n_2*(1-exp(-k_2*x)) + n_3*(1-exp(-k_3*x))}) +
-      ylim(c(0, 1.1)) +
+      ylim(c(0, 1.25)) +
       scale_x_log10()
 
     fit_components_plot <- ggplot() +
@@ -68,7 +68,7 @@ plot_uc_fit <- function(fit_dat,
       stat_function(fun = function(x){n_2*(1-exp(-k_2*x))}, color = "green") +
       stat_function(fun = function(x){n_3*(1-exp(-k_3*x))}, color = "blue") +
       xlim(c(0, 1500)) +
-      ylim(c(0, 1.1)) +
+      ylim(c(0, 1.25)) +
       labs(title = "Fit components",
            x = "Exposure [min]",
            y = "Fractional DU [%]")
@@ -88,12 +88,12 @@ plot_uc_fit <- function(fit_dat,
            y = "Fractional DU [%]",
            x = "Exposure [min]") +
       stat_function(fun=function(x){n_1*(1-exp(-k_1*x)) + n_2*(1-exp(-k_2*x)) + n_3*(1-exp(-k_3*x))}) +
-      ylim(c(0, 1.1)) +
+      ylim(c(0, 1.25)) +
       stat_function(fun = function(x){n_1*(1-exp(-k_1*x))}, color = "red") +
       stat_function(fun = function(x){n_2*(1-exp(-k_2*x))}, color = "green") +
       stat_function(fun = function(x){n_3*(1-exp(-k_3*x))}, color = "blue") +
       geom_hline(yintercept = 1, linetype = "dotted", alpha = 0.3) +
-      scale_x_log10()
+      scale_x_log10(limits = c(NA, 5000))
 
     return(grid.arrange(uc_plot, uc_fit_plot_log_components, nrow = 1))
 
