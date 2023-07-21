@@ -92,7 +92,7 @@ plot_uc_fit <- function(fit_dat,
       stat_function(fun = function(x){n_1*(1-exp(-k_1*x))}, color = "red") +
       stat_function(fun = function(x){n_2*(1-exp(-k_2*x))}, color = "green") +
       stat_function(fun = function(x){n_3*(1-exp(-k_3*x))}, color = "blue") +
-      geom_hline(yintercept = 1, linetype = "dotted", alpha = 0.3) +
+      geom_hline(yintercept = 1, linetype = 2, alpha = 0.3) +
       scale_x_log10(limits = c(NA, 5000))
 
     return(grid.arrange(uc_plot, uc_fit_plot_log_components, nrow = 1))

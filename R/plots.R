@@ -158,14 +158,15 @@ plot_r2_hist <- function(fixed_params){
 }
 
 #' @export
-plot_n <- function(fixed_params){
+plot_n <- function(list_params){
 
-  fixed_params %>%
-    mutate(n = n_1 + n_2 + n_3,
-           diff = abs(1 - n)) %>%
+  list_params %>%
+    mutate(n = n_1 + n_2 + n_3) %>%
     filter(is.na(class_name)) %>%
     ggplot() +
-    geom_point(aes(x = id, y = diff)) +
-    labs(title = "abs(1-n) without class name")
+    geom_point(aes(x = id, y = n)) +
+    labs(title = "n without class name") +
+    geom_hline(yintercept = 1.25, linetype = 2) +
+    ylim(c(0, NA))
 
 }

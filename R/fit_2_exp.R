@@ -16,8 +16,7 @@ fit_2_exp <- function(fit_dat,
 
   fit_2_types <- get_2_k_params(fit_k_params)
 
-  print(paste(unique(fit_dat[["Sequence"]])))
-  print("2 exp fit")
+  # print(paste(unique(fit_dat[["Sequence"]])))
 
   fit_2_res <- lapply(fit_2_types, function(fit_2_params){
 
