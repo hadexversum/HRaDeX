@@ -1,5 +1,5 @@
 #'
-#'
+#' @importFrom ggplot2 coord_cartesian
 #'
 #' @export
 
