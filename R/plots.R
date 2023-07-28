@@ -103,7 +103,8 @@ get_params_summary_image <- function(fixed_params){
 
 #' @importFrom ggplot2 geom_rect aes element_blank
 #' @export
-plot_cov_class <- function(fixed_params){
+plot_cov_class <- function(fixed_params,
+                           fractional = T){
 
 
   ## levels
@@ -127,8 +128,17 @@ plot_cov_class <- function(fixed_params){
 
   fixed_params[["ID"]] <- levels
 
-  fixed_params <- fixed_params %>%
-    mutate(alpha = case_when( n_1 + n_2 + n_3 > 1.25 ~ 0.5, T ~  1))
+  if(fractional){
+
+    fixed_params <- fixed_params %>%
+      mutate(alpha = case_when( n_1 + n_2 + n_3 > 1.25 ~ 0.5, T ~  1))
+
+  } else {
+
+    fixed_params <- fixed_params %>%
+      mutate(alpha = case_when( n_1 + n_2 + n_3 - max_uptake >= 0 ~ 0.5, T ~  1))
+
+  }
   ## end of levels
 
   ggplot(data = fixed_params,
@@ -158,15 +168,31 @@ plot_r2_hist <- function(fixed_params){
 }
 
 #' @export
-plot_n <- function(list_params){
+plot_n <- function(list_params,
+                   fractional = F){
 
-  list_params %>%
-    mutate(n = n_1 + n_2 + n_3) %>%
-    filter(is.na(class_name)) %>%
-    ggplot() +
-    geom_point(aes(x = id, y = n)) +
-    labs(title = "n without class name") +
-    geom_hline(yintercept = 1.25, linetype = 2) +
-    ylim(c(0, NA))
+  if(fractional){
+
+    list_params %>%
+      mutate(n = n_1 + n_2 + n_3) %>%
+      filter(is.na(class_name)) %>%
+      ggplot() +
+      geom_point(aes(x = id, y = n)) +
+      labs(title = "n without class name") +
+      geom_hline(yintercept = 1.25, linetype = 2) +
+      ylim(c(0, NA))
+
+  } else {
+
+    list_params %>%
+      filter(is.na(class_name)) %>%
+      mutate(n = (n_1 + n_2 + n_3) / max_uptake) %>%
+      ggplot() +
+      geom_point(aes(x = id, y = n)) +
+      labs(title = "n without class name",
+           y = "n/max_uptake") +
+      geom_hline(yintercept = 1, linetype = 2) +
+      ylim(c(0, 1.25))
+  }
 
 }

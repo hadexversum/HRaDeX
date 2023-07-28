@@ -47,34 +47,65 @@ get_2_k_params <- function(fit_k_params){
 }
 
 #' @noRd
-get_3_n_params <- function(){
+get_3_n_params <- function(MaxUptake = NA){
 
-  data.frame(
-    start = c(n_1 = 0.33, n_2 = 0.33, n_3 = 0.33),
-    lower = c(n_1 = 0, n_2 = 0, n_3 = 0),
-    upper = c(n_1 = 1, n_2 = 1, n_3 = 1)
-  )
+  if(is.na(MaxUptake)){
+
+    data.frame(
+      start = c(n_1 = 0.33, n_2 = 0.33, n_3 = 0.33),
+      lower = c(n_1 = 0, n_2 = 0, n_3 = 0),
+      upper = c(n_1 = 1, n_2 = 1, n_3 = 1)
+    )
+
+  } else {
+
+    data.frame(
+      start = c(n_1 = MaxUptake/3, n_2 = MaxUptake/3, n_3 = MaxUptake/3),
+      lower = c(n_1 = 0, n_2 = 0, n_3 = 0),
+      upper = c(n_1 = MaxUptake, n_2 = MaxUptake, n_3 = MaxUptake)
+    )
+
+  }
+
 
 }
 
 #' @noRd
-get_2_n_params <- function(){
+get_2_n_params <- function(MaxUptake = NA){
 
-  data.frame(
-    start = c(n_1 = 0.5, n_2 = 0.5),
-    lower = c(n_1 = 0, n_2 = 0),
-    upper = c(n_1 = 1, n_2 = 1)
-  )
+  if(is.na(MaxUptake)){
+    data.frame(
+      start = c(n_1 = 0.5, n_2 = 0.5),
+      lower = c(n_1 = 0, n_2 = 0),
+      upper = c(n_1 = 1, n_2 = 1)
+    )
+  } else {
+    data.frame(
+      start = c(n_1 = MaxUptake/2, n_2 = MaxUptake/2),
+      lower = c(n_1 = 0, n_2 = 0),
+      upper = c(n_1 = MaxUptake, n_2 = MaxUptake)
+    )
+  }
+
 }
 
 #' @noRd
-get_1_n_params <- function(){
+get_1_n_params <- function(MaxUptake = NA){
 
-  data.frame(
-    start = c(n_1 = 1),
-    lower = c(n_1 = 0),
-    upper = c(n_1 = 1)
-  )
+  if(is.na(MaxUptake)){
+    data.frame(
+      start = c(n_1 = 1),
+      lower = c(n_1 = 0),
+      upper = c(n_1 = 1)
+    )
+  } else {
+    data.frame(
+      start = c(n_1 = MaxUptake*0.7),
+      lower = c(n_1 = 0),
+      upper = c(n_1 = MaxUptake)
+    )
+  }
+
 
 }
 

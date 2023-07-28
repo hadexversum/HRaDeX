@@ -4,6 +4,7 @@ get_fit_results <- function(fit_dat,
                             control = list(maxiter = 1000,  scale = "levenberg"),
                             trace = F,
                             workflow = 31,
+                            fractional = T,
                             edge_times = c(min(fit_dat[["Exposure"]]), max(fit_dat[["Exposure"]]))){
 
   workflow <- match.arg(as.character(workflow), choices = c(31, 21, 321))
@@ -27,12 +28,14 @@ get_fit_results <- function(fit_dat,
     fit_3 <- fit_3_exp(fit_dat,
                        control = control,
                        fit_k_params = fit_k_params,
-                       trace = trace)
+                       trace = trace,
+                       fractional = fractional)
 
     fit_1 <- fit_1_exp(fit_dat,
                        control = control,
                        fit_k_params = fit_k_params,
-                       trace = trace)
+                       trace = trace,
+                       fractional = fractional)
 
     res <- rbind(fit_3, fit_1) %>%
       arrange(r2) %>%
@@ -44,12 +47,14 @@ get_fit_results <- function(fit_dat,
     fit_2 <- fit_2_exp(fit_dat,
                        control = control,
                        fit_k_params = fit_k_params,
-                       trace = trace)
+                       trace = trace,
+                       fractional = fractional)
 
     fit_1 <- fit_1_exp(fit_dat,
                        control = control,
                        fit_k_params = fit_k_params,
-                       trace = trace)
+                       trace = trace,
+                       fractional = fractional)
 
     res <- rbind(fit_2, fit_1) %>%
       arrange(r2) %>%
@@ -62,17 +67,20 @@ get_fit_results <- function(fit_dat,
     fit_3 <- fit_3_exp(fit_dat,
                        control = control,
                        fit_k_params = fit_k_params,
-                       trace = trace)
+                       trace = trace,
+                       fractional = fractional)
 
     fit_2 <- fit_2_exp(fit_dat,
                        control = control,
                        fit_k_params = fit_k_params,
-                       trace = trace)
+                       trace = trace,
+                       fractional = fractional)
 
     fit_1 <- fit_1_exp(fit_dat,
                        control = control,
                        fit_k_params = fit_k_params,
-                       trace = trace)
+                       trace = trace,
+                       fractional = fractional)
 
     res <- rbind(fit_3, fit_2, fit_1) %>%
       arrange(r2) %>%
@@ -134,6 +142,7 @@ fix_class_result <- function(fit_dat,
   data.frame(sequence = fit_dat[["Sequence"]][1],
              start = fit_dat[["Start"]][1],
              end = fit_dat[["End"]][1],
+             max_uptake = fit_dat[["MaxUptake"]][1],
              n_1 = n_1,
              k_1 = k_1,
              n_2 = n_2,

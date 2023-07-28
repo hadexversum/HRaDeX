@@ -4,6 +4,7 @@ create_fit_dataset <- function(kin_dat,
                                fit_k_params,
                                control = list(maxiter = 1000,  scale = "levenberg"),
                                trace = F,
+                               fractional = F,
                                workflow = 321){
 
   peptide_list <- kin_dat %>%
@@ -22,6 +23,7 @@ create_fit_dataset <- function(kin_dat,
                     control = control,
                     trace = trace,
                     workflow = workflow,
+                    fractional = fractional,
                     edge_times = edge_times)
   }) %>% bind_rows() %>% mutate(id = 1:nrow(.)) %>% remove_rownames(.) %>%
     select(id, everything())

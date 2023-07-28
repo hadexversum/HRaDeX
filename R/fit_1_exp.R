@@ -6,6 +6,7 @@
 fit_1_exp <- function(fit_dat,
                       control,
                       fit_k_params,
+                      fractional = T,
                       trace = F){
 
 
@@ -16,16 +17,36 @@ fit_1_exp <- function(fit_dat,
   n_1 = k_1 = -1
   r2 <- 99999
 
-  fit_params <- rbind(get_1_k_params(fit_k_params), get_1_n_params())
+  max_uptake <- fit_dat[["MaxUptake"]][1]
+
+  if(fractional){
+    fit_params <- rbind(get_1_k_params(fit_k_params), get_1_n_params())
+  } else {
+    fit_params <- rbind(get_1_k_params(fit_k_params), get_1_n_params(MaxUptake = max_uptake))
+  }
 
   tryCatch({
-    mod <- minpack.lm::nlsLM(frac_deut_uptake ~ n_1*(1-exp(-k_1*Exposure)),
-                             data = fit_dat,
-                             start = deframe(rownames_to_column(fit_params["start"])),
-                             lower = deframe(rownames_to_column(fit_params["lower"])),
-                             upper = deframe(rownames_to_column(fit_params["upper"])),
-                             control = control,
-                             trace = trace)
+    if(fractional){
+
+      mod <- minpack.lm::nlsLM(frac_deut_uptake ~ n_1*(1-exp(-k_1*Exposure)),
+                               data = fit_dat,
+                               start = deframe(rownames_to_column(fit_params["start"])),
+                               lower = deframe(rownames_to_column(fit_params["lower"])),
+                               upper = deframe(rownames_to_column(fit_params["upper"])),
+                               control = control,
+                               trace = trace)
+
+    } else {
+
+      mod <- minpack.lm::nlsLM(deut_uptake ~ n_1*(1-exp(-k_1*Exposure)),
+                               data = fit_dat,
+                               start = deframe(rownames_to_column(fit_params["start"])),
+                               lower = deframe(rownames_to_column(fit_params["lower"])),
+                               upper = deframe(rownames_to_column(fit_params["upper"])),
+                               control = control,
+                               trace = trace)
+    }
+
 
     r2 <-  sum(residuals(mod)^2)
     n_1 <- coef(mod)["n_1"]
@@ -39,6 +60,7 @@ fit_1_exp <- function(fit_dat,
     data.frame(sequence = fit_dat[["Sequence"]][1],
                start = fit_dat[["Start"]][1],
                end = fit_dat[["End"]][1],
+               max_uptake = max_uptake,
                n_1 = -1,
                k_1 = -1,
                n_2 = -1,
@@ -55,7 +77,8 @@ fit_1_exp <- function(fit_dat,
                      n = n_1[[1]],
                      k = k_1[[1]],
                      r2 = r2,
-                     fit_k_params = fit_k_params)
+                     fit_k_params = fit_k_params,
+                     max_uptake = max_uptake)
   }
 
 }
@@ -64,7 +87,8 @@ fix_1_exp_result <- function(fit_dat,
                              n,
                              k,
                              r2,
-                             fit_k_params){
+                             fit_k_params,
+                             max_uptake){
 
   n_1 = k_1 = n_2 = k_2 = n_3 = k_3 = 0
 
@@ -88,6 +112,7 @@ fix_1_exp_result <- function(fit_dat,
   data.frame(sequence = fit_dat[["Sequence"]][1],
              start = fit_dat[["Start"]][1],
              end = fit_dat[["End"]][1],
+             max_uptake = max_uptake,
              n_1 = n_1,
              k_1 = k_1,
              n_2 = n_2,
