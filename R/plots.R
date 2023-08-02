@@ -146,12 +146,13 @@ plot_cov_class <- function(fixed_params,
                        ymin = ID, ymax = ID - 1)) +
     geom_rect(fill = fixed_params[["color"]],
               alpha = fixed_params[["alpha"]]) +
-    theme(legend.position = "bottom",
-          axis.ticks.y = element_blank(),
+    labs(title = "Assigned class on coverage",
+         x = "Position",
+         y = "") +
+    theme_bw() +
+    theme(axis.ticks.y = element_blank(),
           axis.text.y = element_blank()) +
-    labs(title = "class components on coverage",
-         x = "Position") +
-    theme_bw()
+    coord_cartesian(x = c(0, max(fixed_params[["end"]])+1))
 
 }
 
