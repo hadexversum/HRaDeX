@@ -23,31 +23,27 @@ plot_hires <- function(hires_params){
 #'
 #' @export
 plot_hires_components <- function(hires_params,
-                                   fractional = F){
+                                  fractional = F){
 
-  hires_tmp <- hires_params %>%
-    filter(!is.na(n_1)) %>%
-    mutate(n = n_1 + n_2 + n_3) %>%
-    mutate(n_1_tmp = n_1 / n,
-           n_2_tmp = n_2 / n,
-           n_3_tmp = n_3 / n) %>%
-    filter(is.na(class_name)) %>%
-    mutate(n_1_tmp_color = rgb(n_1_tmp, 0, 0),
-           n_2_tmp_color = rgb(0, n_2_tmp, 0),
-           n_3_tmp_color = rgb(0, 0, n_3_tmp))
+  hires_components <- hires_params %>%
+    filter(is.na(class_name), !is.na(n_1)) %>%
+    mutate(n = n_1 + n_2 + n_3,
+           n_1_color = rgb(n_1/n, 0, 0),
+           n_2_color = rgb(0, n_2/n, 0),
+           n_3_color = rgb(0, 0, n_3/n))
 
-  class_tmp <- hires_params %>%
+  edgy_classes <- hires_params %>%
     filter(!is.na(class_name))
 
   ggplot() +
-    geom_rect(data = hires_tmp, aes(xmin = position, xmax = position + 1,
-                                    ymin = 0, ymax = 1), fill = hires_tmp[["n_1_tmp_color"]]) +
-    geom_rect(data = hires_tmp, aes(xmin = position, xmax = position + 1,
-                                    ymin = 1, ymax = 2), fill = hires_tmp[["n_2_tmp_color"]]) +
-    geom_rect(data = hires_tmp, aes(xmin = position, xmax = position + 1,
-                                    ymin = 2, ymax = 3), fill = hires_tmp[["n_3_tmp_color"]]) +
-    geom_rect(data = class_tmp, aes(xmin = position, xmax = position + 1,
-                                    ymin = 0, ymax = 3), fill = class_tmp[["color"]]) +
+    geom_rect(data = hires_components, aes(xmin = position, xmax = position + 1,
+                                    ymin = 0, ymax = 1), fill = hires_components[["n_1_color"]]) +
+    geom_rect(data = hires_components, aes(xmin = position, xmax = position + 1,
+                                    ymin = 1, ymax = 2), fill = hires_components[["n_2_color"]]) +
+    geom_rect(data = hires_components, aes(xmin = position, xmax = position + 1,
+                                    ymin = 2, ymax = 3), fill = hires_components[["n_3_color"]]) +
+    geom_rect(data = edgy_classes, aes(xmin = position, xmax = position + 1,
+                                    ymin = 0, ymax = 3), fill = edgy_classes[["color"]]) +
     theme_bw() +
     labs(title = "Assigned class components on sequence",
          x = "Position",
