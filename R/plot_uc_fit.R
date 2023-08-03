@@ -1,23 +1,46 @@
 #' @importFrom gridExtra grid.arrange
 #' @importFrom ggplot2 stat_function geom_line annotate theme_bw geom_errorbar geom_linerange
+#' @importFrom dplyr summarize group_by
 #' @export
 plot_uc_fit <- function(fit_dat,
                         fit_values,
                         include_uc = T,
-                        fractional = F){
+                        replicate = F,
+                        fractional = T){
 
   plot_title <- paste0(fit_values[["sequence"]], " (", fit_values[["start"]], "-", fit_values[["end"]], ") ")
 
   if(include_uc){
 
-    uc_plot <- ggplot(fit_dat, aes(x = Exposure, y = deut_uptake)) +
-      geom_point() +
-      geom_errorbar(data = fit_dat, aes(x = Exposure, ymin = deut_uptake - err_deut_uptake, ymax = deut_uptake + err_deut_uptake)) +
-      geom_line(linetype = 2) +
-      ylim(c(0, NA)) +
-      labs(title = paste0(plot_title, " without fit"),
-           x = "Exposure [min]",
-           y = "Deuterium uptake [Da]")
+    if(replicate){
+
+      avg_fit_dat <- fit_dat %>%
+        group_by(Exposure) %>%
+        summarize(avg_deut_uptake = mean(deut_uptake))
+
+
+      uc_plot <- ggplot(fit_dat) +
+        geom_point(aes(x = Exposure, y = deut_uptake)) +
+        geom_line(data = avg_fit_dat, aes(x = Exposure, y = avg_deut_uptake), linetype = 2) +
+        ylim(c(0, NA)) +
+        labs(title = paste0(plot_title, " without fit"),
+             x = "Exposure [min]",
+             y = "Deuterium uptake [Da]")
+
+    } else {
+
+      uc_plot <- ggplot(fit_dat, aes(x = Exposure, y = deut_uptake)) +
+        geom_errorbar(data = fit_dat, aes(x = Exposure, ymin = deut_uptake - err_deut_uptake, ymax = deut_uptake + err_deut_uptake)) +
+        geom_point() +
+        geom_line(linetype = 2) +
+        ylim(c(0, NA)) +
+        labs(title = paste0(plot_title, " without fit"),
+             x = "Exposure [min]",
+             y = "Deuterium uptake [Da]")
+
+    }
+
+
   }
 
   if(!is.na(fit_values[["class_name"]])) {
@@ -57,7 +80,6 @@ plot_uc_fit <- function(fit_dat,
 
     uc_fit_plot_log_components <- ggplot() +
       geom_point(data = fit_dat, aes(x = Exposure, y = frac_deut_uptake)) +
-      geom_linerange(data = fit_dat, aes(x = Exposure, ymin = frac_deut_uptake - err_frac_deut_uptake, ymax = frac_deut_uptake + err_frac_deut_uptake)) +
       labs(title = paste0(plot_title, " scaled in log with fit components"),
            y = "Fractional DU [%]",
            x = "Exposure [min]") +
@@ -69,13 +91,17 @@ plot_uc_fit <- function(fit_dat,
       geom_hline(yintercept = 1, linetype = 2, alpha = 0.3) +
       scale_x_log10(limits = c(NA, 10000))
 
+    if(!replicate){
+      uc_fit_plot_log_components <- uc_fit_plot_log_components +
+        geom_linerange(data = fit_dat, aes(x = Exposure, ymin = frac_deut_uptake - err_frac_deut_uptake, ymax = frac_deut_uptake + err_frac_deut_uptake))
+    }
+
   } else {
 
     max_uptake <- fit_dat[["MaxUptake"]][1]
 
     uc_fit_plot_log_components <- ggplot() +
       geom_point(data = fit_dat, aes(x = Exposure, y = deut_uptake)) +
-      geom_linerange(data = fit_dat, aes(x = Exposure, ymin = deut_uptake - err_deut_uptake, ymax = deut_uptake + err_deut_uptake)) +
       labs(title = paste0(plot_title, " scaled in log with fit components"),
            y = "Fractional DU [Da]",
            x = "Exposure [min]") +
@@ -87,6 +113,10 @@ plot_uc_fit <- function(fit_dat,
       geom_hline(yintercept = max_uptake, linetype = 2, alpha = 0.3) +
       scale_x_log10(limits = c(NA, 10000))
 
+    if(!replicate){
+      uc_fit_plot_log_components <- uc_fit_plot_log_components +
+        geom_linerange(data = fit_dat, aes(x = Exposure, ymin = deut_uptake - err_deut_uptake, ymax = deut_uptake + err_deut_uptake))
+    }
 
   }
 

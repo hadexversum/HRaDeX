@@ -177,7 +177,7 @@ detect_class <-  function(fit_dat, edge_times = NULL){
   if(du_100 < 1) class_name <- "none"
 
   if(!is.null(edge_times)) {
-    if(sum(fit_dat[["Exposure"]] %in% edge_times)!=2) class_name <- "invalid"
+    if(sum(unique(fit_dat[["Exposure"]]) %in% edge_times)!=2) class_name <- "invalid"
   }
 
   class_name
