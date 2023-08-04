@@ -67,7 +67,7 @@ calculate_replicate_state_uptake <- function(rep_peptide_dat,
     select(avg_exp_mass) %>% .[[1]] %>% mean()
 
   rep_peptide_dat %>%
-    filter(Exposure >= time_0, Exposure <= time_100) %>%
+    filter(Exposure > time_0, Exposure <= time_100) %>%
     mutate(frac_deut_uptake = (avg_exp_mass - m_0)/(m_100 - m_0),
            deut_uptake = avg_exp_mass - m_0)
 }
