@@ -172,13 +172,18 @@ detect_class <-  function(fit_dat, edge_times = NULL){
 
   max_uptake <- unique(fit_dat[["MaxUptake"]])
 
-  if(du_100*0.8 < du_1) class_name <- "immediate"
+  if(is.nan(du_100)) return("invalid")
+  if(is.nan(du_1)) return("invalid")
 
-  if(du_100 < 1) class_name <- "none"
+  if(du_100*0.8 < du_1) return("immediate")
+
+  if(du_100 < 1) return("none")
 
   if(!is.null(edge_times)) {
-    if(sum(unique(fit_dat[["Exposure"]]) %in% edge_times)!=2) class_name <- "invalid"
+    if(sum(unique(fit_dat[["Exposure"]]) %in% edge_times)!=2) return("invalid")
   }
+
+
 
   class_name
 
