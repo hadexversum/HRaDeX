@@ -67,6 +67,7 @@ fit_2_exp <- function(fit_dat,
     }, error = function(e){
       print(e)
       print("sorry, error in 2 exp")
+      # print(paste("Peptide", unique(fit_dat[["Sequence"]]), unique(fit_dat[["Start"]]), unique(fit_dat[["End"]]) ))
     })
 
     data.frame(n_1 = n_1,
@@ -80,9 +81,9 @@ fit_2_exp <- function(fit_dat,
 
   if(fit_2_res[["n_1"]] == -1 & fit_2_res[["k_1"]] == -1){
 
-    data.frame(sequence = sequence,
-               start = start,
-               end = end,
+    data.frame(sequence = unique(fit_dat[["Sequence"]]),
+               start = unique(fit_dat[["Start"]]),
+               end = unique(fit_dat[["End"]]),
                max_uptake = max_uptake,
                n_1 = -1,
                k_1 = -1,
