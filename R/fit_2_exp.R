@@ -30,7 +30,7 @@ fit_2_exp <- function(fit_dat,
 
     n_1 = k_1 = n_2 = k_2 = -1
     groups = NA
-    r2 <- 99999
+    rss <- 99999
 
     tryCatch({
 
@@ -56,7 +56,7 @@ fit_2_exp <- function(fit_dat,
       }
 
 
-      r2 <-  sum(residuals(mod)^2)
+      rss <-  sum(residuals(mod)^2)
       n_1 <- coef(mod)["n_1"]
       k_1 <- coef(mod)["k_1"]
       n_2 <- coef(mod)["n_2"]
@@ -74,10 +74,10 @@ fit_2_exp <- function(fit_dat,
                k_1 = k_1,
                n_2 = n_2,
                k_2 = k_2,
-               r2 = r2,
+               rss = rss,
                groups = groups)
 
-  }) %>% bind_rows() %>% arrange(r2) %>% .[1, ]
+  }) %>% bind_rows() %>% arrange(rss) %>% .[1, ]
 
   if(fit_2_res[["n_1"]] == -1 & fit_2_res[["k_1"]] == -1){
 
@@ -91,7 +91,7 @@ fit_2_exp <- function(fit_dat,
                k_2 = -1,
                n_3 = -1,
                k_3 = -1,
-               r2 = 99999,
+               rss = 99999,
                class_name = NA,
                fitted = NA,
                color = NA)
@@ -148,7 +148,7 @@ fix_2_exp_result_v2 <- function(fit_dat,
              k_2 = k_2,
              n_3 = n_3,
              k_3 = k_3,
-             r2 = fit_2_res[["r2"]],
+             rss = fit_2_res[["rss"]],
              class_name = NA,
              fitted = 2,
              color = rgb(n_1/n, n_2/n, n_3/n)
@@ -204,7 +204,7 @@ fix_2_exp_result <- function(fit_dat,
              k_2 = k_2,
              n_3 = n_3,
              k_3 = k_3,
-             r2 = fit_2_res[["r2"]],
+             rss = fit_2_res[["rss"]],
              class_name = NA,
              fitted = 2,
              color = rgb(n_1, n_2, n_3)

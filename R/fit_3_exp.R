@@ -15,7 +15,7 @@ fit_3_exp <- function(fit_dat,
   }
 
   n_1 = k_1 = n_2 = k_2 = n_3 = k_3 = -1
-  r2 <- 99999
+  rss <- 99999
   fitted <- NA
   rgb_color <- NA
 
@@ -51,7 +51,7 @@ fit_3_exp <- function(fit_dat,
     }
 
 
-    r2 <-  sum(residuals(mod)^2)
+    rss <-  sum(residuals(mod)^2)
     n_1 <- coef(mod)["n_1"]
     k_1 <- coef(mod)["k_1"]
     n_2 <- coef(mod)["n_2"]
@@ -76,7 +76,7 @@ fit_3_exp <- function(fit_dat,
              k_2 = k_2,
              n_3 = n_3,
              k_3 = k_3,
-             r2 = r2,
+             rss = rss,
              class_name = NA,
              fitted = fitted,
              color = rgb_color

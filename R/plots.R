@@ -158,12 +158,12 @@ plot_cov_class <- function(fixed_params,
 
 #' @importFrom ggplot2 facet_wrap geom_histogram
 #' @export
-plot_r2_hist <- function(fixed_params){
+plot_rss_hist <- function(fixed_params){
 
   fixed_params %>%
     filter(is.na(class_name)) %>%
     ggplot() +
-    geom_histogram(aes(x = r2)) +
+    geom_histogram(aes(x = rss)) +
     labs(fill = "exp") +
     facet_wrap(~ fitted, ncol = 1)
 }

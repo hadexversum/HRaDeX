@@ -38,7 +38,7 @@ get_fit_results <- function(fit_dat,
                        fractional = fractional)
 
     res <- rbind(fit_3, fit_1) %>%
-      arrange(r2) %>%
+      arrange(rss) %>%
       .[1, ]
   }
 
@@ -57,7 +57,7 @@ get_fit_results <- function(fit_dat,
                        fractional = fractional)
 
     res <- rbind(fit_2, fit_1) %>%
-      arrange(r2) %>%
+      arrange(rss) %>%
       .[1, ]
 
   }
@@ -83,7 +83,7 @@ get_fit_results <- function(fit_dat,
                        fractional = fractional)
 
     res <- rbind(fit_3, fit_2, fit_1) %>%
-      arrange(r2) %>%
+      arrange(rss) %>%
       .[1, ]
 
   }
@@ -149,7 +149,7 @@ fix_class_result <- function(fit_dat,
              k_2 = k_2,
              n_3 = n_3,
              k_3 = k_3,
-             r2 = NA,
+             rss = NA,
              class_name = class_name,
              fitted = 0,
              color = color)
