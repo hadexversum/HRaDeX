@@ -5,14 +5,18 @@
 
 plot_hires <- function(hires_params){
 
-  ggplot(hires_params, aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1)) +
-    geom_rect(fill = hires_params[["color"]]) +
+  ggplot(hires_params) +
+    geom_rect(aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1), fill = hires_params[["color"]]) +
+    geom_rect(data = subset(hires_params, is.na(n_1)),
+              aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1), fill = "#B8B8B8") +
     labs(title = "Assigned class on sequence",
          x = "Position",
          y = "") +
     theme_bw() +
     theme(axis.ticks.y = element_blank(),
-          axis.text.y = element_blank()) +
+          axis.text.y = element_blank(),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank()) +
     coord_cartesian(x = c(0, max(hires_params[["position"]])+1))
 
 }
