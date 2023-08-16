@@ -13,6 +13,7 @@ prepare_kin_dat <- function(dat,
   if(replicate){
 
     kin_dat <- dat %>%
+      filter(State == state) %>%
       filter(Exposure >= time_0, Exposure <= time_100) %>%
       calculate_exp_masses_per_replicate() %>%
       create_control_dataset(control_exposure = time_100) %>%
@@ -27,6 +28,7 @@ prepare_kin_dat <- function(dat,
   } else {
 
     kin_dat <- dat %>%
+      filter(State == state) %>%
       filter(Exposure >= time_0, Exposure <= time_100) %>%
       create_control_dataset(control_exposure = time_100) %>%
       create_state_uptake_dataset(.,

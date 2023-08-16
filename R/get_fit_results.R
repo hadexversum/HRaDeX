@@ -175,9 +175,9 @@ detect_class <-  function(fit_dat, edge_times = NULL){
   if(is.nan(du_100)) return("invalid")
   if(is.nan(du_1)) return("invalid")
 
-  if(du_100*0.8 < du_1) return("immediate")
-
   if(du_100 < 1) return("none")
+
+  if(du_100*0.8 < du_1) return("immediate")
 
   if(!is.null(edge_times)) {
     if(sum(unique(fit_dat[["Exposure"]]) %in% edge_times)!=2) return("invalid")

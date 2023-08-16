@@ -12,12 +12,12 @@ calculate_hires <- function(fit_values,
     if(fractional){
       tmp_params <- fit_values %>%
         filter(start <= pos & pos <= end & n_1 + n_2 + n_3 < 1.25) %>%
-        arrange(class_name, nchar(sequence)) %>%
+        arrange(nchar(sequence), class_name) %>%
         .[1, ]
     } else {
       tmp_params <- fit_values %>%
         filter(start <= pos & pos <= end & n_1 + n_2 + n_3 - max_uptake <= 0) %>%
-        arrange(class_name, nchar(sequence)) %>%
+        arrange(nchar(sequence), class_name) %>%
         .[1, ]
     }
 
