@@ -8,7 +8,9 @@ get_fit_results <- function(fit_dat,
                             edge_times = c(min(fit_dat[["Exposure"]]), max(fit_dat[["Exposure"]]))){
 
   workflow <- match.arg(as.character(workflow), choices = c(31, 21, 321))
-  # to do: 321 workflow
+
+  protein <- fit_dat[["Protein"]][1]
+  state <- fit_dat[["State"]][1]
 
   if(length(unique(fit_dat[["Sequence"]])) > 1){
     stop("More than one sequence in supplied data!")
@@ -20,6 +22,8 @@ get_fit_results <- function(fit_dat,
   if(!is.na(class_name)){
     return(fix_class_result(fit_dat,
                             class_name,
+                            protein,
+                            state,
                             fit_k_params))
   }
 
@@ -88,7 +92,10 @@ get_fit_results <- function(fit_dat,
 
   }
 
-  return(res)
+  res[["Protein"]] <- protein
+  res[["State"]] <- state
+
+  return(select(res, Protein, State, everything()))
 
 }
 
@@ -139,7 +146,9 @@ fix_class_result <- function(fit_dat,
     color = "#808080"
   }
 
-  data.frame(sequence = fit_dat[["Sequence"]][1],
+  data.frame(Protein = protein,
+             State = state,
+             sequence = fit_dat[["Sequence"]][1],
              start = fit_dat[["Start"]][1],
              end = fit_dat[["End"]][1],
              max_uptake = fit_dat[["MaxUptake"]][1],
@@ -182,8 +191,6 @@ detect_class <-  function(fit_dat, edge_times = NULL){
   if(!is.null(edge_times)) {
     if(sum(unique(fit_dat[["Exposure"]]) %in% edge_times)!=2) return("invalid")
   }
-
-
 
   class_name
 

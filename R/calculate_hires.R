@@ -7,6 +7,9 @@ calculate_hires <- function(fit_values,
 
   length = max(fit_values[["end"]])
 
+  Protein = fit_values[["Protein"]][1]
+  State = fit_values[["State"]][1]
+
   hires_params <- lapply(seq(1:length), function(pos){
 
     if(fractional){
@@ -23,7 +26,9 @@ calculate_hires <- function(fit_values,
 
     if(nrow(tmp_params) == 0){
 
-      data.frame(position = pos,
+      data.frame(Protein = Protein,
+                 State = State,
+                 position = pos,
                  n_1 = NA,
                  n_2 = NA,
                  n_3 = NA,
@@ -31,7 +36,9 @@ calculate_hires <- function(fit_values,
                  color = NA)
     } else {
 
-      data.frame(position = pos,
+      data.frame(Protein = Protein,
+                 State = State,
+                 position = pos,
                  n_1 = tmp_params[["n_1"]],
                  n_2 = tmp_params[["n_2"]],
                  n_3 = tmp_params[["n_3"]],
