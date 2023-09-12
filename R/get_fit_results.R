@@ -127,6 +127,8 @@ get_fit_results <- function(fit_dat,
 #' @export
 fix_class_result <- function(fit_dat,
                              class_name,
+                             protein,
+                             state,
                              fit_k_params){
 
   if(class_name == "immediate"){
