@@ -51,7 +51,10 @@ create_two_state_dataset <- function(hires_params_1,
 
 plot_color_distance <- function(two_state_dataset){
 
-  ggplot(two_state_dataset) +
+  two_state_dataset %>%
+    filter(!is.na(color.x)) %>%
+    filter(!is.na(color.y)) %>%
+  ggplot() +
     geom_point(aes(x = position, y = dist)) +
     labs(title = "Distance between assigned colors",
          x = "Position",

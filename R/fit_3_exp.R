@@ -16,6 +16,7 @@ fit_3_exp <- function(fit_dat,
 
   n_1 = k_1 = n_2 = k_2 = n_3 = k_3 = -1
   rss <- 99999
+  bic <- 99999
   fitted <- NA
   rgb_color <- NA
 
@@ -52,6 +53,7 @@ fit_3_exp <- function(fit_dat,
 
 
     rss <-  sum(residuals(mod)^2)
+    bic <- stats::AIC(mod, k = log(nrow(fit_dat)))
     n_1 <- coef(mod)["n_1"]
     k_1 <- coef(mod)["k_1"]
     n_2 <- coef(mod)["n_2"]
@@ -77,6 +79,7 @@ fit_3_exp <- function(fit_dat,
              n_3 = n_3,
              k_3 = k_3,
              rss = rss,
+             bic = bic,
              class_name = NA,
              fitted = fitted,
              color = rgb_color
