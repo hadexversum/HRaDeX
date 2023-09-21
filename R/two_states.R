@@ -18,13 +18,16 @@ plot_two_states <- function(hires_params_1,
     geom_rect(data = hires_params_2, aes(xmin = position, xmax = position + 1, ymin = 1, ymax = 2), fill = hires_params_2[["color"]]) +
     geom_rect(data = subset(hires_params_2, is.na(n_1)),
               aes(xmin = position, xmax = position + 1, ymin = 1, ymax = 2), fill = "#B8B8B8") +
-    labs(title = "Assigned class on sequence",
+    geom_hline(yintercept = 1, linetype = "dashed") +
+    labs(title = paste0("Assigned class on sequence for states: ", state_1, " and ", state_2),
          x = "Position",
          y = "") +
     theme_bw() +
     scale_y_continuous(breaks = c(0.5, 1.5), labels = c(state_1, state_2)) +
     theme(panel.grid.major = element_blank(),
-          panel.grid.minor = element_blank()) +
+          panel.grid.minor = element_blank(),
+          axis.text.y = element_blank(),
+          axis.ticks.y = element_blank()) +
     coord_cartesian(x = c(0, protein_length+1))
 
 }
@@ -51,6 +54,8 @@ create_two_state_dataset <- function(hires_params_1,
 
 plot_color_distance <- function(two_state_dataset){
 
+  protein_length <- max(two_state_dataset[["position"]])
+
   two_state_dataset %>%
     filter(!is.na(color.x)) %>%
     filter(!is.na(color.y)) %>%
@@ -58,6 +63,7 @@ plot_color_distance <- function(two_state_dataset){
     geom_point(aes(x = position, y = dist)) +
     labs(title = "Distance between assigned colors",
          x = "Position",
-         y = "Distance")
+         y = "Distance") +
+    coord_cartesian(x = c(0, protein_length+1))
 
 }
