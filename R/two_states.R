@@ -149,7 +149,8 @@ get_uc_distance <- function(fit_dat_1,
 plot_uc <- function(fit_dat_1,
                     fit_dat_2,
                     fit_values_1,
-                    fit_values_2){
+                    fit_values_2,
+                    fractional = F){
 
   v_sequence = fit_dat_1[["Sequence"]][1]
   v_start = fit_dat_1[["Start"]][1]
@@ -165,24 +166,48 @@ plot_uc <- function(fit_dat_1,
            start == v_start,
            end == v_end)
 
-  ggplot() +
-    geom_point(data = fit_dat_1, aes(x = Exposure, y = frac_deut_uptake, shape = State)) +
-    # geom_line(data = fit_dat_1, aes(x = Exposure, y = frac_deut_uptake, linetype = State)) +
-    geom_point(data = fit_dat_2, aes(x = Exposure, y = frac_deut_uptake, shape = State)) +
-    # geom_line(data = fit_dat_2, aes(x = Exposure, y = frac_deut_uptake, linetype = State)) +
-    scale_x_log10() +
-    ylim(c(0, 1.25)) +
-    theme(legend.position = "bottom") +
-    stat_function(fun=function(x){fit_params_1[["n_1"]]*(1-exp(-fit_params_1[["k_1"]]*x)) + fit_params_1[["n_2"]]*(1-exp(-fit_params_1[["k_2"]]*x)) + fit_params_1[["n_3"]]*(1-exp(-fit_params_1[["k_3"]]*x))}, linetype = "dashed") +
-    stat_function(fun = function(x){fit_params_1[["n_1"]]*(1-exp(-fit_params_1[["k_1"]]*x))}, color = "red", linetype = "dashed") +
-    stat_function(fun = function(x){fit_params_1[["n_2"]]*(1-exp(-fit_params_1[["k_2"]]*x))}, color = "green", linetype = "dashed") +
-    stat_function(fun = function(x){fit_params_1[["n_3"]]*(1-exp(-fit_params_1[["k_3"]]*x))}, color = "blue", linetype = "dashed") +
-    stat_function(fun=function(x){fit_params_2[["n_1"]]*(1-exp(-fit_params_2[["k_1"]]*x)) + fit_params_2[["n_2"]]*(1-exp(-fit_params_2[["k_2"]]*x)) + fit_params_2[["n_3"]]*(1-exp(-fit_params_2[["k_3"]]*x))}, linetype = "solid") +
-    stat_function(fun = function(x){fit_params_2[["n_1"]]*(1-exp(-fit_params_2[["k_1"]]*x))}, color = "red", linetype = "solid") +
-    stat_function(fun = function(x){fit_params_2[["n_2"]]*(1-exp(-fit_params_2[["k_2"]]*x))}, color = "green", linetype = "solid") +
-    stat_function(fun = function(x){fit_params_2[["n_3"]]*(1-exp(-fit_params_2[["k_3"]]*x))}, color = "blue", linetype = "solid") +
-    labs(x = "Exposure [min]",
-         y = "Fractional DU [%]",
-         title = paste0("Deuterium uptake curve for peptide ", v_sequence, " (", v_start, "-", v_end, ")"))
+  if (fractional) {
+
+    ggplot() +
+      geom_point(data = fit_dat_1, aes(x = Exposure, y = frac_deut_uptake, shape = State)) +
+      # geom_line(data = fit_dat_1, aes(x = Exposure, y = frac_deut_uptake, linetype = State)) +
+      geom_point(data = fit_dat_2, aes(x = Exposure, y = frac_deut_uptake, shape = State)) +
+      # geom_line(data = fit_dat_2, aes(x = Exposure, y = frac_deut_uptake, linetype = State)) +
+      scale_x_log10() +
+      ylim(c(0, 1.25)) +
+      theme(legend.position = "bottom") +
+      stat_function(fun=function(x){fit_params_1[["n_1"]]*(1-exp(-fit_params_1[["k_1"]]*x)) + fit_params_1[["n_2"]]*(1-exp(-fit_params_1[["k_2"]]*x)) + fit_params_1[["n_3"]]*(1-exp(-fit_params_1[["k_3"]]*x))}, linetype = "dashed") +
+      stat_function(fun = function(x){fit_params_1[["n_1"]]*(1-exp(-fit_params_1[["k_1"]]*x))}, color = "red", linetype = "dashed") +
+      stat_function(fun = function(x){fit_params_1[["n_2"]]*(1-exp(-fit_params_1[["k_2"]]*x))}, color = "green", linetype = "dashed") +
+      stat_function(fun = function(x){fit_params_1[["n_3"]]*(1-exp(-fit_params_1[["k_3"]]*x))}, color = "blue", linetype = "dashed") +
+      stat_function(fun=function(x){fit_params_2[["n_1"]]*(1-exp(-fit_params_2[["k_1"]]*x)) + fit_params_2[["n_2"]]*(1-exp(-fit_params_2[["k_2"]]*x)) + fit_params_2[["n_3"]]*(1-exp(-fit_params_2[["k_3"]]*x))}, linetype = "solid") +
+      stat_function(fun = function(x){fit_params_2[["n_1"]]*(1-exp(-fit_params_2[["k_1"]]*x))}, color = "red", linetype = "solid") +
+      stat_function(fun = function(x){fit_params_2[["n_2"]]*(1-exp(-fit_params_2[["k_2"]]*x))}, color = "green", linetype = "solid") +
+      stat_function(fun = function(x){fit_params_2[["n_3"]]*(1-exp(-fit_params_2[["k_3"]]*x))}, color = "blue", linetype = "solid") +
+      labs(x = "Exposure [min]",
+           y = "Fractional DU [%]",
+           title = paste0("Deuterium uptake curve for peptide ", v_sequence, " (", v_start, "-", v_end, ")"))
+
+  } else {
+
+    ggplot() +
+      geom_point(data = fit_dat_1, aes(x = Exposure, y = deut_uptake, shape = State)) +
+      geom_point(data = fit_dat_2, aes(x = Exposure, y = deut_uptake, shape = State)) +
+      scale_x_log10() +
+      theme(legend.position = "bottom") +
+      stat_function(fun=function(x){fit_params_1[["n_1"]]*(1-exp(-fit_params_1[["k_1"]]*x)) + fit_params_1[["n_2"]]*(1-exp(-fit_params_1[["k_2"]]*x)) + fit_params_1[["n_3"]]*(1-exp(-fit_params_1[["k_3"]]*x))}, linetype = "dashed") +
+      stat_function(fun = function(x){fit_params_1[["n_1"]]*(1-exp(-fit_params_1[["k_1"]]*x))}, color = "red", linetype = "dashed") +
+      stat_function(fun = function(x){fit_params_1[["n_2"]]*(1-exp(-fit_params_1[["k_2"]]*x))}, color = "green", linetype = "dashed") +
+      stat_function(fun = function(x){fit_params_1[["n_3"]]*(1-exp(-fit_params_1[["k_3"]]*x))}, color = "blue", linetype = "dashed") +
+      stat_function(fun=function(x){fit_params_2[["n_1"]]*(1-exp(-fit_params_2[["k_1"]]*x)) + fit_params_2[["n_2"]]*(1-exp(-fit_params_2[["k_2"]]*x)) + fit_params_2[["n_3"]]*(1-exp(-fit_params_2[["k_3"]]*x))}, linetype = "solid") +
+      stat_function(fun = function(x){fit_params_2[["n_1"]]*(1-exp(-fit_params_2[["k_1"]]*x))}, color = "red", linetype = "solid") +
+      stat_function(fun = function(x){fit_params_2[["n_2"]]*(1-exp(-fit_params_2[["k_2"]]*x))}, color = "green", linetype = "solid") +
+      stat_function(fun = function(x){fit_params_2[["n_3"]]*(1-exp(-fit_params_2[["k_3"]]*x))}, color = "blue", linetype = "solid") +
+      labs(x = "Exposure [min]",
+           y = "DU [Da]",
+           title = paste0("Deuterium uptake curve for peptide ", v_sequence, " (", v_start, "-", v_end, ")"))
+
+  }
+
 
 }
