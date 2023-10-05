@@ -45,13 +45,7 @@ plot_uc_fit <- function(fit_dat,
 
   if(!is.na(fit_values[["class_name"]])) {
 
-   uc_plot_sc <-  ggplot() +
-     geom_point(data = fit_dat, aes(x = Exposure, y = frac_deut_uptake)) +
-     labs(title = paste0(plot_title, fit_values[["class_name"]],  " exchange scaled in log"),
-          y = "Fractional DU [%]",
-          x = "Exposure [min]") +
-     scale_x_log10() +
-     ylim(c(0, 1.25))
+   uc_plot_sc <-  plot_lm(fit_dat)
 
    if(include_uc) { return(grid.arrange(uc_plot, uc_plot_sc, nrow = 1)) }
 
