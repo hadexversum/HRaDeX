@@ -136,8 +136,8 @@ get_uc_distance <- function(fit_dat_1,
            tmp_uptake_diff = ((deut_uptake.x - deut_uptake.y)/(err_deut_uptake.x + err_deut_uptake.y))^2) %>%
     arrange(Exposure) %>%
     group_by(ID, Protein, MaxUptake, Sequence, Start, End) %>%
-    summarize(frac_uptake_diff = sum(tmp_frac_uptake_diff),
-              uptake_diff = sum(tmp_uptake_diff))
+    summarize(frac_uptake_diff = sum(tmp_frac_uptake_diff, na.rm = T),
+              uptake_diff = sum(tmp_uptake_diff, na.rm = T))
 
 }
 
