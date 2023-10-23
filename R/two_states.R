@@ -131,11 +131,11 @@ plot_uc_distance <- function(kin_dat_1,
 get_uc_distance <- function(fit_dat_1,
                             fit_dat_2){
 
-  merge(fit_dat_1, fit_dat_2, by = c("ID", "Protein", "MaxUptake", "Sequence", "Start", "End", "Exposure")) %>%
+  merge(fit_dat_1, fit_dat_2, by = c("Protein", "MaxUptake", "Sequence", "Start", "End", "Exposure")) %>%
     mutate(tmp_frac_uptake_diff = ((frac_deut_uptake.x - frac_deut_uptake.y)/(err_frac_deut_uptake.x + err_frac_deut_uptake.y))^2,
            tmp_uptake_diff = ((deut_uptake.x - deut_uptake.y)/(err_deut_uptake.x + err_deut_uptake.y))^2) %>%
     arrange(Exposure) %>%
-    group_by(ID, Protein, MaxUptake, Sequence, Start, End) %>%
+    group_by(Protein, MaxUptake, Sequence, Start, End) %>%
     summarize(frac_uptake_diff = sum(tmp_frac_uptake_diff, na.rm = T),
               uptake_diff = sum(tmp_uptake_diff, na.rm = T))
 

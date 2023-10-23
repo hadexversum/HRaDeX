@@ -194,12 +194,9 @@ detect_class <-  function(fit_dat, edge_times = NULL){
   # if(du_100 < 1) return("none") # before
   # if(du_100*0.8 < du_1) return("immediate") # before
 
-  if(du_100/ max_uptake < 0.1 & du_100 < 1) return("none")
-
-  # if(du_100 < 0.5) return("none")
-
-  ## lowering the threshold
-  if((du_100 - du_1)/max_uptake < 0.05) return("immediate")
+  threshold = 0.1
+  if(du_100/ max_uptake < threshold & du_100 < 1) return("none")
+  if((du_100 - du_1)/max_uptake < threshold &  du_1 / du_100 > 1 - threshold) return("immediate")
 
   class_name
 
