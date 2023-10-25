@@ -13,7 +13,7 @@ plot_lm <- function(fit_dat,
     stop("More than one sequence in supplied data!")
   }
 
-  mod <- lm(deut_uptake~Exposure, data = fit_dat)
+  # mod <- lm(deut_uptake~Exposure, data = fit_dat)
 
   ggplot(fit_dat, aes(x = Exposure, y = deut_uptake)) +
     geom_point(shape = 1, size = 3) +
