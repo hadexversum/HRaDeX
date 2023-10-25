@@ -20,7 +20,7 @@ plot_uc_fit <- function(fit_dat,
 
 
       uc_plot <- ggplot(fit_dat) +
-        geom_point(aes(x = Exposure, y = deut_uptake)) +
+        geom_point(aes(x = Exposure, y = deut_uptake), size = 2) +
         geom_line(data = avg_fit_dat, aes(x = Exposure, y = avg_deut_uptake), linetype = 2) +
         ylim(c(0, NA)) +
         labs(title = paste0(plot_title, " without fit"),
@@ -31,7 +31,7 @@ plot_uc_fit <- function(fit_dat,
 
       uc_plot <- ggplot(fit_dat, aes(x = Exposure, y = deut_uptake)) +
         geom_errorbar(data = fit_dat, aes(x = Exposure, ymin = deut_uptake - err_deut_uptake, ymax = deut_uptake + err_deut_uptake)) +
-        geom_point() +
+        geom_point(size = 2) +
         geom_line(linetype = 2) +
         ylim(c(0, NA)) +
         labs(title = paste0(plot_title, " without fit"),
@@ -73,7 +73,7 @@ plot_uc_fit <- function(fit_dat,
   if(fractional){
 
     uc_fit_plot_log_components <- ggplot() +
-      geom_point(data = fit_dat, aes(x = Exposure, y = frac_deut_uptake)) +
+      geom_point(data = fit_dat, aes(x = Exposure, y = frac_deut_uptake), shape = 1, size = 3) +
       labs(title = paste0(plot_title, " scaled in log with fit components"),
            y = "Fractional DU [%]",
            x = "Exposure [min]") +
@@ -95,7 +95,7 @@ plot_uc_fit <- function(fit_dat,
     max_uptake <- fit_dat[["MaxUptake"]][1]
 
     uc_fit_plot_log_components <- ggplot() +
-      geom_point(data = fit_dat, aes(x = Exposure, y = deut_uptake)) +
+      geom_point(data = fit_dat, aes(x = Exposure, y = deut_uptake), shape = 1, size = 3) +
       labs(title = paste0(plot_title, " scaled in log with fit components"),
            y = "Fractional DU [Da]",
            x = "Exposure [min]") +
