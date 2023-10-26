@@ -21,6 +21,50 @@ plot_hires <- function(hires_params){
 
 }
 
+
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#' @export
+
+create_monotony <- function(hires_params,
+                            fractional = T){
+
+  lapply(c(2:nrow(hires_params)), function(i){
+
+    color_1 = hires_params[i-1, "color"]
+    color_2 = hires_params[i, "color"]
+
+    dist = calculate_color_distance(color_1, color_2)[[1]]
+
+    if(is.na(color_1)) dist = NA
+
+    if(is.na(color_2)) dist = NA
+
+    data.frame(position = i,
+               dist = dist)
+
+
+    }) %>% bind_rows()
+
+}
+
+#'
+#'
+#'
+#' @export
+plot_monotony <- function(mono_dat){
+
+  ggplot(mono_dat, aes(x = position, y = dist)) +
+    geom_point() +
+    geom_line()
+
+}
+
 #'
 #'
 #'
@@ -113,5 +157,6 @@ plot_hires_components <- function(hires_params,
 
   }
 
-
 }
+
+

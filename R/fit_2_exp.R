@@ -72,6 +72,11 @@ fit_2_exp <- function(fit_dat,
       # print(paste("Peptide", unique(fit_dat[["Sequence"]]), unique(fit_dat[["Start"]]), unique(fit_dat[["End"]]) ))
     })
 
+    ## quants
+    n_1 <- round(n_1, 1)
+    n_2 <- round(n_2, 1)
+
+
     data.frame(n_1 = n_1,
                k_1 = k_1,
                n_2 = n_2,

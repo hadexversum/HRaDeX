@@ -112,6 +112,11 @@ fix_1_exp_result <- function(fit_dat,
     n_3 = n
   }
 
+  ## quants
+  n_1 <- round(n_1, 1)
+  n_2 <- round(n_2, 1)
+  n_3 <- round(n_3, 1)
+
   n <- n_1 + n_2 + n_3
 
   data.frame(sequence = fit_dat[["Sequence"]][1],
