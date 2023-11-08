@@ -12,7 +12,7 @@ plot_hires <- function(hires_params){
     labs(title = "Assigned class on sequence",
          x = "Position",
          y = "") +
-    theme_bw() +
+    theme_bw(base_size = 18) +
     theme(axis.ticks.y = element_blank(),
           axis.text.y = element_blank(),
           panel.grid.major = element_blank(),
@@ -114,7 +114,7 @@ plot_hires_components <- function(hires_params,
                                          ymin = 0, ymax = 3), fill = edgy_classes[["color"]]) +
       geom_rect(data = no_coverage, aes(xmin = position, xmax = position + 1,
                                         ymin = 0, ymax = 3), fill = color_grey) +
-      theme_bw() +
+      theme_bw(base_size = 18) +
       labs(title = "Assigned class components on sequence",
            x = "Position",
            y = "") +
@@ -144,7 +144,7 @@ plot_hires_components <- function(hires_params,
                                          ymin = 0, ymax = 3), fill = edgy_classes[["color"]]) +
       geom_rect(data = no_coverage, aes(xmin = position, xmax = position + 1,
                                         ymin = 0, ymax = 3), fill = color_grey) +
-      theme_bw() +
+      theme_bw(base_size = 18) +
       labs(title = "Assigned class components on sequence",
            x = "Position",
            y = "") +

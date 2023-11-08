@@ -28,7 +28,7 @@ plot_start_params <- function(fit_k_params){
     geom_ribbon(aes(x = x, ymin=0.33*(1-exp(-fit_k_params[3, "lower"]*x)), ymax=0.33*(1-exp(-fit_k_params[3, "upper"]*x))), fill = "blue", alpha = 0.1)+
     scale_x_log10() +
     ylim(c(0, .35)) +
-    theme_bw() +
+    theme_bw(base_size = 18) +
     labs(x = "Exposure",
          y = "Initial exchange values with bounds")
 
@@ -63,6 +63,7 @@ plot_3_exp_map_v2 <- function(fixed_params){
          y = "k for 2 dom n") +
     scale_x_log10() +
     scale_y_log10() +
+    theme_gray(base_size = 18) +
     geom_hline(yintercept = 0.1, color = "red", linetype = "dashed") +
     geom_hline(yintercept = 0, color = "red", linetype = "dashed") +
     geom_hline(yintercept = 1, color = "red", linetype = "dashed") +
@@ -149,7 +150,7 @@ plot_cov_class <- function(fixed_params,
     labs(title = "Assigned class on coverage",
          x = "Position",
          y = "") +
-    theme_bw() +
+    theme_bw(base_size = 18) +
     theme(axis.ticks.y = element_blank(),
           axis.text.y = element_blank()) +
     coord_cartesian(x = c(0, max(fixed_params[["end"]])+1))
@@ -165,6 +166,7 @@ plot_rss_hist <- function(fixed_params){
     ggplot() +
     geom_histogram(aes(x = rss)) +
     labs(fill = "exp") +
+    theme_gray(base_size = 18) +
     facet_wrap(~ fitted, ncol = 1)
 }
 
@@ -180,6 +182,7 @@ plot_n <- function(list_params,
       ggplot() +
       geom_point(aes(x = id, y = n)) +
       labs(title = "n without class name") +
+      theme_gray(base_size = 18) +
       geom_hline(yintercept = 1.25, linetype = 2) +
       ylim(c(0, NA))
 
@@ -192,6 +195,7 @@ plot_n <- function(list_params,
       geom_point(aes(x = id, y = n)) +
       labs(title = "n without class name",
            y = "n/max_uptake") +
+      theme_gray(base_size = 18) +
       geom_hline(yintercept = 1, linetype = 2) +
       ylim(c(0, 1.25))
   }

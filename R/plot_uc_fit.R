@@ -23,6 +23,7 @@ plot_uc_fit <- function(fit_dat,
         geom_point(aes(x = Exposure, y = deut_uptake), size = 2) +
         geom_line(data = avg_fit_dat, aes(x = Exposure, y = avg_deut_uptake), linetype = 2) +
         ylim(c(0, NA)) +
+        theme_gray(base_size = 18) +
         labs(title = paste0(plot_title, " without fit"),
              x = "Exposure [min]",
              y = "Deuterium uptake [Da]")
@@ -34,6 +35,7 @@ plot_uc_fit <- function(fit_dat,
         geom_point(size = 2) +
         geom_line(linetype = 2) +
         ylim(c(0, NA)) +
+        theme_gray(base_size = 18) +
         labs(title = paste0(plot_title, " without fit"),
              x = "Exposure [min]",
              y = "Deuterium uptake [Da]")
@@ -79,6 +81,7 @@ plot_uc_fit <- function(fit_dat,
            x = "Exposure [min]") +
       stat_function(fun=function(x){n_1*(1-exp(-k_1*x)) + n_2*(1-exp(-k_2*x)) + n_3*(1-exp(-k_3*x))}) +
       ylim(c(0, 1.25)) +
+      theme_gray(base_size = 18) +
       stat_function(fun = function(x){n_1*(1-exp(-k_1*x))}, color = "red") +
       stat_function(fun = function(x){n_2*(1-exp(-k_2*x))}, color = "green") +
       stat_function(fun = function(x){n_3*(1-exp(-k_3*x))}, color = "blue") +
@@ -101,6 +104,7 @@ plot_uc_fit <- function(fit_dat,
            x = "Exposure [min]") +
       stat_function(fun=function(x){n_1*(1-exp(-k_1*x)) + n_2*(1-exp(-k_2*x)) + n_3*(1-exp(-k_3*x))}) +
       ylim(c(0, max_uptake + 1)) +
+      theme_gray(base_size = 18) +
       stat_function(fun = function(x){n_1*(1-exp(-k_1*x))}, color = "red") +
       stat_function(fun = function(x){n_2*(1-exp(-k_2*x))}, color = "green") +
       stat_function(fun = function(x){n_3*(1-exp(-k_3*x))}, color = "blue") +
@@ -114,6 +118,6 @@ plot_uc_fit <- function(fit_dat,
 
   }
 
-    return(grid.arrange(uc_plot, uc_fit_plot_log_components, nrow = 1))
+    return(grid.arrange(uc_fit_plot_log_components, uc_plot, nrow = 1, widths = c(3, 2)))
 
 }
