@@ -142,7 +142,7 @@ get_uc_distance <- function(fit_dat_1,
 }
 
 
-#'
+#' @importFrom ggplot2 theme_gray scale_shape_manual
 #'
 #' @export plot_uc
 
@@ -166,15 +166,22 @@ plot_uc <- function(fit_dat_1,
            start == v_start,
            end == v_end)
 
+  v_state_1 <- unique(fit_dat_1[["State"]])
+  v_state_2 <- unique(fit_dat_2[["State"]])
+
   if (fractional) {
 
     ggplot() +
-      geom_point(data = fit_dat_1, aes(x = Exposure, y = frac_deut_uptake, shape = State)) +
-      # geom_line(data = fit_dat_1, aes(x = Exposure, y = frac_deut_uptake, linetype = State)) +
-      geom_point(data = fit_dat_2, aes(x = Exposure, y = frac_deut_uptake, shape = State)) +
-      # geom_line(data = fit_dat_2, aes(x = Exposure, y = frac_deut_uptake, linetype = State)) +
+      geom_point(data = fit_dat_1, aes(x = Exposure, y = frac_deut_uptake, shape = "1"),  size = 3) +
+      geom_linerange(data = fit_dat_1, aes(x = Exposure, ymin = frac_deut_uptake - err_frac_deut_uptake, ymax = frac_deut_uptake + err_frac_deut_uptake)) +
+      geom_point(data = fit_dat_2, aes(x = Exposure, y = frac_deut_uptake, shape = "2"), size = 3) +
+      geom_linerange(data = fit_dat_2, aes(x = Exposure, ymin = frac_deut_uptake - err_frac_deut_uptake, ymax = frac_deut_uptake + err_frac_deut_uptake)) +
       scale_x_log10() +
       ylim(c(0, 1.25)) +
+      theme_gray(base_size = 15) +
+      scale_shape_manual(name = "State",
+                         labels = c(v_state_1, v_state_2),
+                         values = c(1, 2)) +
       theme(legend.position = "bottom") +
       stat_function(fun=function(x){fit_params_1[["n_1"]]*(1-exp(-fit_params_1[["k_1"]]*x)) + fit_params_1[["n_2"]]*(1-exp(-fit_params_1[["k_2"]]*x)) + fit_params_1[["n_3"]]*(1-exp(-fit_params_1[["k_3"]]*x))}, linetype = "dashed") +
       stat_function(fun = function(x){fit_params_1[["n_1"]]*(1-exp(-fit_params_1[["k_1"]]*x))}, color = "red", linetype = "dashed") +
@@ -194,6 +201,10 @@ plot_uc <- function(fit_dat_1,
       geom_point(data = fit_dat_1, aes(x = Exposure, y = deut_uptake, shape = State)) +
       geom_point(data = fit_dat_2, aes(x = Exposure, y = deut_uptake, shape = State)) +
       scale_x_log10() +
+      theme_gray(base_size = 15) +
+      scale_shape_manual(name = "State",
+                         labels = c(v_state_1, v_state_2),
+                         values = c(1, 2)) +
       theme(legend.position = "bottom") +
       stat_function(fun=function(x){fit_params_1[["n_1"]]*(1-exp(-fit_params_1[["k_1"]]*x)) + fit_params_1[["n_2"]]*(1-exp(-fit_params_1[["k_2"]]*x)) + fit_params_1[["n_3"]]*(1-exp(-fit_params_1[["k_3"]]*x))}, linetype = "dashed") +
       stat_function(fun = function(x){fit_params_1[["n_1"]]*(1-exp(-fit_params_1[["k_1"]]*x))}, color = "red", linetype = "dashed") +
