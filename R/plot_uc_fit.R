@@ -49,7 +49,7 @@ plot_uc_fit <- function(fit_dat,
 
    uc_plot_sc <-  plot_lm(fit_dat, class_name = unique(fit_values[["class_name"]]))
 
-   if(include_uc) { return(grid.arrange(uc_plot, uc_plot_sc, nrow = 1)) }
+   if(include_uc) { return(grid.arrange(uc_plot, uc_plot_sc, nrow = 1, widths = c(3, 2))) }
 
    return(uc_plot_sc)
 

@@ -21,7 +21,7 @@ plot_lm <- function(fit_dat,
     ylim(c(0, ceiling(max(fit_dat[["deut_uptake"]] + 1)))) +
     scale_x_log10(limits = c(NA, 10000)) +
     stat_smooth(method = "lm") +
-    # ggpubr::stat_regline_equation(label.x.npc = "center") +
+    theme_gray(base_size = 18) +
     labs(title = paste0(sequence, " (", start, "-", end, ") edge case ", class_name),
          x = "Exposure [min]",
          y = "Deuterium uptake [Da]")
