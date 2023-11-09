@@ -17,7 +17,7 @@ plot_class_heatmap <- function(fixed_params){
 #' @export
 plot_start_params <- function(fit_k_params){
 
-  x = seq(0, 1500, 0.1)
+  x = seq(0, 1500, 0.025)
 
   ggplot() +
     geom_line(aes(x = x, y = 0.33*(1-exp(-fit_k_params[1, "start"]*x))), color = "red") +
@@ -26,13 +26,12 @@ plot_start_params <- function(fit_k_params){
     geom_ribbon(aes(x = x, ymin=0.33*(1-exp(-fit_k_params[2, "lower"]*x)), ymax=0.33*(1-exp(-fit_k_params[2, "upper"]*x))), fill = "green", alpha = 0.1) +
     geom_line(aes(x = x, y = 0.33*(1-exp(-fit_k_params[3, "start"]*x))), color = "blue") +
     geom_ribbon(aes(x = x, ymin=0.33*(1-exp(-fit_k_params[3, "lower"]*x)), ymax=0.33*(1-exp(-fit_k_params[3, "upper"]*x))), fill = "blue", alpha = 0.1)+
-    scale_x_log10() +
     ylim(c(0, .35)) +
+    scale_x_log10() +
     theme_bw(base_size = 18) +
     labs(x = "Exposure",
          y = "Initial exchange values with bounds")
-
-}
+  }
 
 #' @importFrom ggplot2 scale_x_log10 scale_y_log10 geom_hline geom_point geom_vline
 #' @importFrom dplyr case_when
