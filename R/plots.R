@@ -101,60 +101,7 @@ get_params_summary_image <- function(fixed_params){
 }
 
 
-#' @importFrom ggplot2 geom_rect aes element_blank
-#' @export
-plot_cov_class <- function(fixed_params,
-                           fractional = T){
 
-
-  ## levels
-  levels <- rep(NA, (nrow(fixed_params)))
-  levels[1] <- 1
-  start <- fixed_params[["start"]]
-  end <- fixed_params[["end"]]
-
-  for(i in 1:(nrow(fixed_params) - 1)) {
-    for(level in 1:max(levels, na.rm = TRUE)) {
-      if(all(start[i + 1] > end[1:i][levels == level] | end[i + 1] < start[1:i][levels == level], na.rm = TRUE)) {
-        levels[i + 1] <- level
-        break
-      } else {
-        if(level == max(levels, na.rm = TRUE)) {
-          levels[i + 1] <- max(levels, na.rm = TRUE) + 1
-        }
-      }
-    }
-  }
-
-  fixed_params[["ID"]] <- levels
-
-  if(fractional){
-
-    fixed_params <- fixed_params %>%
-      mutate(alpha = case_when( n_1 + n_2 + n_3 > 1.25 ~ 0.5, T ~  1))
-
-  } else {
-
-    fixed_params <- fixed_params %>%
-      mutate(alpha = case_when( n_1 + n_2 + n_3 - max_uptake >= 0 ~ 0.5, T ~  1))
-
-  }
-  ## end of levels
-
-  ggplot(data = fixed_params,
-         mapping = aes(xmin = start, xmax = end + 1,
-                       ymin = ID, ymax = ID - 1)) +
-    geom_rect(fill = fixed_params[["color"]],
-              alpha = fixed_params[["alpha"]]) +
-    labs(title = "Assigned class on coverage",
-         x = "Position",
-         y = "") +
-    theme_bw(base_size = 18) +
-    theme(axis.ticks.y = element_blank(),
-          axis.text.y = element_blank()) +
-    coord_cartesian(x = c(0, max(fixed_params[["end"]])+1))
-
-}
 
 #' @importFrom ggplot2 facet_wrap geom_histogram
 #' @export

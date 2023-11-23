@@ -1,26 +1,69 @@
 #'
 #' @importFrom ggplot2 coord_cartesian
+#' @importFrom ggiraph geom_rect_interactive girafe girafe_options opts_tooltip
+#' @importFrom glue glue
+#'
+#' @examples
+#' dat <- HaDeX::read_hdx()
 #'
 #' @export
 
-plot_hires <- function(hires_params){
+plot_hires <- function(hires_params,
+                       interactive = F){
 
-  ggplot(hires_params) +
-    geom_rect(aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1), fill = hires_params[["color"]]) +
-    geom_rect(data = subset(hires_params, is.na(n_1)),
-              aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1), fill = "#B8B8B8") +
-    labs(title = "Assigned class on sequence",
-         x = "Position",
-         y = "") +
-    theme_bw(base_size = 18) +
-    theme(axis.ticks.y = element_blank(),
-          axis.text.y = element_blank(),
-          panel.grid.major = element_blank(),
-          panel.grid.minor = element_blank()) +
-    coord_cartesian(x = c(0, max(hires_params[["position"]])+1))
+
+  if(interactive){
+
+    hires_params <- mutate(hires_params,
+                           n_1 = round(n_1, 2),
+                           n_2 = round(n_2, 2),
+                           n_3 = round(n_3, 2))
+
+    selected_rect <-  geom_rect_interactive(aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1,
+                              tooltip = glue("Position: {position},
+                                             n_1 = {n_1/(n_1+n_2+n_3)},
+                                             n_2 = {n_2/(n_1+n_2+n_3)},
+                                             n_3 = {n_3/(n_1+n_2+n_3)}")),
+                          fill = hires_params[["color"]])
+    selected_rect_na <- geom_rect_interactive(data = subset(hires_params, is.na(n_1)),
+                            aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1,
+                                tooltip = glue("Position: {position},
+                                               no available data")), fill = "#B8B8B8")
+  } else {
+
+    selected_rect <- geom_rect(aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1),
+                               fill = hires_params[["color"]])
+    selected_rect_na <- geom_rect(data = subset(hires_params, is.na(n_1)),
+                                  aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1),
+                                  fill = "#B8B8B8")
+
+  }
+
+    hires_plot <- ggplot(hires_params) +
+      selected_rect +
+      selected_rect_na +
+      labs(title = "Assigned class on sequence",
+           x = "Position",
+           y = "") +
+      theme_bw(base_size = 18) +
+      theme(axis.ticks.y = element_blank(),
+            axis.text.y = element_blank(),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank()) +
+      coord_cartesian(x = c(0, max(hires_params[["position"]])+1))
+
+  return(hires_plot)
 
 }
 
+
+# x <- girafe(ggobj = hires_plot)
+# x <- girafe_options(x,
+#                     opts_tooltip(opacity = .7,
+#                                  offx = 20, offy = -10,
+#                                  use_fill = TRUE, use_stroke = TRUE,
+#                                  delay_mouseout = 1000) )
+# if( interactive() ) print(x)
 
 #'
 #'
@@ -42,13 +85,10 @@ create_monotony <- function(hires_params,
     dist = calculate_color_distance(color_1, color_2)[[1]]
 
     if(is.na(color_1)) dist = NA
-
     if(is.na(color_2)) dist = NA
 
     data.frame(position = i,
                dist = dist)
-
-
     }) %>% bind_rows()
 
 }
@@ -71,8 +111,8 @@ plot_monotony <- function(mono_dat){
 #'
 #' @export
 plot_hires_components <- function(hires_params,
-                                  white = T,
-                                  fractional = F){
+                                  fractional = F,
+                                  interactive = F){
 
   protein_length = max(hires_params[["position"]])
 
@@ -84,9 +124,7 @@ plot_hires_components <- function(hires_params,
 
   color_grey = rep("#B8B8B8", nrow(no_coverage))
 
-  if(white){
-
-    hires_components <- hires_params %>%
+  hires_components <- hires_params %>%
       filter(is.na(class_name), !is.na(n_1)) %>%
       mutate(n = n_1 + n_2 + n_3,
              n_1_alpha = case_when(
@@ -103,60 +141,78 @@ plot_hires_components <- function(hires_params,
     color_green = rep("#00FF00", nrow(hires_components))
     color_blue = rep("#0000FF", nrow(hires_components))
 
-    ggplot() +
-      geom_rect(data = hires_components, aes(xmin = position, xmax = position + 1,
-                                             ymin = 0, ymax = 1), alpha = hires_components[["n_1_alpha"]], fill = color_red) +
-      geom_rect(data = hires_components, aes(xmin = position, xmax = position + 1,
-                                             ymin = 1, ymax = 2), alpha = hires_components[["n_2_alpha"]], fill = color_green) +
-      geom_rect(data = hires_components, aes(xmin = position, xmax = position + 1,
-                                             ymin = 2, ymax = 3), alpha = hires_components[["n_3_alpha"]], fill = color_blue) +
-      geom_rect(data = edgy_classes, aes(xmin = position, xmax = position + 1,
-                                         ymin = 0, ymax = 3), fill = edgy_classes[["color"]]) +
-      geom_rect(data = no_coverage, aes(xmin = position, xmax = position + 1,
-                                        ymin = 0, ymax = 3), fill = color_grey) +
-      theme_bw(base_size = 18) +
-      labs(title = "Assigned class components on sequence",
-           x = "Position",
-           y = "") +
-      theme(axis.ticks.y = element_blank(),
-            axis.text.y = element_blank(),
-            panel.grid.major = element_blank(),
-            panel.grid.minor = element_blank()) +
-      coord_cartesian(x = c(0, protein_length+1))
+
+  if (interactive){
+
+    rect_red <- geom_rect_interactive(data = hires_components,
+                                      aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1,
+                                          tooltip = glue("Position: {position},
+                                                          n_1 = {round(n_1_alpha, 2)}")),
+                                      alpha = hires_components[["n_1_alpha"]],
+                                      fill = color_red)
+    rect_green <- geom_rect_interactive(data = hires_components,
+                                        aes(xmin = position, xmax = position + 1, ymin = 1, ymax = 2,
+                                            tooltip = glue("Position: {position},
+                                                          n_2 = {round(n_2_alpha, 2)}")),
+                            alpha = hires_components[["n_2_alpha"]],
+                            fill = color_green)
+    rect_blue <- geom_rect_interactive(data = hires_components,
+                                       aes(xmin = position, xmax = position + 1, ymin = 2, ymax = 3,
+                                           tooltip = glue("Position: {position},
+                                                          n_3 = {round(n_3_alpha, 2)}")),
+                                       alpha = hires_components[["n_3_alpha"]],
+                                       fill = color_blue)
+    rect_edge <- geom_rect_interactive(data = edgy_classes,
+                                       aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 3,
+                                           tooltip = glue("Position: {position},
+                                                          class: {class_name}")),
+                                       fill = edgy_classes[["color"]])
+    rect_na <- geom_rect_interactive(data = no_coverage,
+                                     aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 3,
+                                         tooltip = glue("Position: {position},
+                                                         no available data")),
+                                     fill = color_grey)
 
   } else {
 
-    hires_components <- hires_params %>%
-      filter(is.na(class_name), !is.na(n_1)) %>%
-      mutate(n = n_1 + n_2 + n_3,
-             n_1_color = rgb(n_1/n, 0, 0),
-             n_2_color = rgb(0, n_2/n, 0),
-             n_3_color = rgb(0, 0, n_3/n))
-
-    ggplot() +
-      geom_rect(data = hires_components, aes(xmin = position, xmax = position + 1,
-                                             ymin = 0, ymax = 1), fill = hires_components[["n_1_color"]]) +
-      geom_rect(data = hires_components, aes(xmin = position, xmax = position + 1,
-                                             ymin = 1, ymax = 2), fill = hires_components[["n_2_color"]]) +
-      geom_rect(data = hires_components, aes(xmin = position, xmax = position + 1,
-                                             ymin = 2, ymax = 3), fill = hires_components[["n_3_color"]]) +
-      geom_rect(data = edgy_classes, aes(xmin = position, xmax = position + 1,
-                                         ymin = 0, ymax = 3), fill = edgy_classes[["color"]]) +
-      geom_rect(data = no_coverage, aes(xmin = position, xmax = position + 1,
-                                        ymin = 0, ymax = 3), fill = color_grey) +
-      theme_bw(base_size = 18) +
-      labs(title = "Assigned class components on sequence",
-           x = "Position",
-           y = "") +
-      theme(axis.ticks.y = element_blank(),
-            axis.text.y = element_blank(),
-            panel.grid.major = element_blank(),
-            panel.grid.minor = element_blank()) +
-      coord_cartesian(x = c(0, protein_length+1))
-
+    rect_red <- geom_rect(data = hires_components,
+                          aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1),
+                          alpha = hires_components[["n_1_alpha"]],
+                          fill = color_red)
+    rect_green <- geom_rect(data = hires_components,
+                            aes(xmin = position, xmax = position + 1, ymin = 1, ymax = 2),
+                            alpha = hires_components[["n_2_alpha"]],
+                            fill = color_green)
+    rect_blue <- geom_rect(data = hires_components,
+                           aes(xmin = position, xmax = position + 1, ymin = 2, ymax = 3),
+                           alpha = hires_components[["n_3_alpha"]],
+                           fill = color_blue)
+    rect_edge <- geom_rect(data = edgy_classes,
+                           aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 3),
+                           fill = edgy_classes[["color"]])
+    rect_na <- geom_rect(data = no_coverage,
+                         aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 3),
+                         fill = color_grey)
 
   }
 
+  components_plot <- ggplot() +
+    rect_red +
+    rect_green +
+    rect_blue +
+    rect_edge +
+    rect_na +
+    theme_bw(base_size = 18) +
+    labs(title = "Assigned class components on sequence",
+         x = "Position",
+         y = "") +
+    theme(axis.ticks.y = element_blank(),
+          axis.text.y = element_blank(),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank()) +
+    coord_cartesian(x = c(0, protein_length+1))
+
+  return(components_plot)
 }
 
 
