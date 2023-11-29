@@ -1,59 +1,14 @@
 #' @importFrom gridExtra grid.arrange
 #' @importFrom ggplot2 stat_function geom_line annotate theme_bw geom_errorbar geom_linerange
 #' @importFrom dplyr summarize group_by
+#' @importFrom ggiraph geom_point_interactive geom_line_interactive
+#'
 #' @export
-plot_uc_fit <- function(fit_dat,
-                        fit_values,
-                        include_uc = T,
-                        replicate = F,
-                        fractional = T){
-
-  plot_title <- paste0(fit_values[["sequence"]], " (", fit_values[["start"]], "-", fit_values[["end"]], ") ")
-
-  if(include_uc){
-
-    if(replicate){
-
-      avg_fit_dat <- fit_dat %>%
-        group_by(Exposure) %>%
-        summarize(avg_deut_uptake = mean(deut_uptake))
-
-
-      uc_plot <- ggplot(fit_dat) +
-        geom_point(aes(x = Exposure, y = deut_uptake), size = 2) +
-        geom_line(data = avg_fit_dat, aes(x = Exposure, y = avg_deut_uptake), linetype = 2) +
-        ylim(c(0, NA)) +
-        theme_gray(base_size = 18) +
-        labs(title = paste0(plot_title, " without fit"),
-             x = "Exposure [min]",
-             y = "Deuterium uptake [Da]")
-
-    } else {
-
-      uc_plot <- ggplot(fit_dat, aes(x = Exposure, y = deut_uptake)) +
-        geom_errorbar(data = fit_dat, aes(x = Exposure, ymin = deut_uptake - err_deut_uptake, ymax = deut_uptake + err_deut_uptake)) +
-        geom_point(size = 2) +
-        geom_line(linetype = 2) +
-        ylim(c(0, NA)) +
-        theme_gray(base_size = 18) +
-        labs(title = paste0(plot_title, " without fit"),
-             x = "Exposure [min]",
-             y = "Deuterium uptake [Da]")
-
-    }
-
-
-  }
-
-  if(!is.na(fit_values[["class_name"]])) {
-
-   uc_plot_sc <-  plot_lm(fit_dat, class_name = unique(fit_values[["class_name"]]))
-
-   if(include_uc) { return(grid.arrange(uc_plot, uc_plot_sc, nrow = 1, widths = c(3, 2))) }
-
-   return(uc_plot_sc)
-
-  }
+plot_fitted_uc <- function(fit_dat,
+                           fit_values,
+                           replicate = F,
+                           fractional = T,
+                           interactive = F){
 
   n_1 <- fit_values[["n_1"]]
   k_1 <- fit_values[["k_1"]]
@@ -62,20 +17,22 @@ plot_uc_fit <- function(fit_dat,
   n_3 <- fit_values[["n_3"]]
   k_3 <- fit_values[["k_3"]]
 
-  # uc_fit_plot <- ggplot() +
-  #   geom_point(data = fit_dat, aes(x = Exposure, y = frac_deut_uptake)) +
-  #   geom_errorbar(data = fit_dat, aes(x = Exposure, ymin = frac_deut_uptake - err_frac_deut_uptake, ymax = frac_deut_uptake + err_frac_deut_uptake)) +
-  #     labs(title = paste0(plot_title, " scaled"),
-  #        y = "Fractional DU [%]",
-  #        x = "Exposure [min]") +
-  #   stat_function(fun=function(x){n_1*(1-exp(-k_1*x)) + n_2*(1-exp(-k_2*x)) + n_3*(1-exp(-k_3*x))}) +
-  #   annotate(geom = "text", x = 1000, y = 0.2, label = paste0("R2: ", round(fit_values[["r2"]], 4))) +
-  #   ylim(c(0, 1.25))
-
   if(fractional){
 
-    uc_fit_plot_log_components <- ggplot() +
-      geom_point(data = fit_dat, aes(x = Exposure, y = frac_deut_uptake), shape = 1, size = 3) +
+    if(interactive){
+
+      sel_points <- geom_point(aes(x = Exposure, y = frac_deut_uptake,
+                                   tooltip = glue("Exposure: {Exposure}
+                                                  FDU = {formatC(frac_deut_uptake, 2)}
+                                                  Err FDU = {formatC(err_frac_deut_uptake, 2)}")),
+                               shape = 1, size = 3)
+
+    } else {
+      sel_points <- geom_point(aes(x = Exposure, y = frac_deut_uptake), shape = 1, size = 3)
+    }
+
+    uc_fit_plot_log_components <- ggplot(data = fit_dat) +
+      sel_points +
       labs(title = paste0(plot_title, " scaled in log with fit components"),
            y = "Fractional DU [%]",
            x = "Exposure [min]") +

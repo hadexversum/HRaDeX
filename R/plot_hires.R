@@ -15,9 +15,9 @@ plot_hires <- function(hires_params,
   if(interactive){
 
     hires_params <- mutate(hires_params,
-                           n_1 = round(n_1, 2),
-                           n_2 = round(n_2, 2),
-                           n_3 = round(n_3, 2))
+                           n_1 = formatC(n_1, 2),
+                           n_2 = formatC(n_2, 2),
+                           n_3 = formatC(n_3, 2))
 
     selected_rect <-  geom_rect_interactive(aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1,
                               tooltip = glue("Position: {position},
