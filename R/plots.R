@@ -33,44 +33,7 @@ plot_start_params <- function(fit_k_params){
          y = "Initial exchange values with bounds")
   }
 
-#' @importFrom ggplot2 scale_x_log10 scale_y_log10 geom_hline geom_point geom_vline
-#' @importFrom dplyr case_when
-#' @export
-plot_3_exp_map_v2 <- function(fixed_params){
 
-  fixed_params %>%
-    filter(is.na(class_name)) %>%
-    mutate(dom_exp = case_when(
-      n_3 > n_1 & n_3 > n_2 ~ k_3,
-      n_2 > n_1 & n_2 > n_3 ~ k_2,
-      n_1 > n_2 & n_1 > n_3 ~ k_1,
-      T ~ -1
-    )) %>%
-    mutate(sec_dom_exp = case_when(
-      n_2 < n_1 & n_2 > n_3 ~ k_2,
-      n_3 < n_1 & n_3 > n_2 ~ k_3,
-      n_1 < n_2 & n_1 > n_3 ~ k_1,
-      n_3 < n_2 & n_3 > n_1 ~ k_3,
-      n_1 < n_3 & n_1 > n_2 ~ k_1,
-      n_2 < n_3 & n_2 > n_1 ~ k_2,
-      T ~ -1
-    )) %>%
-    ggplot(aes(x = dom_exp, y = sec_dom_exp)) +
-    geom_point() +
-    labs(title = "three types of n(1-exp(-kt))",
-         x = "k for dom n",
-         y = "k for 2 dom n") +
-    scale_x_log10() +
-    scale_y_log10() +
-    theme_gray(base_size = 18) +
-    geom_hline(yintercept = 0.1, color = "red", linetype = "dashed") +
-    geom_hline(yintercept = 0, color = "red", linetype = "dashed") +
-    geom_hline(yintercept = 1, color = "red", linetype = "dashed") +
-    geom_vline(xintercept = 0.1, color = "red", linetype = "dashed") +
-    geom_vline(xintercept = 0, color = "red", linetype = "dashed") +
-    geom_vline(xintercept = 1, color = "red", linetype = "dashed")
-
-}
 
 #' @importFrom ggplot2 xlim theme_void geom_text
 #' @export
@@ -103,47 +66,6 @@ get_params_summary_image <- function(fixed_params){
 
 
 
-#' @importFrom ggplot2 facet_wrap geom_histogram
-#' @export
-plot_rss_hist <- function(fixed_params){
 
-  fixed_params %>%
-    filter(is.na(class_name)) %>%
-    ggplot() +
-    geom_histogram(aes(x = rss)) +
-    labs(fill = "exp") +
-    theme_gray(base_size = 18) +
-    facet_wrap(~ fitted, ncol = 1)
-}
 
-#' @export
-plot_n <- function(list_params,
-                   fractional = F){
 
-  if(fractional){
-
-    list_params %>%
-      mutate(n = n_1 + n_2 + n_3) %>%
-      filter(is.na(class_name)) %>%
-      ggplot() +
-      geom_point(aes(x = id, y = n)) +
-      labs(title = "n without class name") +
-      theme_gray(base_size = 18) +
-      geom_hline(yintercept = 1.25, linetype = 2) +
-      ylim(c(0, NA))
-
-  } else {
-
-    list_params %>%
-      filter(is.na(class_name)) %>%
-      mutate(n = (n_1 + n_2 + n_3) / max_uptake) %>%
-      ggplot() +
-      geom_point(aes(x = id, y = n)) +
-      labs(title = "n without class name",
-           y = "n/max_uptake") +
-      theme_gray(base_size = 18) +
-      geom_hline(yintercept = 1, linetype = 2) +
-      ylim(c(0, 1.25))
-  }
-
-}

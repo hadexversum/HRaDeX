@@ -1,6 +1,6 @@
 #' @importFrom ggiraph girafe opts_hover opts_sizing opts_hover_inv
 #'
-#' @export
+#' @export plot_interactive
 
 plot_interactive <- function(plot_function, ...){
 
@@ -12,4 +12,5 @@ plot_interactive <- function(plot_function, ...){
          ))
 
 }
+
 

@@ -14,16 +14,18 @@ plot_hires <- function(hires_params,
 
   if(interactive){
 
+    # TODO: scale by n
     hires_params <- mutate(hires_params,
+                           n = n_1 + n_2 + n_3,
                            n_1 = formatC(n_1, 2),
                            n_2 = formatC(n_2, 2),
                            n_3 = formatC(n_3, 2))
 
     selected_rect <-  geom_rect_interactive(aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1,
                               tooltip = glue("Position: {position},
-                                             n_1 = {n_1/(n_1+n_2+n_3)},
-                                             n_2 = {n_2/(n_1+n_2+n_3)},
-                                             n_3 = {n_3/(n_1+n_2+n_3)}")),
+                                             n_1 = {n_1},
+                                             n_2 = {n_2},
+                                             n_3 = {n_3}")),
                           fill = hires_params[["color"]])
     selected_rect_na <- geom_rect_interactive(data = subset(hires_params, is.na(n_1)),
                             aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1,
@@ -57,13 +59,6 @@ plot_hires <- function(hires_params,
 }
 
 
-# x <- girafe(ggobj = hires_plot)
-# x <- girafe_options(x,
-#                     opts_tooltip(opacity = .7,
-#                                  offx = 20, offy = -10,
-#                                  use_fill = TRUE, use_stroke = TRUE,
-#                                  delay_mouseout = 1000) )
-# if( interactive() ) print(x)
 
 #'
 #'

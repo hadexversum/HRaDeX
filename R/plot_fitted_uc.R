@@ -10,6 +10,8 @@ plot_fitted_uc <- function(fit_dat,
                            fractional = T,
                            interactive = F){
 
+  plot_title <- paste0(fit_values[["sequence"]], " (", fit_values[["start"]], "-", fit_values[["end"]], ") ")
+
   n_1 <- fit_values[["n_1"]]
   k_1 <- fit_values[["k_1"]]
   n_2 <- fit_values[["n_2"]]
@@ -17,11 +19,17 @@ plot_fitted_uc <- function(fit_dat,
   n_3 <- fit_values[["n_3"]]
   k_3 <- fit_values[["k_3"]]
 
+
+  if(!is.na(fit_values[["class_name"]])) {
+
+    final_plot <-  plot_lm(fit_dat, class_name = unique(fit_values[["class_name"]]), interactive = interactive)
+  }
+
   if(fractional){
 
     if(interactive){
 
-      sel_points <- geom_point(aes(x = Exposure, y = frac_deut_uptake,
+      sel_points <- geom_point_interactive(aes(x = Exposure, y = frac_deut_uptake,
                                    tooltip = glue("Exposure: {Exposure}
                                                   FDU = {formatC(frac_deut_uptake, 2)}
                                                   Err FDU = {formatC(err_frac_deut_uptake, 2)}")),
@@ -31,7 +39,7 @@ plot_fitted_uc <- function(fit_dat,
       sel_points <- geom_point(aes(x = Exposure, y = frac_deut_uptake), shape = 1, size = 3)
     }
 
-    uc_fit_plot_log_components <- ggplot(data = fit_dat) +
+    final_plot <- ggplot(data = fit_dat) +
       sel_points +
       labs(title = paste0(plot_title, " scaled in log with fit components"),
            y = "Fractional DU [%]",
@@ -46,16 +54,28 @@ plot_fitted_uc <- function(fit_dat,
       scale_x_log10(limits = c(NA, 10000))
 
     if(!replicate){
-      uc_fit_plot_log_components <- uc_fit_plot_log_components +
+      final_plot <- final_plot +
         geom_linerange(data = fit_dat, aes(x = Exposure, ymin = frac_deut_uptake - err_frac_deut_uptake, ymax = frac_deut_uptake + err_frac_deut_uptake))
     }
 
   } else {
 
+    if(interactive){
+
+      sel_points <- geom_point_interactive(data = fit_dat,
+                                           aes(x = Exposure, y = deut_uptake,
+                                               tooltip = glue("Exposure: {Exposure}
+                                                  FDU = {formatC(frac_deut_uptake, 2)}
+                                                  Err FDU = {formatC(err_frac_deut_uptake, 2)}")),
+                                           shape = 1, size = 3)
+    } else {
+      sel_points <- geom_point(data = fit_dat, aes(x = Exposure, y = deut_uptake), shape = 1, size = 3)
+    }
+
     max_uptake <- fit_dat[["MaxUptake"]][1]
 
-    uc_fit_plot_log_components <- ggplot() +
-      geom_point(data = fit_dat, aes(x = Exposure, y = deut_uptake), shape = 1, size = 3) +
+    final_plot <- ggplot() +
+      sel_points +
       labs(title = paste0(plot_title, " scaled in log with fit components"),
            y = "Fractional DU [Da]",
            x = "Exposure [min]") +
@@ -69,12 +89,13 @@ plot_fitted_uc <- function(fit_dat,
       scale_x_log10(limits = c(NA, 10000))
 
     if(!replicate){
-      uc_fit_plot_log_components <- uc_fit_plot_log_components +
+      final_plot <- final_plot +
         geom_linerange(data = fit_dat, aes(x = Exposure, ymin = deut_uptake - err_deut_uptake, ymax = deut_uptake + err_deut_uptake))
     }
 
   }
 
-    return(grid.arrange(uc_fit_plot_log_components, uc_plot, nrow = 1, widths = c(3, 2)))
+  return(final_plot)
+
 
 }
