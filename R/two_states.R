@@ -4,20 +4,58 @@
 
 plot_two_states <- function(hires_params_1,
                             hires_params_2,
-                            type = c("aggregated", "classes", "coverage")){
+                            type = c("aggregated", "classes", "coverage"),
+                            interactive = F){
 
   state_1 <- hires_params_1[["State"]][1]
   state_2 <- hires_params_2[["State"]][1]
 
   protein_length <- max(hires_params_1[["position"]], hires_params_2[["position"]])
 
-  ggplot() +
-    geom_rect(data = hires_params_1, aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1), fill = hires_params_1[["color"]]) +
-    geom_rect(data = subset(hires_params_1, is.na(n_1)),
-              aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1), fill = "#B8B8B8") +
-    geom_rect(data = hires_params_2, aes(xmin = position, xmax = position + 1, ymin = 1, ymax = 2), fill = hires_params_2[["color"]]) +
-    geom_rect(data = subset(hires_params_2, is.na(n_1)),
-              aes(xmin = position, xmax = position + 1, ymin = 1, ymax = 2), fill = "#B8B8B8") +
+  if(interactive){
+    sel_rect_1 <- geom_rect_interactive(data = hires_params_1,
+                            aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1,
+                                tooltip = glue("Position: {position}
+                                               State: {State}
+                                               class name: {class_name}
+                                               n_1 = {formatC(n_1, 2)}
+                                               n_2 = {formatC(n_2, 2)}
+                                               n_3 = {formatC(n_3, 2)}")),
+                            fill = hires_params_1[["color"]])
+    sel_rect_na_1 <- geom_rect_interactive(data = subset(hires_params_1, is.na(n_1)),
+                               aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1,
+                                   tooltip = glue("Position: {position}
+                                                   no data available")),
+                               fill = "#B8B8B8")
+    sel_rect_2 <- geom_rect_interactive(data = hires_params_2,
+                            aes(xmin = position, xmax = position + 1, ymin = 1, ymax = 2,
+                                tooltip = glue("Position: {position}
+                                               State: {State}
+                                               class name: {class_name}
+                                               n_1 = {formatC(n_1, 2)}
+                                               n_2 = {formatC(n_2, 2)}
+                                               n_3 = {formatC(n_3, 2)}")),
+                            fill = hires_params_2[["color"]])
+    sel_rect_na_2 <- geom_rect_interactive(data = subset(hires_params_2, is.na(n_1)),
+                               aes(xmin = position, xmax = position + 1, ymin = 1, ymax = 2,
+                                   tooltip = glue("Position: {position}
+                                                   no data available")),
+                               fill = "#B8B8B8")
+
+  } else {
+    sel_rect_1 <- geom_rect(data = hires_params_1, aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1), fill = hires_params_1[["color"]])
+    sel_rect_na_1 <- geom_rect(data = subset(hires_params_1, is.na(n_1)),
+                aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1), fill = "#B8B8B8")
+    sel_rect_2 <- geom_rect(data = hires_params_2, aes(xmin = position, xmax = position + 1, ymin = 1, ymax = 2), fill = hires_params_2[["color"]])
+    sel_rect_na_2 <- geom_rect(data = subset(hires_params_2, is.na(n_1)),
+                aes(xmin = position, xmax = position + 1, ymin = 1, ymax = 2), fill = "#B8B8B8")
+  }
+
+  plt <- ggplot() +
+    sel_rect_1 +
+    sel_rect_na_1 +
+    sel_rect_2 +
+    sel_rect_na_2 +
     geom_hline(yintercept = 1, linetype = "dashed") +
     labs(title = paste0("Assigned class on sequence for states: ", state_1, " and ", state_2),
          x = "Position",
@@ -29,6 +67,10 @@ plot_two_states <- function(hires_params_1,
           axis.text.y = element_blank(),
           axis.ticks.y = element_blank()) +
     coord_cartesian(x = c(0, protein_length+1))
+
+  girafe(ggobj = plt,
+         width_svg = 10,
+         height_svg = 4)
 
 }
 
@@ -52,32 +94,44 @@ create_two_state_dataset <- function(hires_params_1,
 #'
 #' @export plot_color_distance
 
-plot_color_distance <- function(two_state_dataset){
+plot_color_distance <- function(two_state_dataset,
+                                interactive = T){
 
   protein_length <- max(two_state_dataset[["position"]])
 
-  two_state_dataset %>%
+  if(interactive){
+    sel_points <- geom_point_interactive(aes(x = position, y = dist,
+                                             tooltip = glue("Position: {position}
+                                                            Distance = {formatC(dist, 2)}")))
+  } else {
+    sel_points <- geom_point(aes(x = position, y = dist))
+  }
+
+  plt <- two_state_dataset %>%
     filter(!is.na(color.x)) %>%
     filter(!is.na(color.y)) %>%
   ggplot() +
-    geom_point(aes(x = position, y = dist)) +
+    sel_points +
     labs(title = "Distance between assigned colors",
          x = "Position",
          y = "Distance") +
     coord_cartesian(x = c(0, protein_length+1))
 
+  girafe(ggobj = plt,
+         width_svg = 10,
+         height_svg = 4)
 }
 
 
-#'
 #' @importFrom ggplot2 geom_segment
-#'
+#' @importFrom ggiraph geom_segment_interactive
 #'
 #' @export plot_uc_distance
 
 plot_uc_distance <- function(kin_dat_1,
                              kin_dat_2,
-                             fractional = T){
+                             fractional = T,
+                             interactive = F){
 
 
   peptide_list <- merge(kin_dat_1, kin_dat_2, by = c("Protein", "Sequence", "Start", "End")) %>%
@@ -103,22 +157,46 @@ plot_uc_distance <- function(kin_dat_1,
   }) %>% bind_rows()
 
   if (fractional){
-    ggplot(res) +
-      geom_segment(aes(x = Start, xend = End, y = frac_uptake_diff, yend = frac_uptake_diff)) +
+
+    if(interactive){
+      sel_segment <- geom_segment_interactive(aes(x = Start, xend = End, y = frac_uptake_diff, yend = frac_uptake_diff,
+                                      tooltip = glue("Sequence: {Sequence}
+                                                     Position: {Start}-{End}
+                                                     Difference = {formatC(frac_uptake_diff, 2)}")))
+    } else {
+      sel_segment <- geom_segment(aes(x = Start, xend = End, y = frac_uptake_diff, yend = frac_uptake_diff))
+    }
+
+    plt <- ggplot(res) +
+      sel_segment +
       labs(title = "Fractional uptake difference",
            y = "diff value",
            x = "Position") +
+      theme_bw(base_size = 18) +
       coord_cartesian(x = c(0, protein_length+1))
 
   } else {
 
-    ggplot(res) +
+    if(interactive){
+      sel_segment <- geom_segment_interactive(aes(x = Start, xend = End, y = uptake_diff, yend = uptake_diff,
+                                                  tooltip = glue("Sequence: {Sequence}
+                                                     Position: {Start}-{End}
+                                                     Difference = {formatC(uptake_diff, 2)}")))
+    } else {
+      sel_segment <- geom_segment(aes(x = Start, xend = End, y = frac_uptake_diff, yend = frac_uptake_diff))
+    }
+
+    plt <- ggplot(res) +
       geom_segment(aes(x = Start, xend = End, y = uptake_diff, yend = uptake_diff)) +
       labs(title = "Uptake difference",
            y = "diff value",
            x = "Position") +
       coord_cartesian(x = c(0, protein_length+1))
   }
+
+  girafe(ggobj = plt,
+         width_svg = 10,
+         height_svg = 4)
 
 }
 
@@ -150,7 +228,8 @@ plot_uc <- function(fit_dat_1,
                     fit_dat_2,
                     fit_values_1,
                     fit_values_2,
-                    fractional = F){
+                    fractional = F,
+                    interactive = F){
 
   v_sequence = fit_dat_1[["Sequence"]][1]
   v_start = fit_dat_1[["Start"]][1]
@@ -171,10 +250,34 @@ plot_uc <- function(fit_dat_1,
 
   if (fractional) {
 
-    ggplot() +
-      geom_point(data = fit_dat_1, aes(x = Exposure, y = frac_deut_uptake, shape = "1"),  size = 3) +
+    if(interactive){
+      sel_points_1 <- geom_point_interactive(data = fit_dat_1,
+                                             aes(x = Exposure, y = frac_deut_uptake, shape = "1",
+                                                 tooltip = glue("Sequence: {Sequence}
+                                                                State: {State}
+                                                                Exposure: {Exposure} min
+                                                                FDU = {formatC(frac_deut_uptake, 2)} %
+                                                                Err FDU = {formatC(err_frac_deut_uptake, 2)} %
+                                                                ")),
+                                             size = 3)
+      sel_points_2 <- geom_point_interactive(data = fit_dat_2,
+                                             aes(x = Exposure, y = frac_deut_uptake, shape = "2",
+                                                 tooltip = glue("Sequence: {Sequence}
+                                                                State: {State}
+                                                                Exposure: {Exposure} min
+                                                                FDU = {formatC(frac_deut_uptake, 2)} %
+                                                                Err FDU = {formatC(err_frac_deut_uptake, 2)} %
+                                                                ")),
+                                             size = 3)
+    } else {
+      sel_points_1 <- geom_point(data = fit_dat_1, aes(x = Exposure, y = frac_deut_uptake, shape = "1"),  size = 3)
+      sel_points_2 <- geom_point(data = fit_dat_2, aes(x = Exposure, y = frac_deut_uptake, shape = "2"), size = 3)
+    }
+
+    plt <- ggplot() +
+      sel_points_1 +
       geom_linerange(data = fit_dat_1, aes(x = Exposure, ymin = frac_deut_uptake - err_frac_deut_uptake, ymax = frac_deut_uptake + err_frac_deut_uptake)) +
-      geom_point(data = fit_dat_2, aes(x = Exposure, y = frac_deut_uptake, shape = "2"), size = 3) +
+      sel_points_2+
       geom_linerange(data = fit_dat_2, aes(x = Exposure, ymin = frac_deut_uptake - err_frac_deut_uptake, ymax = frac_deut_uptake + err_frac_deut_uptake)) +
       scale_x_log10() +
       ylim(c(0, 1.25)) +
@@ -197,9 +300,32 @@ plot_uc <- function(fit_dat_1,
 
   } else {
 
-    ggplot() +
-      geom_point(data = fit_dat_1, aes(x = Exposure, y = deut_uptake, shape = State)) +
-      geom_point(data = fit_dat_2, aes(x = Exposure, y = deut_uptake, shape = State)) +
+    if(interactive){
+      sel_points_1 <- geom_point_interactive(data = fit_dat_1, aes(x = Exposure, y = deut_uptake, shape = "1",
+                                                                   tooltip = glue("Sequence: {Sequence}
+                                                                                  State: {State}
+                                                                                  Exposure: {Exposure} min
+                                                                                  FDU = {formatC(deut_uptake, 2)} Da
+                                                                                  Err FDU = {formatC(err_deut_uptake, 2)} Da
+                                                                                  ")))
+      sel_points_2 <- geom_point_interactive(data = fit_dat_2, aes(x = Exposure, y = deut_uptake, shape = "2",
+                                                                   tooltip = glue("Sequence: {Sequence}
+                                                                                  State: {State}
+                                                                                  Exposure: {Exposure} min
+                                                                                  FDU = {formatC(deut_uptake, 2)} Da
+                                                                                  Err FDU = {formatC(err_deut_uptake, 2)} Da
+                                                                                  ")))
+
+    } else {
+      sel_points_1 <- geom_point(data = fit_dat_1, aes(x = Exposure, y = deut_uptake, shape = "1"))
+      sel_points_2 <- geom_point(data = fit_dat_2, aes(x = Exposure, y = deut_uptake, shape = "2"))
+    }
+
+    plt <- ggplot() +
+      sel_points_1 +
+      geom_linerange(data = fit_dat_1, aes(x = Exposure, ymin = deut_uptake - err_deut_uptake, ymax = deut_uptake + err_deut_uptake)) +
+      sel_points_2 +
+      geom_linerange(data = fit_dat_2, aes(x = Exposure, ymin = deut_uptake - err_deut_uptake, ymax = deut_uptake + err_deut_uptake)) +
       scale_x_log10() +
       theme_gray(base_size = 15) +
       scale_shape_manual(name = "State",
@@ -220,5 +346,8 @@ plot_uc <- function(fit_dat_1,
 
   }
 
+  girafe(ggobj = plt,
+         width_svg = 10,
+         height_svg = 4)
 
 }
