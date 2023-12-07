@@ -17,6 +17,7 @@ RoxygenNote: 7.1.2
 Imports:
     dplyr,
     HaDeX,
+    ggiraph,
     ggplot2,
     gridExtra,
     minpack.lm,

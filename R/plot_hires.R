@@ -21,27 +21,30 @@ plot_hires <- function(hires_params,
                            n_2 = formatC(n_2, 2),
                            n_3 = formatC(n_3, 2))
 
-    selected_rect <-  geom_rect_interactive(aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1,
+    selected_rect <-  geom_rect_interactive(data = subset(hires_params, !is.na(n_1)),
+                                            aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1,
                               tooltip = glue("Position: {position},
                                              n_1 = {n_1},
                                              n_2 = {n_2},
                                              n_3 = {n_3}")),
                           fill = hires_params[["color"]])
+
     selected_rect_na <- geom_rect_interactive(data = subset(hires_params, is.na(n_1)),
                             aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1,
                                 tooltip = glue("Position: {position},
                                                no available data")), fill = "#B8B8B8")
   } else {
 
-    selected_rect <- geom_rect(aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1),
+    selected_rect <- geom_rect(data = hires_params, aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1),
                                fill = hires_params[["color"]])
+
     selected_rect_na <- geom_rect(data = subset(hires_params, is.na(n_1)),
                                   aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1),
                                   fill = "#B8B8B8")
 
   }
 
-    hires_plot <- ggplot(hires_params) +
+    hires_plot <- ggplot() +
       selected_rect +
       selected_rect_na +
       labs(title = "Assigned class on sequence",
@@ -54,7 +57,9 @@ plot_hires <- function(hires_params,
             panel.grid.minor = element_blank()) +
       coord_cartesian(x = c(0, max(hires_params[["position"]])+1))
 
-  return(hires_plot)
+  girafe(ggobj = hires_plot,
+         width_svg = 10,
+         height_svg = 4)
 
 }
 
@@ -207,7 +212,9 @@ plot_hires_components <- function(hires_params,
           panel.grid.minor = element_blank()) +
     coord_cartesian(x = c(0, protein_length+1))
 
-  return(components_plot)
+  girafe(ggobj = components_plot,
+         width_svg = 10,
+         height_svg = 4)
 }
 
 

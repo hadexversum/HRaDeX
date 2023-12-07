@@ -53,7 +53,7 @@ plot_cov_class <- function(fit_values,
                       alpha = fit_values[["alpha"]])
   }
 
-  ggplot(data = fit_values,
+  class_cov_plot <- ggplot(data = fit_values,
          mapping = aes(xmin = start, xmax = end + 1,
                        ymin = ID, ymax = ID - 1)) +
     rect +
@@ -65,4 +65,7 @@ plot_cov_class <- function(fit_values,
           axis.text.y = element_blank()) +
     coord_cartesian(x = c(0, max(fit_values[["end"]])+1))
 
+  girafe(ggobj = class_cov_plot,
+         width_svg = 10,
+         height_svg = 4)
 }
