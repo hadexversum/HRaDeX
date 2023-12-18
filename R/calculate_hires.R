@@ -32,6 +32,7 @@ calculate_hires <- function(fit_values,
                  n_1 = NA,
                  n_2 = NA,
                  n_3 = NA,
+                 k_est = NA,
                  class_name = NA,
                  color = NA)
     } else {
@@ -42,6 +43,7 @@ calculate_hires <- function(fit_values,
                  n_1 = tmp_params[["n_1"]],
                  n_2 = tmp_params[["n_2"]],
                  n_3 = tmp_params[["n_3"]],
+                 k_est = tmp_params[["k_est"]],
                  class_name = tmp_params[["class_name"]],
                  color = tmp_params[["color"]])
     }

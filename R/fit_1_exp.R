@@ -72,6 +72,7 @@ fit_1_exp <- function(fit_dat,
                rss = 99999,
                bic = 99999,
                class_name = NA,
+               k_est = NA,
                fitted = NA,
                color = NA )
   } else{
@@ -129,6 +130,7 @@ fix_1_exp_result <- function(fit_dat,
              rss = rss,
              bic = bic,
              class_name = NA,
+             k_est = (n_1*k_1 + n_2*k_2 + n_3*k_3)/n,
              fitted = 1,
              color = rgb(n_1/n, n_2/n, n_3/n)
   )

@@ -15,6 +15,7 @@ fit_3_exp <- function(fit_dat,
   }
 
   n_1 = k_1 = n_2 = k_2 = n_3 = k_3 = -1
+  n = NA
   rss <- 99999
   bic <- 99999
   fitted <- NA
@@ -60,14 +61,14 @@ fit_3_exp <- function(fit_dat,
     k_2 <- coef(mod)["k_2"]
     n_3 <- coef(mod)["n_3"]
     k_3 <- coef(mod)["k_3"]
-    n <- n_1 + n_2 + n_3
-    rgb_color <- rgb(n_1/n, n_2/n, n_3/n)
+
     fitted <- 3
   }, error = function(e){
     print("sorry, error in 3 exp fit")
   })
 
-
+  n <- n_1 + n_2 + n_3
+  rgb_color <- rgb(n_1/n, n_2/n, n_3/n)
 
   data.frame(sequence = fit_dat[["Sequence"]][1],
              start = fit_dat[["Start"]][1],
@@ -82,6 +83,7 @@ fit_3_exp <- function(fit_dat,
              rss = rss,
              bic = bic,
              class_name = NA,
+             k_est = (n_1*k_1 + n_2*k_2 + n_3*k_3)/n,
              fitted = fitted,
              color = rgb_color
   )
