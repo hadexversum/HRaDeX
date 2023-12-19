@@ -31,8 +31,8 @@ plot_fitted_uc <- function(fit_dat,
 
       sel_points <- geom_point_interactive(aes(x = Exposure, y = frac_deut_uptake,
                                    tooltip = glue("Exposure: {Exposure}
-                                                  FDU = {formatC(frac_deut_uptake, 2)}
-                                                  Err FDU = {formatC(err_frac_deut_uptake, 2)}")),
+                                                  FDU = {formatC(100*frac_deut_uptake, 2)} %
+                                                  Err FDU = {formatC(100*err_frac_deut_uptake, 2)} %")),
                                shape = 1, size = 3)
 
     } else {
@@ -65,8 +65,8 @@ plot_fitted_uc <- function(fit_dat,
       sel_points <- geom_point_interactive(data = fit_dat,
                                            aes(x = Exposure, y = deut_uptake,
                                                tooltip = glue("Exposure: {Exposure}
-                                                  FDU = {formatC(frac_deut_uptake, 2)}
-                                                  Err FDU = {formatC(err_frac_deut_uptake, 2)}")),
+                                                  FDU = {formatC(deut_uptake, 2)} Da
+                                                  Err FDU = {formatC(deut_uptake, 2)} Da")),
                                            shape = 1, size = 3)
     } else {
       sel_points <- geom_point(data = fit_dat, aes(x = Exposure, y = deut_uptake), shape = 1, size = 3)
