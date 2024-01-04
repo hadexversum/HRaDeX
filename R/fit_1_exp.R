@@ -108,12 +108,10 @@ fix_1_exp_result <- function(fit_dat,
     n_2 = n
   }
 
-  if(fit_k_params["k_3", "lower"] < k & k <= fit_k_params["k_3", "upper"]){
+  if(fit_k_params["k_3", "lower"] <= k & k <= fit_k_params["k_3", "upper"]){
     k_3 = k
     n_3 = n
   }
-
-
 
   n <- n_1 + n_2 + n_3
 
