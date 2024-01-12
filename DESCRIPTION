@@ -21,6 +21,7 @@ Imports:
     ggplot2,
     gridExtra,
     minpack.lm,
+    r3dmol,
     tibble
 Suggests: 
     testthat (>= 3.0.0)

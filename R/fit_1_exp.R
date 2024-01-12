@@ -54,7 +54,7 @@ fit_1_exp <- function(fit_dat,
     n_1 <- coef(mod)["n_1"]
     k_1 <- coef(mod)["k_1"]
   }, error = function(e){
-    print("sorry, error in 1 exp")
+    # print("sorry, error in 1 exp")
   })
 
   if(n_1 == -1 & k_1 == -1){

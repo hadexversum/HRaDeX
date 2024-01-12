@@ -64,7 +64,7 @@ fit_3_exp <- function(fit_dat,
 
     fitted <- 3
   }, error = function(e){
-    print("sorry, error in 3 exp fit")
+    # print("sorry, error in 3 exp fit")
   })
 
   n <- n_1 + n_2 + n_3

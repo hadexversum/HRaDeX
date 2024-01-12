@@ -67,8 +67,8 @@ fit_2_exp <- function(fit_dat,
       groups <- attr(fit_2_params, "groups")
 
     }, error = function(e){
-      print(e)
-      print("sorry, error in 2 exp")
+      # print(e)
+      # print("sorry, error in 2 exp")
       # print(paste("Peptide", unique(fit_dat[["Sequence"]]), unique(fit_dat[["Start"]]), unique(fit_dat[["End"]]) ))
     })
 
