@@ -3,8 +3,7 @@
 #' @export
 
 plot_3d_structure_hires <- function(hires_params,
-                                    pdb_file_path,
-                                    spin = T){
+                                    pdb_file_path){
 
   color_code <- hires_params[, c("position", "color")]
   color_code[is.na(color_code["color"]), "color"] <- "#D3D3D3"
@@ -16,10 +15,10 @@ plot_3d_structure_hires <- function(hires_params,
       lowerZoomLimit = 50,
       upperZoomLimit = 350
     ),
+    width = 1000,
+    height = 1000,
     id = "hradex_structure",
     elementId = "hradex_structure",
-    width = 400,
-    height = 400,
     backgroundColor = "0xeeeeee") %>%
     r3dmol::m_add_model(data = pdb_file_path,
                 format = "pdb") %>%
@@ -32,9 +31,8 @@ plot_3d_structure_hires <- function(hires_params,
         }")
       )) %>%
     r3dmol::m_zoom_to() %>%
-    r3dmol::m_rotate(angle = 90, axis = "y")
-
-  if(spin) structure_obj <- structure_obj %>% r3dmol::m_spin()
+    r3dmol::m_rotate(angle = 90, axis = "y") %>%
+    r3dmol::m_button_spin()
 
   return(structure_obj)
 }
