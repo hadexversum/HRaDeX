@@ -15,8 +15,6 @@ plot_3d_structure_hires <- function(hires_params,
       lowerZoomLimit = 50,
       upperZoomLimit = 350
     ),
-    width = 1000,
-    height = 1000,
     id = "hradex_structure",
     elementId = "hradex_structure",
     backgroundColor = "0xeeeeee") %>%

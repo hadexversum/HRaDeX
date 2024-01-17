@@ -122,17 +122,12 @@ plot_color_distance <- function(two_state_dataset,
          height_svg = 4)
 }
 
-
-#' @importFrom ggplot2 geom_segment
-#' @importFrom ggiraph geom_segment_interactive
 #'
-#' @export plot_uc_distance
+#'
+#' @export
 
-plot_uc_distance <- function(kin_dat_1,
-                             kin_dat_2,
-                             fractional = T,
-                             interactive = F){
-
+create_uc_distance_dataset <- function(kin_dat_1,
+                                       kin_dat_2){
 
   peptide_list <- merge(kin_dat_1, kin_dat_2, by = c("Protein", "Sequence", "Start", "End")) %>%
     select(Sequence, Start, End) %>%
@@ -141,7 +136,7 @@ plot_uc_distance <- function(kin_dat_1,
 
   protein_length <- max(peptide_list[["End"]])
 
-  res <- lapply(1:nrow(peptide_list), function(i){
+  lapply(1:nrow(peptide_list), function(i){
 
     fit_dat_1 <- filter(kin_dat_1,
                         Sequence == peptide_list[["Sequence"]][i],
@@ -156,6 +151,20 @@ plot_uc_distance <- function(kin_dat_1,
 
   }) %>% bind_rows()
 
+}
+
+
+#' @importFrom ggplot2 geom_segment
+#' @importFrom ggiraph geom_segment_interactive
+#'
+#' @export plot_uc_distance
+
+plot_uc_distance <- function(uc_distance_dataset,
+                             fractional = T,
+                             interactive = F){
+
+  protein_length <- max(uc_distance_dataset[["End"]])
+
   if (fractional){
 
     if(interactive){
@@ -167,7 +176,7 @@ plot_uc_distance <- function(kin_dat_1,
       sel_segment <- geom_segment(aes(x = Start, xend = End, y = frac_uptake_diff, yend = frac_uptake_diff))
     }
 
-    plt <- ggplot(res) +
+    plt <- ggplot(uc_distance_dataset) +
       sel_segment +
       labs(title = "Fractional uptake difference",
            y = "diff value",
@@ -183,14 +192,15 @@ plot_uc_distance <- function(kin_dat_1,
                                                      Position: {Start}-{End}
                                                      Difference = {formatC(uptake_diff, 2)}")))
     } else {
-      sel_segment <- geom_segment(aes(x = Start, xend = End, y = frac_uptake_diff, yend = frac_uptake_diff))
+      sel_segment <- geom_segment(aes(x = Start, xend = End, y = uptake_diff, yend = uptake_diff))
     }
 
-    plt <- ggplot(res) +
-      geom_segment(aes(x = Start, xend = End, y = uptake_diff, yend = uptake_diff)) +
+    plt <- ggplot(uc_distance_dataset) +
+      sel_segment +
       labs(title = "Uptake difference",
            y = "diff value",
            x = "Position") +
+      theme_bw(base_size = 18) +
       coord_cartesian(x = c(0, protein_length+1))
   }
 
