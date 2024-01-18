@@ -17,8 +17,7 @@ plot_3d_structure_blank <- function(pdb_file_path){
                         format = "pdb") %>%
     r3dmol::m_set_style(
       style = r3dmol::m_style_cartoon(color = "white")) %>%
-    r3dmol::m_zoom_to() %>%
-    r3dmol::m_rotate(angle = 90, axis = "y")
+    r3dmol::m_zoom_to()
 
   return(structure_obj)
 }
