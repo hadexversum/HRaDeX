@@ -12,7 +12,7 @@ plot_3d_structure_blank <- function(pdb_file_path){
     ),
     id = "blank_structure",
     elementId = "blank_structure",
-    backgroundColor = "0xeeeeee") %>%
+    backgroundColor = "#FFFFFF") %>%
     r3dmol::m_add_model(data = pdb_file_path,
                         format = "pdb") %>%
     r3dmol::m_set_style(

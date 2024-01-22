@@ -17,7 +17,7 @@ plot_3d_structure_hires <- function(hires_params,
     ),
     id = "hradex_structure",
     elementId = "hradex_structure",
-    backgroundColor = "0xeeeeee") %>%
+    backgroundColor = "#FFFFFF") %>%
     r3dmol::m_add_model(data = pdb_file_path,
                 format = "pdb") %>%
     r3dmol::m_set_style(
