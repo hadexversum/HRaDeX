@@ -127,7 +127,7 @@ plot_color_distance <- function(two_state_dataset,
 #' @export
 
 create_uc_distance_dataset <- function(kin_dat_1,
-                                       kin_dat_2){
+                                       kin_dat_2, scaled = T){
 
   peptide_list <- merge(kin_dat_1, kin_dat_2, by = c("Protein", "Sequence", "Start", "End")) %>%
     select(Sequence, Start, End) %>%
@@ -136,20 +136,21 @@ create_uc_distance_dataset <- function(kin_dat_1,
 
   protein_length <- max(peptide_list[["End"]])
 
-  lapply(1:nrow(peptide_list), function(i){
+lapply(1:nrow(peptide_list), function(i){
 
-    fit_dat_1 <- filter(kin_dat_1,
-                        Sequence == peptide_list[["Sequence"]][i],
-                        Start == peptide_list[["Start"]][i],
-                        End == peptide_list[["End"]][i])
-    fit_dat_2 <- filter(kin_dat_2,
-                        Sequence == peptide_list[["Sequence"]][i],
-                        Start == peptide_list[["Start"]][i],
-                        End == peptide_list[["End"]][i])
+      fit_dat_1 <- filter(kin_dat_1,
+                          Sequence == peptide_list[["Sequence"]][i],
+                          Start == peptide_list[["Start"]][i],
+                          End == peptide_list[["End"]][i])
+      fit_dat_2 <- filter(kin_dat_2,
+                          Sequence == peptide_list[["Sequence"]][i],
+                          Start == peptide_list[["Start"]][i],
+                          End == peptide_list[["End"]][i])
 
-    get_uc_distance(fit_dat_1, fit_dat_2)
+      get_uc_distance(fit_dat_1, fit_dat_2, scaled = scaled)
 
-  }) %>% bind_rows()
+    }) %>% bind_rows()
+
 
 }
 
@@ -219,13 +220,19 @@ plot_uc_distance <- function(uc_distance_dataset,
 get_uc_distance <- function(fit_dat_1,
                             fit_dat_2){
 
-  merge(fit_dat_1, fit_dat_2, by = c("Protein", "MaxUptake", "Sequence", "Start", "End", "Exposure")) %>%
-    mutate(tmp_frac_uptake_diff = ((frac_deut_uptake.x - frac_deut_uptake.y)/(err_frac_deut_uptake.x + err_frac_deut_uptake.y))^2,
-           tmp_uptake_diff = ((deut_uptake.x - deut_uptake.y)/(err_deut_uptake.x + err_deut_uptake.y))^2) %>%
-    arrange(Exposure) %>%
-    group_by(Protein, MaxUptake, Sequence, Start, End) %>%
-    summarize(frac_uptake_diff = sum(tmp_frac_uptake_diff, na.rm = T),
-              uptake_diff = sum(tmp_uptake_diff, na.rm = T))
+
+
+    res <- merge(fit_dat_1, fit_dat_2, by = c("Protein", "MaxUptake", "Sequence", "Start", "End", "Exposure")) %>%
+      mutate(tmp_frac_uptake_diff = ((frac_deut_uptake.x - frac_deut_uptake.y)/(err_frac_deut_uptake.x + err_frac_deut_uptake.y)),
+             tmp_uptake_diff = ((deut_uptake.x - deut_uptake.y)/(err_deut_uptake.x + err_deut_uptake.y))) %>%
+      arrange(Exposure) %>%
+      group_by(Protein, MaxUptake, Sequence, Start, End) %>%
+      summarize(frac_uptake_diff = sum(tmp_frac_uptake_diff, na.rm = T),
+                uptake_diff = sum(tmp_uptake_diff, na.rm = T))
+
+
+
+  return(res)
 
 }
 
