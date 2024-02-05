@@ -147,7 +147,7 @@ lapply(1:nrow(peptide_list), function(i){
                           Start == peptide_list[["Start"]][i],
                           End == peptide_list[["End"]][i])
 
-      get_uc_distance(fit_dat_1, fit_dat_2, scaled = scaled)
+      get_uc_distance(fit_dat_1, fit_dat_2)
 
     }) %>% bind_rows()
 

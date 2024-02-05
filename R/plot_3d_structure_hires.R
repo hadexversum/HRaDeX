@@ -21,6 +21,8 @@ plot_3d_structure_hires <- function(hires_params,
     r3dmol::m_add_model(data = pdb_file_path,
                 format = "pdb") %>%
     r3dmol::m_set_style(
+      style = r3dmol::m_style_cartoon(color = "#D3D3D3")) %>%
+    r3dmol::m_set_style(
       style = r3dmol::m_style_cartoon(
         colorfunc = paste0("
         function(atom) {

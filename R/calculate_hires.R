@@ -3,14 +3,14 @@
 
 calculate_hires <- function(fit_values,
                             method = c("shortest", "weiss"),
+                            protein_length = max(fit_values[["end"]]),
                             fractional = F){
 
-  length = max(fit_values[["end"]])
 
   Protein = fit_values[["Protein"]][1]
   State = fit_values[["State"]][1]
 
-  hires_params <- lapply(seq(1:length), function(pos){
+  hires_params <- lapply(seq(1:protein_length), function(pos){
 
     if(fractional){
       tmp_params <- fit_values %>%

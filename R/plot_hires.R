@@ -15,24 +15,27 @@ plot_hires <- function(hires_params,
   if(interactive){
 
     # TODO: scale by n
-    hires_params <- mutate(hires_params,
+    hires_params_sc <- mutate(hires_params,
                            n = n_1 + n_2 + n_3,
                            n_1 = formatC(n_1, 2),
                            n_2 = formatC(n_2, 2),
                            n_3 = formatC(n_3, 2))
 
-    selected_rect <-  geom_rect_interactive(data = subset(hires_params, !is.na(n_1)),
+    selected_rect <-  geom_rect_interactive(data = hires_params_sc,
                                             aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1,
                               tooltip = glue("Position: {position},
                                              n_1 = {n_1},
                                              n_2 = {n_2},
                                              n_3 = {n_3}")),
-                          fill = hires_params[["color"]])
+                          fill = hires_params_sc[["color"]])
 
-    selected_rect_na <- geom_rect_interactive(data = subset(hires_params, is.na(n_1)),
-                            aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1,
-                                tooltip = glue("Position: {position},
-                                               no available data")), fill = "#B8B8B8")
+    selected_rect_na <- geom_rect_interactive(data = subset(hires_params_sc, is.na(color)),
+                                            aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1,
+                                                tooltip = glue("Position: {position},
+                                                               No available data")),
+                                            fill = "#B8B8B8")
+
+
   } else {
 
     selected_rect <- geom_rect(data = hires_params, aes(xmin = position, xmax = position + 1, ymin = 0, ymax = 1),
@@ -46,7 +49,7 @@ plot_hires <- function(hires_params,
 
     hires_plot <- ggplot() +
       selected_rect +
-      selected_rect_na +
+        selected_rect_na +
       labs(title = "Assigned class on sequence",
            x = "Position",
            y = "") +
