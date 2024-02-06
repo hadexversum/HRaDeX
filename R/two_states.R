@@ -84,8 +84,9 @@ create_two_state_dataset <- function(hires_params_1,
                                      hires_params_2){
 
   merge(hires_params_1, hires_params_2, by = c("Protein", "position")) %>%
-    select(Protein, position, color.x, color.y) %>%
-    mutate(dist = calculate_color_distance(color.x, color.y)) %>%
+    select(Protein, position, color.x, color.y, k_est.x, k_est.y) %>%
+    mutate(dist = calculate_color_distance(color.x, color.y),
+           k_diff = k_est.x - k_est.y) %>%
     arrange(position)
 
 }
@@ -127,7 +128,7 @@ plot_color_distance <- function(two_state_dataset,
 #' @export
 
 create_uc_distance_dataset <- function(kin_dat_1,
-                                       kin_dat_2, scaled = T){
+                                       kin_dat_2){
 
   peptide_list <- merge(kin_dat_1, kin_dat_2, by = c("Protein", "Sequence", "Start", "End")) %>%
     select(Sequence, Start, End) %>%
@@ -220,17 +221,22 @@ plot_uc_distance <- function(uc_distance_dataset,
 get_uc_distance <- function(fit_dat_1,
                             fit_dat_2){
 
-
-
-    res <- merge(fit_dat_1, fit_dat_2, by = c("Protein", "MaxUptake", "Sequence", "Start", "End", "Exposure")) %>%
+    res <-
+      merge(fit_dat_1, fit_dat_2, by = c("Protein", "MaxUptake", "Sequence", "Start", "End", "Exposure")) %>%
       mutate(tmp_frac_uptake_diff = ((frac_deut_uptake.x - frac_deut_uptake.y)/(err_frac_deut_uptake.x + err_frac_deut_uptake.y)),
-             tmp_uptake_diff = ((deut_uptake.x - deut_uptake.y)/(err_deut_uptake.x + err_deut_uptake.y))) %>%
+             tmp_uptake_diff = ((deut_uptake.x - deut_uptake.y)/(err_deut_uptake.x + err_deut_uptake.y)),
+             tmp_frac_up = ifelse(frac_deut_uptake.x > frac_deut_uptake.y, frac_deut_uptake.x - err_frac_deut_uptake.x, frac_deut_uptake.y - err_frac_deut_uptake.y),
+             tmp_frac_down = ifelse(frac_deut_uptake.x > frac_deut_uptake.y, frac_deut_uptake.y + err_frac_deut_uptake.y, frac_deut_uptake.x + err_frac_deut_uptake.x),
+             tmp_frac_uptake_dist = tmp_frac_up - tmp_frac_down,
+             tmp_up = ifelse(deut_uptake.x > deut_uptake.y, deut_uptake.x - err_deut_uptake.x, deut_uptake.y - err_deut_uptake.y),
+             tmp_down = ifelse(deut_uptake.x > deut_uptake.y, deut_uptake.y + err_deut_uptake.y, deut_uptake.x + err_deut_uptake.x),
+             tmp_uptake_dist = tmp_up - tmp_down) %>%
       arrange(Exposure) %>%
       group_by(Protein, MaxUptake, Sequence, Start, End) %>%
       summarize(frac_uptake_diff = sum(tmp_frac_uptake_diff, na.rm = T),
-                uptake_diff = sum(tmp_uptake_diff, na.rm = T))
-
-
+                uptake_diff = sum(tmp_uptake_diff, na.rm = T),
+                frac_uptake_dist = sum(tmp_frac_uptake_dist, na.rm = T),
+                uptake_dist = sum(tmp_uptake_dist, na.rm = T))
 
   return(res)
 
