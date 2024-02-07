@@ -60,7 +60,7 @@ plot_two_states <- function(hires_params_1,
     labs(title = paste0("Assigned class on sequence for states: ", state_1, " and ", state_2),
          x = "Position",
          y = "") +
-    theme_bw() +
+    theme_bw(base_size = 18) +
     scale_y_continuous(breaks = c(0.5, 1.5), labels = c(state_1, state_2)) +
     theme(panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
@@ -87,7 +87,8 @@ create_two_state_dataset <- function(hires_params_1,
     select(Protein, position, color.x, color.y, k_est.x, k_est.y) %>%
     mutate(dist = calculate_color_distance(color.x, color.y),
            k_diff = k_est.x - k_est.y) %>%
-    arrange(position)
+    arrange(position) %>%
+    select(Protein, position, color.x, color.y, dist, k_diff)
 
 }
 
@@ -116,44 +117,15 @@ plot_color_distance <- function(two_state_dataset,
     labs(title = "Distance between assigned colors",
          x = "Position",
          y = "Distance") +
-    coord_cartesian(x = c(0, protein_length+1))
+    coord_cartesian(x = c(0, protein_length+1)) +
+    theme_bw(base_size = 18)
 
   girafe(ggobj = plt,
          width_svg = 10,
          height_svg = 4)
 }
 
-#'
-#'
-#' @export
 
-create_uc_distance_dataset <- function(kin_dat_1,
-                                       kin_dat_2){
-
-  peptide_list <- merge(kin_dat_1, kin_dat_2, by = c("Protein", "Sequence", "Start", "End")) %>%
-    select(Sequence, Start, End) %>%
-    unique(.) %>%
-    arrange(Start, End)
-
-  protein_length <- max(peptide_list[["End"]])
-
-lapply(1:nrow(peptide_list), function(i){
-
-      fit_dat_1 <- filter(kin_dat_1,
-                          Sequence == peptide_list[["Sequence"]][i],
-                          Start == peptide_list[["Start"]][i],
-                          End == peptide_list[["End"]][i])
-      fit_dat_2 <- filter(kin_dat_2,
-                          Sequence == peptide_list[["Sequence"]][i],
-                          Start == peptide_list[["Start"]][i],
-                          End == peptide_list[["End"]][i])
-
-      get_uc_distance(fit_dat_1, fit_dat_2)
-
-    }) %>% bind_rows()
-
-
-}
 
 
 #' @importFrom ggplot2 geom_segment
@@ -212,7 +184,37 @@ plot_uc_distance <- function(uc_distance_dataset,
 
 }
 
+#'
+#'
+#' @export
 
+create_uc_distance_dataset <- function(kin_dat_1,
+                                       kin_dat_2){
+
+  peptide_list <- merge(kin_dat_1, kin_dat_2, by = c("Sequence", "Start", "End")) %>%
+    select(Sequence, Start, End) %>%
+    unique(.) %>%
+    arrange(Start, End)
+
+  protein_length <- max(peptide_list[["End"]])
+
+  lapply(1:nrow(peptide_list), function(i){
+
+    fit_dat_1 <- filter(kin_dat_1,
+                        Sequence == peptide_list[["Sequence"]][i],
+                        Start == peptide_list[["Start"]][i],
+                        End == peptide_list[["End"]][i])
+    fit_dat_2 <- filter(kin_dat_2,
+                        Sequence == peptide_list[["Sequence"]][i],
+                        Start == peptide_list[["Start"]][i],
+                        End == peptide_list[["End"]][i])
+
+    get_uc_distance(fit_dat_1, fit_dat_2)
+
+  }) %>% bind_rows()
+
+
+}
 
 #'
 #'
@@ -221,8 +223,7 @@ plot_uc_distance <- function(uc_distance_dataset,
 get_uc_distance <- function(fit_dat_1,
                             fit_dat_2){
 
-    res <-
-      merge(fit_dat_1, fit_dat_2, by = c("Protein", "MaxUptake", "Sequence", "Start", "End", "Exposure")) %>%
+    res <- merge(fit_dat_1, fit_dat_2, by = c("Protein", "MaxUptake", "Sequence", "Start", "End", "Exposure")) %>%
       mutate(tmp_frac_uptake_diff = ((frac_deut_uptake.x - frac_deut_uptake.y)/(err_frac_deut_uptake.x + err_frac_deut_uptake.y)),
              tmp_uptake_diff = ((deut_uptake.x - deut_uptake.y)/(err_deut_uptake.x + err_deut_uptake.y)),
              tmp_frac_up = ifelse(frac_deut_uptake.x > frac_deut_uptake.y, frac_deut_uptake.x - err_frac_deut_uptake.x, frac_deut_uptake.y - err_frac_deut_uptake.y),

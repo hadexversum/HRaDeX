@@ -18,7 +18,8 @@ plot_k_distance <- function(two_state_dataset,
     labs(title = "Distance between estimated k",
          x = "Position",
          y = "K difference") +
-    coord_cartesian(x = c(0, protein_length+1))
+    coord_cartesian(x = c(0, protein_length+1)) +
+    theme_bw(base_size = 18)
 
   girafe(ggobj = plt,
          width_svg = 10,
@@ -32,7 +33,8 @@ plot_uc_real_dist <- function(uc_distance_dataset,
 
   if(interactive){
     sel_segment <- geom_segment_interactive(aes(x = Start, xend = End, y = frac_uptake_dist, yend = frac_uptake_dist,
-                                                tooltip = glue("Position: {Start}-{End}
+                                                tooltip = glue("Sequence: {Sequence}
+                                                                Position: {Start}-{End}
                                                                Diff = {formatC(frac_uptake_dist, 2)}")))
   } else {
     sel_segment <- geom_segment(aes(x = Start, xend = End, y = frac_uptake_dist, yend = frac_uptake_dist))
@@ -42,9 +44,12 @@ plot_uc_real_dist <- function(uc_distance_dataset,
     sel_segment +
     labs(title = "Distances between uptake points",
          x = "Position",
-         y = "Frac uptake diff")
+         y = "Frac uptake diff")+
+    theme_bw(base_size = 18)
+
+  girafe(ggobj = plt,
+         width_svg = 10,
+         height_svg = 4)
 
 }
 
-
-uc_distance_dataset <- create_uc_distance_dataset(kin_dat_1, kin_dat_2)
