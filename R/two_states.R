@@ -153,7 +153,7 @@ plot_uc_distance <- function(uc_distance_dataset,
     plt <- ggplot(uc_distance_dataset) +
       sel_segment +
       labs(title = "Fractional uptake difference",
-           y = "diff value",
+           y = "Abs diff value",
            x = "Position") +
       theme_bw(base_size = 18) +
       coord_cartesian(x = c(0, protein_length+1))
@@ -172,7 +172,7 @@ plot_uc_distance <- function(uc_distance_dataset,
     plt <- ggplot(uc_distance_dataset) +
       sel_segment +
       labs(title = "Uptake difference",
-           y = "diff value",
+           y = "Abs diff value",
            x = "Position") +
       theme_bw(base_size = 18) +
       coord_cartesian(x = c(0, protein_length+1))
@@ -224,8 +224,8 @@ get_uc_distance <- function(fit_dat_1,
                             fit_dat_2){
 
     res <- merge(fit_dat_1, fit_dat_2, by = c("Protein", "MaxUptake", "Sequence", "Start", "End", "Exposure")) %>%
-      mutate(tmp_frac_uptake_diff = ((frac_deut_uptake.x - frac_deut_uptake.y)/(err_frac_deut_uptake.x + err_frac_deut_uptake.y)),
-             tmp_uptake_diff = ((deut_uptake.x - deut_uptake.y)/(err_deut_uptake.x + err_deut_uptake.y)),
+      mutate(tmp_frac_uptake_diff = abs((frac_deut_uptake.x - frac_deut_uptake.y)/(err_frac_deut_uptake.x + err_frac_deut_uptake.y)),
+             tmp_uptake_diff = abs((deut_uptake.x - deut_uptake.y)/(err_deut_uptake.x + err_deut_uptake.y)),
              tmp_frac_up = ifelse(frac_deut_uptake.x > frac_deut_uptake.y, frac_deut_uptake.x - err_frac_deut_uptake.x, frac_deut_uptake.y - err_frac_deut_uptake.y),
              tmp_frac_down = ifelse(frac_deut_uptake.x > frac_deut_uptake.y, frac_deut_uptake.y + err_frac_deut_uptake.y, frac_deut_uptake.x + err_frac_deut_uptake.x),
              tmp_frac_uptake_dist = tmp_frac_up - tmp_frac_down,
