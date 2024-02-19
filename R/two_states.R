@@ -232,6 +232,8 @@ get_uc_distance <- function(fit_dat_1,
              tmp_up = ifelse(deut_uptake.x > deut_uptake.y, deut_uptake.x - err_deut_uptake.x, deut_uptake.y - err_deut_uptake.y),
              tmp_down = ifelse(deut_uptake.x > deut_uptake.y, deut_uptake.y + err_deut_uptake.y, deut_uptake.x + err_deut_uptake.x),
              tmp_uptake_dist = tmp_up - tmp_down) %>%
+      mutate(tmp_uptake_dist = ifelse(tmp_uptake_dist < 0, 0, tmp_uptake_dist),
+             tmp_frac_uptake_dist = ifelse(tmp_frac_uptake_dist <0, 0, tmp_frac_uptake_dist)) %>%
       arrange(Exposure) %>%
       group_by(Protein, MaxUptake, Sequence, Start, End) %>%
       summarize(frac_uptake_diff = sum(tmp_frac_uptake_diff, na.rm = T),
