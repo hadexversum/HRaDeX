@@ -57,11 +57,11 @@ plot_two_states <- function(hires_params_1,
     sel_rect_2 +
     sel_rect_na_2 +
     geom_hline(yintercept = 1, linetype = "dashed") +
-    labs(title = paste0("Assigned class on sequence for states: ", state_1, " and ", state_2),
+    labs(title = paste0("Classification for states: ", state_1, "(down) and ", state_2, " (up)"),
          x = "Position",
          y = "") +
     theme_bw(base_size = 18) +
-    scale_y_continuous(breaks = c(0.5, 1.5), labels = c(state_1, state_2)) +
+    # scale_y_continuous(breaks = c(0.5, 1.5), labels = c(state_1, state_2)) +
     theme(panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           axis.text.y = element_blank(),
@@ -114,7 +114,7 @@ plot_color_distance <- function(two_state_dataset,
     filter(!is.na(color.y)) %>%
   ggplot() +
     sel_points +
-    labs(title = "Distance between assigned colors",
+    labs(title = "Distance between populations",
          x = "Position",
          y = "Distance") +
     coord_cartesian(x = c(0, protein_length+1)) +
@@ -134,12 +134,25 @@ plot_color_distance <- function(two_state_dataset,
 #' @export plot_uc_distance
 
 plot_uc_distance <- function(uc_distance_dataset,
+                             squared = F,
                              fractional = T,
                              interactive = F){
 
   protein_length <- max(uc_distance_dataset[["End"]])
 
+  y_axis_label <- ""
+  plot_title <- ""
+
   if (fractional){
+
+    y_axis_label <- "Abs frac diff DU [%]"
+    plot_title <- "Fractional uptake difference"
+
+    if(squared){
+      uc_distance_dataset <- mutate(uc_distance_dataset,
+                                    frac_uptake_diff = frac_uptake_diff^2)
+      y_axis_label <- "Abs frac diff DU ^2 [%]"
+    }
 
     if(interactive){
       sel_segment <- geom_segment_interactive(aes(x = Start, xend = End, y = frac_uptake_diff, yend = frac_uptake_diff,
@@ -150,15 +163,17 @@ plot_uc_distance <- function(uc_distance_dataset,
       sel_segment <- geom_segment(aes(x = Start, xend = End, y = frac_uptake_diff, yend = frac_uptake_diff))
     }
 
-    plt <- ggplot(uc_distance_dataset) +
-      sel_segment +
-      labs(title = "Fractional uptake difference",
-           y = "Abs diff value",
-           x = "Position") +
-      theme_bw(base_size = 18) +
-      coord_cartesian(x = c(0, protein_length+1))
-
   } else {
+
+    y_axis_label <- "Abs diff DU [Da]"
+    plot_title <- "Uptake difference"
+
+    if(squared){
+      uc_distance_dataset <- mutate(uc_distance_dataset,
+                                    uptake_diff = uptake_diff^2)
+      y_axis_label <- "Abs diff DU ^2 [%]"
+    }
+
 
     if(interactive){
       sel_segment <- geom_segment_interactive(aes(x = Start, xend = End, y = uptake_diff, yend = uptake_diff,
@@ -169,14 +184,16 @@ plot_uc_distance <- function(uc_distance_dataset,
       sel_segment <- geom_segment(aes(x = Start, xend = End, y = uptake_diff, yend = uptake_diff))
     }
 
-    plt <- ggplot(uc_distance_dataset) +
-      sel_segment +
-      labs(title = "Uptake difference",
-           y = "Abs diff value",
-           x = "Position") +
-      theme_bw(base_size = 18) +
-      coord_cartesian(x = c(0, protein_length+1))
+
   }
+
+  plt <- ggplot(uc_distance_dataset) +
+    sel_segment +
+    labs(title = plot_title,
+         y = y_axis_label,
+         x = "Position") +
+    theme_bw(base_size = 18) +
+    coord_cartesian(x = c(0, protein_length+1))
 
   girafe(ggobj = plt,
          width_svg = 10,
