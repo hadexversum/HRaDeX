@@ -170,6 +170,8 @@ plot_two_states <- function(hires_params_1,
 }
 
 #'
+#' @param two_state_dataset produced by create_two_state_dataset.
+#' @param interactive indicator if the final plot is in interactive mode, intended for the app.
 #'
 #' @export plot_color_distance
 
@@ -279,7 +281,7 @@ plot_uc_distance <- function(uc_distance_dataset,
 
 #' @importFrom ggplot2 theme_gray scale_shape_manual
 #'
-#' @description This function is intended for visualisation of fit results of two biological states in comparative mode, in compaHRaDeX.
+#' @description This function is intended for visualization of fit results of two biological states in comparative mode, in compaHRaDeX.
 #' @export plot_uc
 
 plot_uc <- function(fit_dat_1,
