@@ -1,10 +1,25 @@
-# example fit_params
+#' Example k parameters
+#'
+#' @return
 
-# fit_k_params <- data.frame(
-#   start = c(k_1 = 2, k_2 = 0.1, k_3 = 0.01),
-#   lower = c(k_1 = 1, k_2 = 0.1, k_3 = 0),
-#   upper = c(k_1 = 30, k_2 = 1, k_3 = 0.1)
-# )
+get_example_fit_k_params <- function(){
+
+  return(data.frame(
+    start = c(k_1 = 2, k_2 = 0.1, k_3 = 0.01),
+    lower = c(k_1 = 1, k_2 = 0.1, k_3 = 0),
+    upper = c(k_1 = 30, k_2 = 1, k_3 = 0.1)))
+
+}
+
+#' Example control
+#'
+#' @return
+
+get_example_control <- function(){
+
+  return(list(maxiter = 1000,  scale = "levenberg"))
+
+}
 
 #' @noRd
 get_1_k_params <- function(fit_k_params){

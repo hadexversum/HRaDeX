@@ -1,3 +1,26 @@
+#' Plots estimated k distance
+#'
+#' @params two_state_dataset data.frame produced by \link{create_two_state_dataset}
+#' @params interactive logical, true for GUI
+#'
+#' @description Function plots the difference between two estimated k values from
+#' hires parameters for two biological states. The sign of difference indicates the
+#' direction of change.
+#'
+#' @return a ggiraph object.
+#'
+#' @seealso create_two_state_dataset
+#'
+#' @examples
+#' dat <- HaDeX::read_hdx(...)
+#' fit_k_params <- get_example_fit_k_params()
+#' control <- get_example_control()
+#' kin_dat <- prepare_kin_dat(dat)
+#' fit_values <- create_fit_dataset(kin_dat, control, fit_k_params)
+#' hires_params <- calculate_hires(fit_values)
+#' two_states_dataset <- create_two_state_dataset(hires_params_1, hires_params_2)
+#' plot_k_distance(two_states_dataset)
+#'
 #' @export
 
 plot_k_distance <- function(two_state_dataset,
@@ -26,6 +49,29 @@ plot_k_distance <- function(two_state_dataset,
          height_svg = 4)
 }
 
+
+#' Plots the uc difference type 1
+#'
+#' @params uc_distance_dataset
+#' @params squared indicator if the uc distance is squared
+#' @params fractional
+#' @params interactive logical, true for GUI
+#'
+#' @description Function plots the uc distance from uc_distance_dataset.
+#' Be careful, as uc_distance_dataset contains distances calculated using
+#' different methods, as described in vignette TODO.
+#'
+#' @return a ggiraph object.
+#'
+#' @seealso create_uc_distance_dataset
+#'
+#' @examples
+#' dat <- HaDeX::read_hdx(...)
+#' kin_dat_1 <- prepare_kin_dat(dat, state = state_1)
+#' kin_dat_2 <- prepare_kin_dat(dat, state = state_2)
+#' uc_distance_dataset <- create_uc_distance_dataset(kin_dat_1, kin_dat_2)
+#' plot_uc_real_dist(uc_distance_dataset)
+#'
 #' @export
 
 plot_uc_real_dist <- function(uc_distance_dataset,
@@ -95,6 +141,31 @@ plot_uc_real_dist <- function(uc_distance_dataset,
 
 #' @importFrom ggplot2 scale_y_continuous
 #'
+#' Plots the classification results for two states
+#'
+#' @params hires_params_1
+#' @params hires_params_2
+#' @params type not supported right now
+#' @params interactive logical, true for GUI
+#'
+#' @description Function plots the classfication results in color code for two biological
+#' states at the same time. The results for the second state are on top, and for the
+#' first state on the bottom. The grey color indicates no data.
+#'
+#' @return a ggiraph object.
+#'
+#' @seelaso calculate_hires create_fit_dataset
+#'
+#' @examples
+#' dat <- HaDeX::read_hdx(...)
+#' fit_k_params <- get_example_fit_k_params()
+#' control <- get_example_control()
+#' control <- get_example_control()
+#' kin_dat <- prepare_kin_dat(dat)
+#' fit_values <- create_fit_dataset(kin_dat, control, fit_k_params)
+#' hires_params <- calculate_hires(fit_values)
+#' plot_two_states(hires_params_1, hires_params_2)
+#'
 #' @export plot_two_states
 
 plot_two_states <- function(hires_params_1,
@@ -152,7 +223,7 @@ plot_two_states <- function(hires_params_1,
     sel_rect_2 +
     sel_rect_na_2 +
     geom_hline(yintercept = 1, linetype = "dashed") +
-    labs(title = paste0("Classification for states: ", state_1, "(down) and ", state_2, " (up)"),
+    labs(title = paste0("Classification for states: ", state_1, " (down) ", state_2, " (up)"),
          x = "Position",
          y = "") +
     theme_bw(base_size = 18) +
@@ -169,9 +240,30 @@ plot_two_states <- function(hires_params_1,
 
 }
 
+#' Plots assigned color distance
 #'
-#' @param two_state_dataset produced by create_two_state_dataset.
-#' @param interactive indicator if the final plot is in interactive mode, intended for the app.
+#' @params two_state_dataset data.frame produced by \link{create_two_state_dataset}
+#' @params interactive logical, true for GUI
+#'
+#' @description Function plots the difference between assigned color codes from
+#' hires parameters for two biological states. The color diffrence is calucluated as
+#' common distance = sqrt((red_1 - red_2)^2 + (green_1 - green_2)^ + (blue_1 - blue_2)^2).
+#' The difference is always positive, as it is difficult to get the direction of change simultaneusly
+#' for three parameters.
+#'
+#' @return a ggiraph object.
+#'
+#' @seealso create_two_state_dataset
+#'
+#' @examples
+#' dat <- HaDeX::read_hdx(...)
+#' fit_k_params <- get_example_fit_k_params()
+#' control <- get_example_control()
+#' kin_dat <- prepare_kin_dat(dat)
+#' fit_values <- create_fit_dataset(kin_dat, control, fit_k_params)
+#' hires_params <- calculate_hires(fit_values)
+#' two_states_dataset <- create_two_state_dataset(hires_params_1, hires_params_2)
+#' plot_color_distance(two_states_dataset)
 #'
 #' @export plot_color_distance
 
@@ -207,6 +299,28 @@ plot_color_distance <- function(two_state_dataset,
 
 #' @importFrom ggplot2 geom_segment
 #' @importFrom ggiraph geom_segment_interactive
+#'
+#' Plots the uc difference type 2
+#'
+#' @params uc_distance_dataset
+#' @params squared indicator if the uc distance is squared
+#' @params fractional
+#' @params interactive logical, true for GUI
+#'
+#' @description Function plots the uc distance from uc_distance_dataset.
+#' Be careful, as uc_distance_dataset contains distances calculated using
+#' different methods, as described in vignette TODO.
+#'
+#' @return a ggplot2 object.
+#'
+#' @seealso create_uc_distance_dataset
+#'
+#' @examples
+#' dat <- HaDeX::read_hdx(...)
+#' kin_dat_1 <- prepare_kin_dat(dat, state = state_1)
+#' kin_dat_2 <- prepare_kin_dat(dat, state = state_2)
+#' uc_distance_dataset <- create_uc_distance_dataset(kin_dat_1, kin_dat_2)
+#' plot_uc_distance(uc_distance_dataset)
 #'
 #' @export plot_uc_distance
 
@@ -281,7 +395,31 @@ plot_uc_distance <- function(uc_distance_dataset,
 
 #' @importFrom ggplot2 theme_gray scale_shape_manual
 #'
-#' @description This function is intended for visualization of fit results of two biological states in comparative mode, in compaHRaDeX.
+#' Plots uc and fit parameters for peptide in two states.
+#'
+#' @params fit_dat_1 data.frame with uptake data for the peptide in first state
+#' @params fit_dat_2 data.frame with uptake data for the peptide in second state
+#' @params fit_values_1 data.frame with fit values for the peptide in first state
+#' @params fit_values_2 data.frame with fit values for the peptide in second state
+#' @params fractional indicator if the values are fractional type
+#' @params interactive logical, true for GUI
+#'
+#' @description This function plots the uptake curves for both biological states of a peptide,
+#' alongside with the fit parameters. The peptides in two states can be compared obly if have the same position
+#' in the whole protein sequence.The biological states are distinguishable by the line type.
+#' This is a part of comparative feature.
+#'
+#' @return a ggiraph object.
+#'
+#' @seealso create_fit_dataset prepare_kin_dat
+#'
+#' @examples
+#' dat <- HaDeX::read_hdx(...)
+#' kin_dat_1 <- prepare_kin_dat(dat, state = state_1)
+#' fit_dat_1 <- kin_dat_1[ID == 1, ]
+#' fit_values_1 <- create_fit_dataset(fit_dat_1, control, fit_k_params)
+#' plot_uc(fit_dat_1, fit_dat_2, fit_values_1, fit_values_2)
+#'
 #' @export plot_uc
 
 plot_uc <- function(fit_dat_1,

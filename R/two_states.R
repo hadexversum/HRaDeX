@@ -1,4 +1,25 @@
+#' Creates dataset with merged hires parameters for two states.
 #'
+#' @param hires_params_1 data.frame with hires parameters for the first state
+#' @param hires_params_2 data.frame with hires parameters for the second state
+#'
+#' @description This function merges the hires parameters for two biological
+#' states, provided the same position values. It also calculates the color
+#' distance and estimed k diffrence for each position.
+#' This function is part of comparative feature.
+#'
+#'
+#' @return data.frame for plotting functions
+#'
+#' @seealso calculate_color_distance calculate_hires
+#'
+#' @examples
+#' dat <- HaDeX::read_hdx(...)
+#' fit_k_params <- get_example_fit_k_params()
+#' control <- get_example_control()
+#' kin_dat <- prepare_kin_dat(dat)
+#' fit_values <- create_fit_dataset(kin_dat, control, fit_k_params)
+#' hires_params <- calculate_hires(fit_values)
 #'
 #' @export create_two_state_dataset
 
@@ -14,7 +35,25 @@ create_two_state_dataset <- function(hires_params_1,
 
 }
 
+#' Creates dataset with uc distances
 #'
+#' @param kin_dat_1 kinetic data for the first state
+#' @param kin_dat_2 kinetic data for the second state
+#'
+#' @description This function iterates through common list of peptides in
+#' two states, based on their position in the sequence. For each pair of peptide
+#' data, the uc distance is calculated. The method of uc distance calucation is
+#' described in the vigniette TODO.
+#'
+#' @return data.frame for plotting functions
+#'
+#' @seealso get_uc_distance plot_uc_distance
+#'
+#' @examples
+#' dat <- HaDeX::read_hdx(...)
+#' kin_dat_1 <- prepare_kin_dat(dat, state = state_1)
+#' kin_dat_2 <- prepare_kin_dat(dat, state = state_2)
+#' uc_dist_dataset <- create_uc_distance_dataset(kin_dat_1, kin_dat_2)
 #'
 #' @export
 
@@ -48,10 +87,31 @@ create_uc_distance_dataset <- function(kin_dat_1,
 
 }
 
+#' Calculates the uc distance for uptake curve
 #'
+#' @params fit_dat_1 data.frame with uc data for peptide in first state
+#' @params fit_dat_2 data.frame with uc data for peptide in second state
+#'
+#' Calculates the uc distance between uptake curves for one peptide in two
+#' biological states. The possible methods of caluclation is described in the
+#' vignette TODO.
+#' This function supports comparison of two different peptides provided that the
+#' values `Start`, `End`, `MaxUptake` and `Exposure` are the same.
+#'
+#' @return a one-row data.frame
+#'
+#' @seealso create_uc_distance_dataset
+#'
+#' @examples
+#' dat <- HaDeX::read_hdx(...)
+#' kin_dat_1 <- prepare_kin_dat(dat, state = state_1)
+#' kin_dat_2 <- prepare_kin_dat(dat, state = state_2)
+#' fit_dat_1 <- kin_dat_1[ID == 1, ]
+#' fit_dat_2 <- kin_dat_2[ID == 1, ]
+#' get_uc_distance(fit_dat_1, fit_dat_2)
 #'
 #' @export get_uc_distance
-#'
+
 get_uc_distance <- function(fit_dat_1,
                             fit_dat_2){
 

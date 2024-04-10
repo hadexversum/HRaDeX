@@ -1,6 +1,25 @@
 #' @importFrom HaDeX create_control_dataset create_kinetic_dataset create_state_uptake_dataset calculate_exp_masses_per_replicate
 #' @importFrom dplyr %>% select filter mutate
 #'
+#' Creates uptake data from mass measurements
+#'
+#' @params dat
+#' @params state
+#' @params time_0
+#' @params time_100
+#' @params replicate
+#' @params FD
+#'
+#' @description
+#'
+#' @return a data.frame object.
+#'
+#' @seealso
+#'
+#' @examples
+#' dat <- HaDeX::read_hdx(...)
+#' kin_dat <- prepare_kin_dat(dat, state = state_1)
+#'
 #' @export
 
 prepare_kin_dat <- function(dat,
@@ -98,7 +117,9 @@ create_replicate_state_uptake_dataset <- function(rep_dat,
     calculate_replicate_state_uptake(tmp_dat,
                                      state = state,
                                      time_0 = time_0,
-                                     time_100 = time_100)
+                                     time_100 = time_100) %>%
+      mutate(frac_deut_uptake = frac_deut_uptake,
+             err_frac_deut_uptake = err_frac_deut_uptake)
 
   }) %>% bind_rows() %>%
     select(-File)
