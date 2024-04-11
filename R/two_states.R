@@ -8,7 +8,6 @@
 #' distance and estimed k diffrence for each position.
 #' This function is part of comparative feature.
 #'
-#'
 #' @return data.frame for plotting functions
 #'
 #' @seealso calculate_color_distance calculate_hires
@@ -89,10 +88,10 @@ create_uc_distance_dataset <- function(kin_dat_1,
 
 #' Calculates the uc distance for uptake curve
 #'
-#' @params fit_dat_1 data.frame with uc data for peptide in first state
-#' @params fit_dat_2 data.frame with uc data for peptide in second state
+#' @param fit_dat_1 data.frame with uc data for peptide in first state
+#' @param fit_dat_2 data.frame with uc data for peptide in second state
 #'
-#' Calculates the uc distance between uptake curves for one peptide in two
+#' @description Calculates the uc distance between uptake curves for one peptide in two
 #' biological states. The possible methods of caluclation is described in the
 #' vignette TODO.
 #' This function supports comparison of two different peptides provided that the

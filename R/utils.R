@@ -1,6 +1,6 @@
 #' Provides a peptide list
 #'
-#' @params dat data.frame
+#' @param dat data.frame
 #'
 #' @description Created peptite list based on the provided data.frame.
 #'
@@ -18,12 +18,12 @@ get_peptide_list <- function(dat){
 }
 
 
-#' @importFrom dplyr ungroup
-#'
 #' Provides a peptide list
 #'
-#' @params dat_1 data.frame
-#' @params dat_2 data.frame
+#' @importFrom dplyr ungroup
+#'
+#' @param dat_1 data.frame
+#' @param dat_2 data.frame
 #'
 #' @description Created peptite list from two binded data.frames.
 #' The peptides are selected based on their position values. If there

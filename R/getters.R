@@ -1,6 +1,6 @@
 #' Example k parameters
 #'
-#' @return
+#' @export
 
 get_example_fit_k_params <- function(){
 
@@ -13,7 +13,7 @@ get_example_fit_k_params <- function(){
 
 #' Example control
 #'
-#' @return
+#' @export
 
 get_example_control <- function(){
 

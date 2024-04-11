@@ -1,20 +1,22 @@
+#' Creates uptake data from mass measurements
+#'
 #' @importFrom HaDeX create_control_dataset create_kinetic_dataset create_state_uptake_dataset calculate_exp_masses_per_replicate
 #' @importFrom dplyr %>% select filter mutate
 #'
-#' Creates uptake data from mass measurements
+#' @param dat experimental data read by HaDeX::read_hdx
+#' @param state biological state
+#' @param time_0 minimal exchange control time point
+#' @param time_100 maximal exchange control time point
+#' @param replicate idicator, if the replicate values should be provided, or aggregated
+#' @param FD idicator, if the time_100 value shoul be used as fully deuterated control,
+#' only for normalization purposes, or left as time point of measurement
 #'
-#' @params dat
-#' @params state
-#' @params time_0
-#' @params time_100
-#' @params replicate
-#' @params FD
-#'
-#' @description
+#' @description Function calculates deuterium uptake for each time point
+#' in the original data with respect to the parameters.
 #'
 #' @return a data.frame object.
 #'
-#' @seealso
+#' @seealso HaDeX::read_hdx
 #'
 #' @examples
 #' dat <- HaDeX::read_hdx(...)
@@ -73,7 +75,24 @@ prepare_kin_dat <- function(dat,
 }
 
 
+#' Calculcate uptake
 #'
+#' @param rep_peptide_dat data from experimental file, but aggregated within
+#' technical replicates
+#' @param state biological state
+#' @param time_0 minimal exchange control time point
+#' @param time_100 maximal exchange control time point
+#'
+#' @description Function calculates deuterim uptake for one biological state,
+#' for replicates, without additional aggregation of the data.
+#'
+#' @return a data.frame object.
+#'
+#' @seealso HaDeX::read_hdx
+#'
+#' @examples
+#' dat <- HaDeX::read_hdx(...)
+#' TODO
 #'
 #' @export
 calculate_replicate_state_uptake <- function(rep_peptide_dat,
@@ -95,6 +114,9 @@ calculate_replicate_state_uptake <- function(rep_peptide_dat,
            deut_uptake = avg_exp_mass - m_0)
 }
 
+#' TODO
+#'
+#'
 #' @export
 create_replicate_state_uptake_dataset <- function(rep_dat,
                                                   state = dat[["State"]][1],

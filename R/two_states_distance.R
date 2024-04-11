@@ -1,7 +1,7 @@
 #' Plots estimated k distance
 #'
-#' @params two_state_dataset data.frame produced by \link{create_two_state_dataset}
-#' @params interactive logical, true for GUI
+#' @param two_state_dataset data.frame produced by \link{create_two_state_dataset}
+#' @param interactive logical, true for GUI
 #'
 #' @description Function plots the difference between two estimated k values from
 #' hires parameters for two biological states. The sign of difference indicates the
@@ -52,10 +52,10 @@ plot_k_distance <- function(two_state_dataset,
 
 #' Plots the uc difference type 1
 #'
-#' @params uc_distance_dataset
-#' @params squared indicator if the uc distance is squared
-#' @params fractional
-#' @params interactive logical, true for GUI
+#' @param uc_distance_dataset ...
+#' @param squared indicator if the uc distance is squared
+#' @param fractional ...
+#' @param interactive logical, true for GUI
 #'
 #' @description Function plots the uc distance from uc_distance_dataset.
 #' Be careful, as uc_distance_dataset contains distances calculated using
@@ -139,14 +139,14 @@ plot_uc_real_dist <- function(uc_distance_dataset,
 
 }
 
-#' @importFrom ggplot2 scale_y_continuous
-#'
 #' Plots the classification results for two states
 #'
-#' @params hires_params_1
-#' @params hires_params_2
-#' @params type not supported right now
-#' @params interactive logical, true for GUI
+#' @importFrom ggplot2 scale_y_continuous
+#'
+#' @param hires_params_1 hires parameters for the first state
+#' @param hires_params_2 hires parameters for the second state
+#' @param type not supported right now
+#' @param interactive logical, true for GUI
 #'
 #' @description Function plots the classfication results in color code for two biological
 #' states at the same time. The results for the second state are on top, and for the
@@ -154,7 +154,7 @@ plot_uc_real_dist <- function(uc_distance_dataset,
 #'
 #' @return a ggiraph object.
 #'
-#' @seelaso calculate_hires create_fit_dataset
+#' @seealso calculate_hires create_fit_dataset
 #'
 #' @examples
 #' dat <- HaDeX::read_hdx(...)
@@ -242,8 +242,8 @@ plot_two_states <- function(hires_params_1,
 
 #' Plots assigned color distance
 #'
-#' @params two_state_dataset data.frame produced by \link{create_two_state_dataset}
-#' @params interactive logical, true for GUI
+#' @param two_state_dataset data.frame produced by \link{create_two_state_dataset}
+#' @param interactive logical, true for GUI
 #'
 #' @description Function plots the difference between assigned color codes from
 #' hires parameters for two biological states. The color diffrence is calucluated as
@@ -297,15 +297,15 @@ plot_color_distance <- function(two_state_dataset,
 }
 
 
+#' Plots the uc difference type 2
+#'
 #' @importFrom ggplot2 geom_segment
 #' @importFrom ggiraph geom_segment_interactive
 #'
-#' Plots the uc difference type 2
-#'
-#' @params uc_distance_dataset
-#' @params squared indicator if the uc distance is squared
-#' @params fractional
-#' @params interactive logical, true for GUI
+#' @param uc_distance_dataset ...
+#' @param squared indicator if the uc distance is squared
+#' @param fractional ...
+#' @param interactive logical, true for GUI
 #'
 #' @description Function plots the uc distance from uc_distance_dataset.
 #' Be careful, as uc_distance_dataset contains distances calculated using
@@ -393,16 +393,16 @@ plot_uc_distance <- function(uc_distance_dataset,
 
 }
 
-#' @importFrom ggplot2 theme_gray scale_shape_manual
-#'
 #' Plots uc and fit parameters for peptide in two states.
 #'
-#' @params fit_dat_1 data.frame with uptake data for the peptide in first state
-#' @params fit_dat_2 data.frame with uptake data for the peptide in second state
-#' @params fit_values_1 data.frame with fit values for the peptide in first state
-#' @params fit_values_2 data.frame with fit values for the peptide in second state
-#' @params fractional indicator if the values are fractional type
-#' @params interactive logical, true for GUI
+#' @importFrom ggplot2 theme_gray scale_shape_manual
+#'
+#' @param fit_dat_1 data.frame with uptake data for the peptide in first state
+#' @param fit_dat_2 data.frame with uptake data for the peptide in second state
+#' @param fit_values_1 data.frame with fit values for the peptide in first state
+#' @param fit_values_2 data.frame with fit values for the peptide in second state
+#' @param fractional indicator if the values are fractional type
+#' @param interactive logical, true for GUI
 #'
 #' @description This function plots the uptake curves for both biological states of a peptide,
 #' alongside with the fit parameters. The peptides in two states can be compared obly if have the same position

@@ -1,5 +1,16 @@
+#' Plots heatmap with classification parameters
+#'
 #' @importFrom ggplot2 ggplot geom_tile theme labs
+#'
+#' @param fixed_params fit params after modification
+#'
+#' @description Not in use.
+#' TODO
+#'
+#' @return a ggplot2 object.
+#'
 #' @export
+
 plot_class_heatmap <- function(fixed_params){
 
   ggplot(fixed_params, aes(x = id, y = 1)) +
@@ -13,7 +24,21 @@ plot_class_heatmap <- function(fixed_params){
 
 }
 
+#' Plots initial fit parameters
+#'
 #' @importFrom ggplot2 geom_line ylim geom_ribbon
+#'
+#' @param fit_k_params data.frame with k values for exchange groups
+#'
+#' @description Plots a visualization of selected excahnge group limits,
+#' with initial parameters for the fit. It is helpful for additional self-control
+#' of chosen limits.
+#'
+#' @return a ggplot2 object.
+#'
+#' @examples
+#' fit_k_params <- get_example_fit_k_params()
+#' plot_start_params(fit_k_params)
 #' @export
 plot_start_params <- function(fit_k_params){
 
