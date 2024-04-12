@@ -1,3 +1,23 @@
+#' Plots singular uptake curve
+#'
+#' @param fit_dat deuterium uptake data for one peptide
+#' @param fit_values fit parameters for that one peptide, not used
+#' @param include_uc indicator if regular uc should be plotted as well
+#' @param replicate indicator if data for replicates should be plotted, or
+#' aggregated
+#' @param fractional ...
+#' @param interactive ...
+#'
+#' @description Function plots deuterium uptake plot (uc) for one peptide,
+#' in a traditional mode.
+#' Currently not in use in GUIs.
+#'
+#' @return a ggplot object. Need a conversion to girafe for interactive mode.
+#'
+#' @seealso ...
+#'
+#' @examples TODO
+#'
 #' @export
 
 plot_singular_uc <- function(fit_dat,
@@ -7,7 +27,7 @@ plot_singular_uc <- function(fit_dat,
                              fractional = T,
                              interactive = F){
 
-    plot_title <- paste0(fit_values[["sequence"]], " (", fit_values[["start"]], "-", fit_values[["end"]], ") ")
+    plot_title <- paste0(unique(fit_dat[["sequence"]]), " (", unique(fit_dat[["start"]]), "-", unique(fit_dat[["end"]]), ") ")
 
     if(replicate){
 

@@ -20,4 +20,5 @@ of chosen limits.
 \examples{
 fit_k_params <- get_example_fit_k_params()
 plot_start_params(fit_k_params)
+
 }

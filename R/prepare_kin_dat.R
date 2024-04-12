@@ -114,8 +114,22 @@ calculate_replicate_state_uptake <- function(rep_peptide_dat,
            deut_uptake = avg_exp_mass - m_0)
 }
 
-#' TODO
+#' Creates deuterium uptake replicate dataset
 #'
+#' @param rep_dat data
+#' @param state biological state
+#' @param time_0 minimal exchange control time point
+#' @param time_100 maximal exchange control time point
+#'
+#' @description Wrapper for calculate_replicate_state_uptake, interating
+#' throught all the peptides in provided data.
+#'
+#' @return a data.frame object.
+#'
+#' @seealso calculate_replicate_state_uptake
+#'
+#' @examples
+#' TODO
 #'
 #' @export
 create_replicate_state_uptake_dataset <- function(rep_dat,

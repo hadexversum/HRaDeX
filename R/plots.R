@@ -39,6 +39,7 @@ plot_class_heatmap <- function(fixed_params){
 #' @examples
 #' fit_k_params <- get_example_fit_k_params()
 #' plot_start_params(fit_k_params)
+#'
 #' @export
 plot_start_params <- function(fit_k_params){
 
@@ -60,7 +61,12 @@ plot_start_params <- function(fit_k_params){
 
 
 
+#' Plot summary image
+#'
 #' @importFrom ggplot2 xlim theme_void geom_text
+#'
+#' @description Not in use.
+#'
 #' @export
 get_params_summary_image <- function(fixed_params){
 

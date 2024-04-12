@@ -1,3 +1,4 @@
+#' Plots high resolution classification plot
 #'
 #' @importFrom ggplot2 coord_cartesian
 #' @importFrom ggiraph geom_rect_interactive girafe girafe_options opts_tooltip

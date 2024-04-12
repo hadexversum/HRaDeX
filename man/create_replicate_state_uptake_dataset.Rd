@@ -2,7 +2,7 @@
 % Please edit documentation in R/prepare_kin_dat.R
 \name{create_replicate_state_uptake_dataset}
 \alias{create_replicate_state_uptake_dataset}
-\title{TODO}
+\title{Creates deuterium uptake replicate dataset}
 \usage{
 create_replicate_state_uptake_dataset(
   rep_dat,
@@ -11,6 +11,26 @@ create_replicate_state_uptake_dataset(
   time_100 = max(dat[["Exposure"]])
 )
 }
+\arguments{
+\item{rep_dat}{data}
+
+\item{state}{biological state}
+
+\item{time_0}{minimal exchange control time point}
+
+\item{time_100}{maximal exchange control time point}
+}
+\value{
+a data.frame object.
+}
 \description{
+Wrapper for calculate_replicate_state_uptake, interating
+throught all the peptides in provided data.
+}
+\examples{
 TODO
+
+}
+\seealso{
+calculate_replicate_state_uptake
 }

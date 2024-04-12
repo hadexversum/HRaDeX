@@ -6,9 +6,6 @@
 \usage{
 get_example_control()
 }
-\value{
-
-}
 \description{
 Example control
 }

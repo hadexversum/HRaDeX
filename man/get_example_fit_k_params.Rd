@@ -6,9 +6,6 @@
 \usage{
 get_example_fit_k_params()
 }
-\value{
-
-}
 \description{
 Example k parameters
 }

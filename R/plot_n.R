@@ -1,3 +1,27 @@
+#' Plots n values
+#'
+#' @param list_params list of fit parameters
+#' @param fractional ...
+#' @param interactive ...
+#'
+#' @description Plots the n values from fit parameters. When operating on fractional
+#' values, the n value should be close to 1 to ensure model legitimacy. When operating
+#' on values in daltons, the upper limit for the n value i max possible uptake calculated
+#' from the sequence, although rarely reached due to back-exchange.
+#'
+#' @return a ggplot2 object. Need of convertion to girafe for interactive mode.
+#'
+#' @seealso create_fit_results
+#'
+#' @examples
+#' dat <- HaDeX::read_hdx(...)
+#' fit_k_params <- get_example_fit_k_params()
+#' control <- get_example_control()
+#' control <- get_example_control()
+#' kin_dat <- prepare_kin_dat(dat)
+#' fit_values <- create_fit_dataset(kin_dat, control, fit_k_params)
+#' plot_n(fit_values)
+#'
 #' @export
 plot_n <- function(list_params,
                    fractional = F,

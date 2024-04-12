@@ -1,5 +1,13 @@
+#' Plots map of params
+#'
 #' @importFrom ggplot2 scale_x_log10 scale_y_log10 geom_hline geom_point geom_vline
 #' @importFrom dplyr case_when
+#'
+#' @param fit_values ...
+#' @param interactive ...
+#'
+#' @description Currently not in use.
+#'
 #' @export
 plot_params_map <- function(fit_values,
                             interactive = F){

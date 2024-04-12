@@ -1,5 +1,21 @@
+#' Histogram of fit rss values
+#'
 #' @importFrom ggplot2 facet_wrap geom_histogram
 #' @importFrom ggiraph geom_histogram_interactive
+#'
+#' @param fit_values data.frame with fit values
+#' @param interactive ...
+#'
+#' @description Histogram of rss values for selected models for each peptide.
+#' Divided with respect to the number of model parameters. Plot to judge the goodness
+#' of the models.
+#'
+#' @return a ggplot2 object. Needs converstion to girafe for the interactive mode.
+#'
+#' @seealso ...
+#'
+#' @examples
+#' TODO
 #'
 #' @export
 plot_rss_hist <- function(fit_values,
