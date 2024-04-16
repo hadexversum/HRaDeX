@@ -14,7 +14,7 @@ plot_3d_structure_blank <- function(pdb_file_path){
     elementId = "blank_structure",
     backgroundColor = "#FFFFFF") %>%
     r3dmol::m_add_model(data = pdb_file_path,
-                        format = c("pdb", "cif")) %>%
+                        format = "pdb") %>%
     r3dmol::m_set_style(
       style = r3dmol::m_style_cartoon(color = "white")) %>%
     r3dmol::m_zoom_to()

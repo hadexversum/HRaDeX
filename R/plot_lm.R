@@ -1,5 +1,21 @@
+#' Plots uc with linear fit
+#'
 #' @importFrom ggplot2 stat_smooth
 #'
+#' @param fit_dat deuterium uptake data for selected peptide.
+#' @param class_name class name assigned to selected peptide.
+#' @param interactive ...
+#'
+#' @description Plots uptake curve for a peptide with linear fit.
+#' Used in GUI to present uptake curves for edge cases, where the
+#' three-exponential model cannot be fitted.
+#'
+#' @return a ggplot2 object. For interactive mode, conversion to girafe is needed.
+#'
+#' @seealso
+#'
+#' @examples
+#' dat <-
 #' @export plot_lm
 
 plot_lm <- function(fit_dat,
