@@ -1,4 +1,25 @@
+#' Plots estimated k
 #'
+#' @param hires_params data.frame with hires results, calculate using
+#' calculate_hires.
+#' @param interactive ...
+#'
+#' @description Plots the estimated k for residues. Estimated k for each are calculated
+#' from classification results, treating the n (population) as the probability of getting
+#' corresponding rate of exchange. The aggregation of results is described in the vignette.
+#'
+#' @return a girafe object.
+#'
+#' @seealso calculate_hires
+#'
+#' @examples
+#' dat <- HaDeX::read_hdx(...)
+#' kin_dat <- prepare_kin_dat(dat)
+#' fit_k_params <- get_example_fit_k_params()
+#' control <- get_example_control()
+#' fit_values <- create_fit_dataset(kin_dat, control, fit_k_params)
+#' hires_params <- calculate_hires(fit_values)
+#' plot_estimated_k(hires_params)
 #'
 #' @export
 

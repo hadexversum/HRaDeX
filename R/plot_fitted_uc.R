@@ -1,7 +1,33 @@
+#' Plots uptake curve with fit components
+#'
 #' @importFrom gridExtra grid.arrange
 #' @importFrom ggplot2 stat_function geom_line annotate theme_bw geom_errorbar geom_linerange
 #' @importFrom dplyr summarize group_by
 #' @importFrom ggiraph geom_point_interactive geom_line_interactive
+#'
+#' @param fit_dat uptake data for selected peptide.
+#' @param fit_values fit values for selected peptide.
+#' @param replicate indicator if the replicate data is plotted, or aggregated.
+#' @param fractional ...
+#' @param interactive ...
+#'
+#' @description FUnction plots the uptake values for one, selected peptide. Alongside the
+#' fitted model is plotted in black, with its components (fast - red, medium - green,
+#' slow - blue). In case when peptide is classified as a edge case, the linear model is used.
+#'
+#' @return a ggplot object. Need converstion to girafe for interactivity.
+#'
+#' @seealso plot_lm
+#'
+#' @examples
+#' HaDeX::read_hdx(...)
+#' kin_dat <- prepare_kin_dat(dat, state = state_1)
+#' fit_dat <- kin_dat[kin_dat[["id"]]==1, ]
+#' fit_k_params <- get_example_fit_k_params()
+#' control <- get_example_control()
+#' fit_values_all <- create_fit_dataset(kin_dat, control, fit_k_params)
+#' fit_values <- fit_values_all[fit_values_all[["id"]]==1, ]
+#' plot_fitted_uc(fit_dat, fit_values)
 #'
 #' @export
 plot_fitted_uc <- function(fit_dat,

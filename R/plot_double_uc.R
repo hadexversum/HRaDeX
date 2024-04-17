@@ -1,6 +1,31 @@
-## wrapper for GUI
-## for previous plot function for regular uc and fitted uc
-
+#' Plots two uc plots side by side
+#'
+#' @param fit_dat uptake data for selected peptide.
+#' @param fit_values fit values for selected peptide.
+#' @param replicate
+#' @param fractional
+#'
+#' @description This function plots two plots side by side for a peptide. The left
+#' plot is uc plot with fitted model with its components. The right plot is singular
+#' uc without logarithmic axis for the comparison of shape.
+#' Basically, this function calls for other functions and plots the results side by side.
+#' This function is aimed for the summary `Plots` panel in HRaDeXGUI and does not have
+#' an interactive mode.
+#'
+#' @return a ggplot object.
+#'
+#' @seelaso plot_fitted_uc plot_singular_uc
+#'
+#' @examples
+#' dat <- HaDeX::read_hdx(...)
+#' kin_dat <- prepare_kin_dat(dat, state = state_1)
+#' fit_dat <- kin_dat[kin_dat[["id"]]==1, ]
+#' fit_k_params <- get_example_fit_k_params()
+#' control <- get_example_control()
+#' fit_values_all <- create_fit_dataset(kin_dat, control, fit_k_params)
+#' fit_values <- fit_values_all[fit_values_all[["id"]]==1, ]
+#' plot_double_uc(fit_dat, fit_values)
+#'
 #' @export
 
 plot_double_uc <- function(fit_dat,

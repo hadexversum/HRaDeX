@@ -1,4 +1,28 @@
+#' Plots coverage with classification results
+#'
 #' @importFrom ggplot2 geom_rect aes element_blank
+#'
+#' @param fit_values
+#' @param fractional ...
+#' @param interactive ...
+#'
+#' @description This function is used for visualization of the classification method
+#' for peptides. It uses the traditional form of coverage, with length present and easily
+#' estimated redundancy. It also allows to see if the tendencies for exchange are coherent
+#' in regions.
+#'
+#' @return a girafe object.
+#'
+#' @seealso create_fit_dataset
+#'
+#' @examples
+#' HaDeX::read_hdx(...)
+#' kin_dat <- prepare_kin_dat(dat, state = state_1)
+#' fit_k_params <- get_example_fit_k_params()
+#' control <- get_example_control()
+#' fit_values <- create_fit_dataset(kin_dat, control, fit_k_params)
+#' plot_cov_class(fit_values)
+#'
 #' @export
 plot_cov_class <- function(fit_values,
                            fractional = T,

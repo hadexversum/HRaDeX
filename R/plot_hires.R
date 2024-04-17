@@ -4,8 +4,25 @@
 #' @importFrom ggiraph geom_rect_interactive girafe girafe_options opts_tooltip
 #' @importFrom glue glue
 #'
+#' @param hires_params data.frame with hires results, calculate using
+#' calculate_hires.
+#' @param interactive ...
+#'
+#' @description Plot the result of color classification analysis in
+#' high resolution in a linear form.
+#'
+#' @return a girafe object.
+#'
+#' @seealso calculate_hires
+#'
 #' @examples
 #' dat <- HaDeX::read_hdx()
+#' kin_dat <- prepare_kin_dat(dat, state = state_1)
+#' fit_k_params <- get_example_fit_k_params()
+#' control <- get_example_control()
+#' fit_values <- create_fit_dataset(kin_dat, control, fit_k_params)
+#' hires_params <- calculate_hires(fit_values)
+#' plot_hires(hires_params)
 #'
 #' @export
 
