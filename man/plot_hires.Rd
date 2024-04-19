@@ -6,10 +6,29 @@
 \usage{
 plot_hires(hires_params, interactive = F)
 }
+\arguments{
+\item{hires_params}{data.frame with hires results, calculate using
+calculate_hires.}
+
+\item{interactive}{...}
+}
+\value{
+a girafe object.
+}
 \description{
-Plots high resolution classification plot
+Plot the result of color classification analysis in
+high resolution in a linear form.
 }
 \examples{
 dat <- HaDeX::read_hdx()
+kin_dat <- prepare_kin_dat(dat, state = state_1)
+fit_k_params <- get_example_fit_k_params()
+control <- get_example_control()
+fit_values <- create_fit_dataset(kin_dat, control, fit_k_params)
+hires_params <- calculate_hires(fit_values)
+plot_hires(hires_params)
 
+}
+\seealso{
+calculate_hires
 }

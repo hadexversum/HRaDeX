@@ -22,7 +22,11 @@ Used in GUI to present uptake curves for edge cases, where the
 three-exponential model cannot be fitted.
 }
 \examples{
-dat <-
+dat <- HaDeX::read_hdx()
+kin_dat <- prepare_kin_dat(dat, state = state_1)
+fit_dat <- kin_dat[kin_dat[["id"]]==1, ]
+plot_lm(fit_dat, class_name = unique(fit_dat[["class_name"]]))
+
 }
 \seealso{
 

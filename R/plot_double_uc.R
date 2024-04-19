@@ -2,8 +2,8 @@
 #'
 #' @param fit_dat uptake data for selected peptide.
 #' @param fit_values fit values for selected peptide.
-#' @param replicate
-#' @param fractional
+#' @param replicate ...
+#' @param fractional ...
 #'
 #' @description This function plots two plots side by side for a peptide. The left
 #' plot is uc plot with fitted model with its components. The right plot is singular
@@ -14,7 +14,7 @@
 #'
 #' @return a ggplot object.
 #'
-#' @seelaso plot_fitted_uc plot_singular_uc
+#' @seealso plot_fitted_uc plot_singular_uc
 #'
 #' @examples
 #' dat <- HaDeX::read_hdx(...)

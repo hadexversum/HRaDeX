@@ -17,9 +17,11 @@ RoxygenNote: 7.1.2
 Imports:
     dplyr,
     HaDeX,
+    glue,
     ggiraph,
     ggplot2,
     gridExtra,
+    magick, 
     minpack.lm,
     r3dmol,
     tibble

@@ -1,4 +1,15 @@
+#' Plots blank 3D structure
+#'
 #' @import r3dmol
+#'
+#' @param pdb_file_path ...
+#'
+#' @description Plots blank 3D strucutre of the protein. This function is the base line
+#' for the presentation of the differences in compahradex.
+#'
+#' @return a r3dmol object.
+#'
+#' @seealso plot_3d_structure_hires
 #'
 #' @export
 
@@ -23,7 +34,19 @@ plot_3d_structure_blank <- function(pdb_file_path){
 }
 
 
+#' Prepares differential data
 #'
+#' @param params values to be presented.
+#' @param value which value should be presented.
+#' @param threshold threshold for the values.
+#'
+#' @description Function prepares the results in a format that can be used
+#' for 3D presentation. It transforms the peptide data into resiudal data, with regard
+#' to the original values above the threshold.
+#'
+#' @return a data.frame object.
+#'
+#' @seealso plot_3d_structure_blank
 #'
 #' @export
 
