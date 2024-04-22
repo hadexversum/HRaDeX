@@ -30,10 +30,17 @@ jobs:
         with:
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: any::pkgdown, local::.
-          needs: website
+      - name: Install devtools
+        run: install.packages(c("devtools", "pkgdown"))
+        shell: Rscript {0}
+
+      - name: Install HaDeX
+        run: devtools::install_github("hadexversum/HaDeX@dev_2", upgrade = "never")
+        shell: Rscript {0}
+
+      - name: Install HRaDeX
+        run: devtools::install_github("hadexversum/HRaDeX", upgrade = "never")
+        shell: Rscript {0}
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
