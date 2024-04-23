@@ -1,15 +1,17 @@
 Package: HRaDeX
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Uptake classification for HDXMS
+Version: 0.5
 Authors@R: 
-    person(given = "First",
-           family = "Last",
-           role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+     c(person("Weronika", "Puchala", 
+              email = "puchala.weronika@gmail.com", 
+              comment = c(ORCID = "0000-0003-2163-1429"),
+              role = c("cre", "aut")),
+       person("Michal", "Burdukiewicz", 
+              email = "michalburdukiewicz@gmail.com", 
+              comment = c(ORCID = "0000-0001-8926-582X"),
+              role = c("aut")))
+Description: Analyses the H/D exchange dynamics of proteins in high reolution. 
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -26,6 +28,9 @@ Imports:
     r3dmol,
     tibble
 Suggests: 
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 URL: https://hadexversum.github.io/HRaDeX/
+VignetteBuilder: knitr

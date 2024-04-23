@@ -1,0 +1,31 @@
+---
+title: "How to use the apps?"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{How to use the apps?}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+HRaDeX itself is just the package for the calculation and visulazation. To make use of the solution more comfortable, we prepared shiny applications. To use them, there are two function calls:
+
+
+You can also use them online, here: [HRaDeX](https://hradex.mslab-ibb.pl/) and [compaHRaDeX](https://compahradex.mslab-ibb.pl/).
+
+Should you notice any inconveniences while using them, please let us know. The best way to contact us is to use the following email: hadex@ibb.waw.pl. 
+
+# HRaDeX
+
+# compaHRaDeX
+
+Once you have processed two biological states using HRaDeX, there is a need for comparative analysis. What is necessary to perform one?
+
+* fit_data_.csv and uc_data_.csv for the first state
+* fit_data_.csv and uc_data_.csv for the second state
+* PDB file structure for the protein.
+
+fit_data_.csv is to be found in the `Fit params` tab in HRaDeX, and uc_data_.csv is in `UC Data` tab. 
+
+Of course, you can perform compartive analysis providing only some of desired files, but then not all of the fetures will be available.
+
+
