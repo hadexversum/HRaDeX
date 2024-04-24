@@ -7,7 +7,9 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-HRaDeX itself is just the package for the calculation and visulazation. To make use of the solution more comfortable, we prepared shiny applications. To use them, there are two function calls:
+Article under development.
+
+HRaDeX itself is just the package for the calculation and visualization. To make use of the solution more comfortable, we prepared shiny applications. To use them, there are two function calls:
 
 
 You can also use them online, here: [HRaDeX](https://hradex.mslab-ibb.pl/) and [compaHRaDeX](https://compahradex.mslab-ibb.pl/).

@@ -7,6 +7,9 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+Article under development.
+This article covers in detail the classification workflow, alongside the numerical transformations. For the methods of visualization of results obtained using classification workflow, see the article on Visualization methods: `vignette("visualization")`. 
+
 # Introduction
 
 The baseline of the HDX-MS method is the investigation of the exchange between hydrogen from the protein structure with deuterium from the buffer in which the protein is suspended. The difference in mass between hydrogen and deuterium is very close to 1 Da, so that we can identify the mass uptake with the number of exchanged hydrogens. Multiple time measurements allow us to see the exchange in time and create an exchange curve of the process for each measured and identified peptide (in a bottom-up approach).
@@ -20,7 +23,7 @@ This method aims to assign each peptide a specific combination of exchange class
 
 The class assignment is the final step of the classification process, based on the literature description of the hydrogen-deuterium phenomenon. The process has several steps, with multiple workflow decisions under the experimenter's control.
 
-In the figure \ref{fig:ex_duc}, examples of experimental curves are presented. Although it is easy to discriminate between the extreme cases (described and defined in section \ref{sec:extreme}) - immediate exchange (red) and none-exchange (black), we need a classification method to provide information on the remaining curves (grey). The problem of classification is mainly focused on them. 
+In the figure *x*, examples of experimental curves are presented. Although it is easy to discriminate between the extreme cases (described and defined in section *x*) - immediate exchange (red) and none-exchange (black), we need a classification method to provide information on the remaining curves (grey). The problem of classification is mainly focused on them. 
 
 *Future plans: the classification of the subfragments of the overlapping peptides.*
 
@@ -50,6 +53,7 @@ This form of the uptake curve is used for the fitting process. Because of this, 
 Firstly, we recognize extreme cases of uptake curve, and assigned them a class name without fitting process.
 
 For the peptide to be labeled as **none exchange**, has to fulfill defined requirements: 
+
 * the uptake level [Da] in the last time point of measurement ($D_{100}$) is lower than 1 Da,
 * the thoretical deuterium uptake in the last time point of measurement (scaled with respect to maximal possible uptake calculated from the sequence) is lower than 10%.
 
@@ -62,7 +66,7 @@ The fitting process is not conducted for uptake curves classified as extreme cas
 
 ## Exchange class definition
 
-Following the literature - especially in a cornerstone of the studies on the modeling hydrogen-deuterium exchange, the pioneering article of Zhang and Smith \cite{zhang_determination_1993}, we expect the process of deuterium exchange for the peptide to be described as a three-component equation \ref{eq:fit_3}:
+Following the literature - especially in a cornerstone of the studies on the modeling hydrogen-deuterium exchange, the pioneering article of Zhang and Smith \cite{zhang_determination_1993}, we expect the process of deuterium exchange for the peptide to be described as a three-component equation *x*}:
 
 $$
 D = n_1 \cdot (1 - exp(-k_1 \cdot t)) + n_2 \cdot (1-exp(-k_2 \cdot t)) + n_3 \cdot (1 - exp(-k_3 \cdot t)) 
@@ -77,7 +81,7 @@ where $n_i$ indicates the population of i-th group and $k_i$ is the exchange rat
 Ideally, $n_1 + n_2 + n_3 = 1$.
 In this equation, we have six unknown parameters that need to be found.
 
-Unfortunately, the authors of this paper did not provide boundaries for each exchange group. The  ranges proposed by us, according to our experience, can be found in table \ref{tab:k_ranges}. 
+Unfortunately, the authors of this paper did not provide boundaries for each exchange group. The  ranges proposed by us, according to our experience, can be found in table *x*. 
 
 The ranges of exchange rates can be changed if desired. However, we recommend avoiding situations where a certain range is covered by two classes, as it may lead to misclassification. 
 
@@ -97,20 +101,20 @@ We have multiple workflows prepared. We strongly advise using the first one, but
 
 Available workflows:
 
-* 3exp/1exp - we start the fitting process by looking for the best fit using function \ref{eq:fit_3} with ranges specified in table \ref{tab:k_ranges}. For the peptides with unsatisfactory results, we look for only one component function (described below). The selection of better results is made by comparing the $R^2$ values. 
+* 3exp/1exp - we start the fitting process by looking for the best fit using function *x* with ranges specified in table *x*}. For the peptides with unsatisfactory results, we look for only one component function (described below). The selection of better results is made by comparing the $R^2$ values. 
 * 2exp/1exp - the starting point is the two-component function (described below), and then the one-component function. The decision process is the same as in the previous point.
 * 3exp/2exp/1exp - all of the variants of the fitting process are prepared and the best is chosen based on the $BIC$ value. 
 
 ### 3exp fit
 
-The fitting function is described as Zhang \& Smith equation \ref{eq:fit_3}, with initial values: 
+The fitting function is described as Zhang \& Smith equation *x*, with initial values: 
 
 * $n_1 = n_2 = n_3 = 0.33$
 * $k_1 = 1$
 * $k_2 = 0.1$
 * $k_3 = 0.01$
 
-The boundaries for the values are as described in table \ref{tab:k_ranges}. 
+The boundaries for the values are as described in table *x*. 
 
 The number of unknown parameters is 6.
 
@@ -124,7 +128,7 @@ $$
 
 Where $a$ and $b$ are two of three exchange groups defined for the Zhang \& Smith equation. We perform three fitting processes (for each group combination) and select the best result comparing the $R^2$ value. That means we look for the fit using $k_1$ with $k_2$, $k_2$ with $k_3$, or $k_1$ with $k_3$ and select one as the answer.
 
-The initial value for $n_a$ and $n_b$ is 0.5. The initial values for $k$ are the same with analogical cases from the three-component equation (see section \ref{sssec:e3exp}).
+The initial value for $n_a$ and $n_b$ is 0.5. The initial values for $k$ are the same with analogical cases from the three-component equation (see section *x*).
 
 In this case, we assume that $n_a$ of hydrogen particles are undergoing the exchange with $k_a$ exchange rate, an $n_b$ with exchange rate $k_b$. 
 
@@ -151,9 +155,10 @@ The number of unknown parameters is 2.
 
 ### Fitting parameters
 
-To fit the curve we use the nonlinear least square method. For more information, see the documentation of the used R package, \hyperlink{https://rdocumentation.org/packages/minpack.lm/versions/1.2-3}{here}.
+To fit the curve we use the nonlinear least square method. For more information, see the documentation of the used [R package](https://rdocumentation.org/packages/minpack.lm/versions/1.2-3).
 
 Recommended parameters (possible change):
+
 * max iteration: 100,
 * algorithm: Levenberg-Marquardt.
 
@@ -199,47 +204,11 @@ $$
 
 This way, we have the right values to obtain the RGB color value.
 
-The estimated k values i calculated analogically.
+The estimated k values are calculated analogically.
 
-
-## Visualization of the results
-
-TODO: describe all methods 
-
-Each of the $n_i$ indicates a population from the range [0,1] and has an associated group color. Based on that, and the defined exchange classes, for each peptide we construct a color using RGB system. The participation of each group is presented on the chart \ref{fig:color_triangle}:
-
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=10cm]{rgb_class.png}
-\caption{RGB color triangle}
-\label{fig:color_triangle}
-\end{figure}
-
-The more red color is selected, the biggest the population of fast-exchanging hydrogens in the peptide.
-
-The more green color is selected, the biggest the population of medium-exchanging hydrogens in the peptide.
-
-The more blue color is selected, the biggest the population of slow-exchanging hydrogens in the peptide.
-
-*Disclaimer: We are aware that the color code convention may lead to inaccessibility for some users with color blindness. We recognize the problem although cannot see the solution without resigning from the RGB color code. For users whom it may concern, we provide numerical data in the web server, next to the plots for direct information.*
-
-
-
-# Example visualizations
-
-Below, in the figure \ref{fig:coverage_heatmap}, we present the classification results of all peptides in a single biological state on the coverage map (selected workflow: 3exp/1exp). The length of each bar represents the length of the peptide and its position on the protein sequence. It is crucial to notice, that overlapping peptides are classified  as one class, and the cases with different classes can be explained by the length and position. The color code for peptides that are mixed type can be interpreted using the RGB triangle (see figure \ref{fig:color_triangle}). 
-
-The consistency of classification for sub-areas of peptide leads us to believe that this method of classification is working and provide information coherent with experimental data.
-
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=17cm]{example_class_coverage.png}
-    \caption{Example of class coverage}
-    \label{fig:coverage_heatmap}
-\end{figure}
 
 # Workflow schema
 
-Figure \ref{diag:workflow_peptide} presents the diagram for classifying one peptide in one biological state, based on its uptake curve. This process can be repeated for each peptide from the data file to access the information for the set of peptides from a protein.
+Figure *x* presents the diagram for classifying one peptide in one biological state, based on its uptake curve. This process can be repeated for each peptide from the data file to access the information for the set of peptides from a protein.
 
+![Workflow schema](figures/workflow_diagram.png)

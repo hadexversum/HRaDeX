@@ -10,3 +10,9 @@ compaHRaDeX is an app for comparative analysis of classification results for two
 The applications are available for use online: [HRaDeX](https://hradex.mslab-ibb.pl/) and [compaHRaDeX](https://compahradex.mslab-ibb.pl/).
 
 The project is currently under development.
+
+
+For more information on pepitde-level analysis, see ...
+For detailed explanation  how the classification workflow works see ...
+and how to visualize the results, see ...
+The documentation is available [here](https://hadexversum.github.io/HRaDeX/).
