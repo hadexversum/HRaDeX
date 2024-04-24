@@ -49,6 +49,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/gui_guide.html">How to use the apps?</a>
+    <a class="dropdown-item" href="../articles/visualization.html">Visualization methods</a>
     <a class="dropdown-item" href="../articles/workflow.html">Workflow description</a>
   </div>
 </li>
@@ -78,6 +79,11 @@
 
     
     
+<p>Article under development. This article covers in detail the
+classification workflow, alongside the numerical transformations. For
+the methods of visualization of results obtained using classification
+workflow, see the article on Visualization methods:
+<code><a href="../articles/visualization.html">vignette("visualization")</a></code>.</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -107,13 +113,12 @@ sequence, and to describe the exchange process itself.</p>
 based on the literature description of the hydrogen-deuterium
 phenomenon. The process has several steps, with multiple workflow
 decisions under the experimenter’s control.</p>
-<p>In the figure <span class="math inline">\(\ref{fig:ex_duc}\)</span>,
-examples of experimental curves are presented. Although it is easy to
-discriminate between the extreme cases (described and defined in section
-<span class="math inline">\(\ref{sec:extreme}\)</span>) - immediate
-exchange (red) and none-exchange (black), we need a classification
-method to provide information on the remaining curves (grey). The
-problem of classification is mainly focused on them.</p>
+<p>In the figure <em>x</em>, examples of experimental curves are
+presented. Although it is easy to discriminate between the extreme cases
+(described and defined in section <em>x</em>) - immediate exchange (red)
+and none-exchange (black), we need a classification method to provide
+information on the remaining curves (grey). The problem of
+classification is mainly focused on them.</p>
 <p><em>Future plans: the classification of the subfragments of the
 overlapping peptides.</em></p>
 <div class="section level3">
@@ -158,11 +163,13 @@ process, only the real measurement time points.</em></p>
 <p>Firstly, we recognize extreme cases of uptake curve, and assigned
 them a class name without fitting process.</p>
 <p>For the peptide to be labeled as <strong>none exchange</strong>, has
-to fulfill defined requirements: * the uptake level [Da] in the last
-time point of measurement (<span class="math inline">\(D_{100}\)</span>)
-is lower than 1 Da, * the thoretical deuterium uptake in the last time
-point of measurement (scaled with respect to maximal possible uptake
-calculated from the sequence) is lower than 10%.</p>
+to fulfill defined requirements:</p>
+<ul>
+<li>the uptake level [Da] in the last time point of measurement (<span class="math inline">\(D_{100}\)</span>) is lower than 1 Da,</li>
+<li>the thoretical deuterium uptake in the last time point of
+measurement (scaled with respect to maximal possible uptake calculated
+from the sequence) is lower than 10%.</li>
+</ul>
 <p>We interpret this case as a lack of observable exchange during the
 course of experiment, and indicate it with the black color on the
 visualization.</p>
@@ -183,7 +190,7 @@ extreme cases (no exchange or invalid).</p>
 <p>Following the literature - especially in a cornerstone of the studies
 on the modeling hydrogen-deuterium exchange, the pioneering article of
 Zhang and Smith , we expect the process of deuterium exchange for the
-peptide to be described as a three-component equation <span class="math inline">\(\ref{eq:fit_3}\)</span>:</p>
+peptide to be described as a three-component equation <em>x</em>}:</p>
 <p><span class="math display">\[
 D = n_1 \cdot (1 - exp(-k_1 \cdot t)) + n_2 \cdot (1-exp(-k_2 \cdot t))
 + n_3 \cdot (1 - exp(-k_3 \cdot t))
@@ -202,7 +209,7 @@ the exchange rate of i-th group. Moreover, we assume:</p>
 this equation, we have six unknown parameters that need to be found.</p>
 <p>Unfortunately, the authors of this paper did not provide boundaries
 for each exchange group. The ranges proposed by us, according to our
-experience, can be found in table <span class="math inline">\(\ref{tab:k_ranges}\)</span>.</p>
+experience, can be found in table <em>x</em>.</p>
 <p>The ranges of exchange rates can be changed if desired. However, we
 recommend avoiding situations where a certain range is covered by two
 classes, as it may lead to misclassification.</p>
@@ -244,11 +251,11 @@ leave the final decision to the user, trusting their motives.</p>
 <p>Available workflows:</p>
 <ul>
 <li>3exp/1exp - we start the fitting process by looking for the best fit
-using function <span class="math inline">\(\ref{eq:fit_3}\)</span> with
-ranges specified in table <span class="math inline">\(\ref{tab:k_ranges}\)</span>. For the peptides with
-unsatisfactory results, we look for only one component function
-(described below). The selection of better results is made by comparing
-the <span class="math inline">\(R^2\)</span> values.</li>
+using function <em>x</em> with ranges specified in table <em>x</em>}.
+For the peptides with unsatisfactory results, we look for only one
+component function (described below). The selection of better results is
+made by comparing the <span class="math inline">\(R^2\)</span>
+values.</li>
 <li>2exp/1exp - the starting point is the two-component function
 (described below), and then the one-component function. The decision
 process is the same as in the previous point.</li>
@@ -258,14 +265,16 @@ prepared and the best is chosen based on the <span class="math inline">\(BIC\)</
 <div class="section level4">
 <h4 id="exp-fit">3exp fit<a class="anchor" aria-label="anchor" href="#exp-fit"></a>
 </h4>
-<p>The fitting function is described as Zhang &amp; Smith equation <span class="math inline">\(\ref{eq:fit_3}\)</span>, with initial values:</p>
+<p>The fitting function is described as Zhang &amp; Smith equation
+<em>x</em>, with initial values:</p>
 <ul>
 <li><span class="math inline">\(n_1 = n_2 = n_3 = 0.33\)</span></li>
 <li><span class="math inline">\(k_1 = 1\)</span></li>
 <li><span class="math inline">\(k_2 = 0.1\)</span></li>
 <li><span class="math inline">\(k_3 = 0.01\)</span></li>
 </ul>
-<p>The boundaries for the values are as described in table <span class="math inline">\(\ref{tab:k_ranges}\)</span>.</p>
+<p>The boundaries for the values are as described in table
+<em>x</em>.</p>
 <p>The number of unknown parameters is 6.</p>
 </div>
 <div class="section level4">
@@ -284,7 +293,7 @@ we look for the fit using <span class="math inline">\(k_1\)</span> with
 <p>The initial value for <span class="math inline">\(n_a\)</span> and
 <span class="math inline">\(n_b\)</span> is 0.5. The initial values for
 <span class="math inline">\(k\)</span> are the same with analogical
-cases from the three-component equation (see section <span class="math inline">\(\ref{sssec:e3exp}\)</span>).</p>
+cases from the three-component equation (see section <em>x</em>).</p>
 <p>In this case, we assume that <span class="math inline">\(n_a\)</span>
 of hydrogen particles are undergoing the exchange with <span class="math inline">\(k_a\)</span> exchange rate, an <span class="math inline">\(n_b\)</span> with exchange rate <span class="math inline">\(k_b\)</span>.</p>
 <p>The number of unknown parameters is 4.</p>
@@ -315,9 +324,13 @@ boundary of <span class="math inline">\(k_3\)</span>
 <h4 id="fitting-parameters">Fitting parameters<a class="anchor" aria-label="anchor" href="#fitting-parameters"></a>
 </h4>
 <p>To fit the curve we use the nonlinear least square method. For more
-information, see the documentation of the used R package, .</p>
-<p>Recommended parameters (possible change): * max iteration: 100, *
-algorithm: Levenberg-Marquardt.</p>
+information, see the documentation of the used <a href="https://rdocumentation.org/packages/minpack.lm/versions/1.2-3" class="external-link">R
+package</a>.</p>
+<p>Recommended parameters (possible change):</p>
+<ul>
+<li>max iteration: 100,</li>
+<li>algorithm: Levenberg-Marquardt.</li>
+</ul>
 </div>
 </div>
 <div class="section level3">
@@ -369,55 +382,20 @@ normalize the values, to get the sense of proportionality.</p>
 n_{i, agg.scaled} = \frac{n_{i, agg}}{\sum^i n_{i, agg}}
 \]</span></p>
 <p>This way, we have the right values to obtain the RGB color value.</p>
-<p>The estimated k values i calculated analogically.</p>
+<p>The estimated k values are calculated analogically.</p>
 </div>
 </div>
-<div class="section level3">
-<h3 id="visualization-of-the-results">Visualization of the results<a class="anchor" aria-label="anchor" href="#visualization-of-the-results"></a>
-</h3>
-<p>TODO: describe all methods</p>
-<p>Each of the <span class="math inline">\(n_i\)</span> indicates a
-population from the range [0,1] and has an associated group color. Based
-on that, and the defined exchange classes, for each peptide we construct
-a color using RGB system. The participation of each group is presented
-on the chart <span class="math inline">\(\ref{fig:color_triangle}\)</span>:</p>
-<p>The more red color is selected, the biggest the population of
-fast-exchanging hydrogens in the peptide.</p>
-<p>The more green color is selected, the biggest the population of
-medium-exchanging hydrogens in the peptide.</p>
-<p>The more blue color is selected, the biggest the population of
-slow-exchanging hydrogens in the peptide.</p>
-<p><em>Disclaimer: We are aware that the color code convention may lead
-to inaccessibility for some users with color blindness. We recognize the
-problem although cannot see the solution without resigning from the RGB
-color code. For users whom it may concern, we provide numerical data in
-the web server, next to the plots for direct information.</em></p>
-</div>
-</div>
-<div class="section level2">
-<h2 id="example-visualizations">Example visualizations<a class="anchor" aria-label="anchor" href="#example-visualizations"></a>
-</h2>
-<p>Below, in the figure <span class="math inline">\(\ref{fig:coverage_heatmap}\)</span>, we present
-the classification results of all peptides in a single biological state
-on the coverage map (selected workflow: 3exp/1exp). The length of each
-bar represents the length of the peptide and its position on the protein
-sequence. It is crucial to notice, that overlapping peptides are
-classified as one class, and the cases with different classes can be
-explained by the length and position. The color code for peptides that
-are mixed type can be interpreted using the RGB triangle (see figure
-<span class="math inline">\(\ref{fig:color_triangle}\)</span>).</p>
-<p>The consistency of classification for sub-areas of peptide leads us
-to believe that this method of classification is working and provide
-information coherent with experimental data.</p>
 </div>
 <div class="section level2">
 <h2 id="workflow-schema">Workflow schema<a class="anchor" aria-label="anchor" href="#workflow-schema"></a>
 </h2>
-<p>Figure <span class="math inline">\(\ref{diag:workflow_peptide}\)</span> presents the
-diagram for classifying one peptide in one biological state, based on
-its uptake curve. This process can be repeated for each peptide from the
-data file to access the information for the set of peptides from a
-protein.</p>
+<p>Figure <em>x</em> presents the diagram for classifying one peptide in
+one biological state, based on its uptake curve. This process can be
+repeated for each peptide from the data file to access the information
+for the set of peptides from a protein.</p>
+<div class="float">
+<img src="figures/workflow_diagram.png" alt="Workflow schema"><div class="figcaption">Workflow schema</div>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
