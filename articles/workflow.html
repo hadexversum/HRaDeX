@@ -364,12 +364,17 @@ resiude, as the most represantative.</p>
 <div class="section level4">
 <h4 id="aggregation-of-values">Aggregation of values<a class="anchor" aria-label="anchor" href="#aggregation-of-values"></a>
 </h4>
+<p>Aggregation of values is inspired by the article by Keppler and Weis
+(doi: 10.1007/s13361-014-1033-6), with small changes: the ommition of
+the first residue is done in different step if demanded by the user. The
+aggregation of values is done on a subset of already filtered data.</p>
 <p>For each residue there is a subset of peptides covering said residue.
 Then, the final <span class="math inline">\(n_{i, agg}\)</span> is
 calculated from the subset of <span class="math inline">\(n_i\)</span>,
-with weights inverse propotional to the peptides lengths (<span class="math inline">\(l_i\)</span>):</p>
+with weights inverse proportional to the max uptake of peptide (<span class="math inline">\(mu_i\)</span>) - the shortest the peptide the
+highest the possibility that the uptake took place in said residue:</p>
 <p><span class="math display">\[
-w_i = \frac{\frac{1}{l_i}}{\sum^i \frac{1}{l_i}}
+w_i = \frac{\frac{1}{mu_i}}{\sum^i \frac{1}{mu_i}}
 \]</span></p>
 <p>Then, the <span class="math inline">\(n_i%\)</span> is a weighted
 average of set of <span class="math inline">\(n_i\)</span>.</p>
