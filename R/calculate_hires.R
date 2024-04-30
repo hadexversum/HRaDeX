@@ -2,7 +2,7 @@
 #' @export
 
 calculate_hires <- function(fit_values,
-                            method = c("shortest", "weiss"),
+                            method = c("shortest", "weighted"),
                             protein_length = max(fit_values[["end"]]),
                             fractional = F){
 
@@ -60,7 +60,7 @@ calculate_hires <- function(fit_values,
 
   }
 
-  if(method == "weiss"){
+  if(method == "weighted"){
 
     hires_params <- lapply(seq(1:protein_length), function(pos){
 
@@ -111,7 +111,7 @@ calculate_hires <- function(fit_values,
 
           res <- tmp_params %>%
             mutate(length = nchar(sequence),
-                   weight = 1/length/sum(1/length)) %>%
+                   weight = 1/max_uptake/sum(1/max_uptake)) %>%
             reframe(Protein = Protein,
                     State = State,
                     position = pos,
