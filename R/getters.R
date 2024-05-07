@@ -145,3 +145,17 @@ plot_k_params <- function(fit_k_params){
          title = "Comaparison of exchange classes")
 
 }
+
+#' Get a data table with positions and residues
+#'
+#' @export
+
+get_residue_positions <- function(fit_values){
+
+  do.call(rbind, lapply(1:nrow(fit_values), function(i){
+    data.frame(position = fit_values[i, "start"]:fit_values[i, "end"],
+               aa = strsplit(fit_values[i, "sequence"], split="")[[1]])
+  })) %>% unique(.) %>% arrange(position)
+
+}
+

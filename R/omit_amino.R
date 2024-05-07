@@ -15,7 +15,11 @@
 omit_amino <- function(dat,
                        omit = 1){
 
-  dat[, "Start"] <- dat[, "Start"] + remove
+  dat <- dat %>%
+    mutate(Start = Start + omit,
+           MaxUptake = MaxUptake - omit,
+           Sequence = substring(Sequence, 1 + omit, nchar(Sequence)))
+  # TODO make it better, with regard to proline
 
   return(dat)
 

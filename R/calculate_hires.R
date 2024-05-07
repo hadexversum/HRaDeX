@@ -9,11 +9,13 @@ calculate_hires <- function(fit_values,
   Protein = fit_values[["Protein"]][1]
   State = fit_values[["State"]][1]
 
-  hires_params <- NULL
+  residues <- get_residue_positions(fit_values)
+
+  hires_params_ <- NULL
 
   if (method == "shortest"){
 
-    hires_params <- lapply(seq(1:protein_length), function(pos){
+    hires_params_ <- lapply(seq(1:protein_length), function(pos){
 
       if(fractional){
 
@@ -62,7 +64,7 @@ calculate_hires <- function(fit_values,
 
   if(method == "weighted"){
 
-    hires_params <- lapply(seq(1:protein_length), function(pos){
+    hires_params_ <- lapply(seq(1:protein_length), function(pos){
 
       # print(pos)
       if(fractional){
@@ -136,6 +138,21 @@ calculate_hires <- function(fit_values,
     }) %>% bind_rows()
 
    }
+
+  hires_params <- merge(hires_params_, residues, by = "position", all.x = TRUE)
+
+  hires_params_p <- hires_params %>%
+    filter(aa == "P") %>%
+    mutate(n_1 = 0,
+           n_2 = 0,
+           n_3 = 0,
+           k_est = 0,
+           class_name = "none",
+           color = "#000000")
+
+  hires_params <- filter(hires_params, aa!="PP" | is.na(aa)) %>%
+    rbind(hires_params_p) %>%
+    arrange(position)
 
   attr(hires_params, "method") <- method
 
