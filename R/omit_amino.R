@@ -1,7 +1,7 @@
 #' Omit first amino of peptides
 #'
 #' @param dat dataset to be modified
-#' @param omit numer of residues to me omitted
+#' @param omit numer of residues to me omitted for each peptide
 #'
 #' @description In some approach, ommitting the first amino residue in the peptide is a
 #' way to correct back-exchange. This function modifies provided dataset and omits desired
@@ -9,6 +9,10 @@
 #' peptide.
 #'
 #' @return data.frame in the same format as provided.
+#'
+#' @examples
+#' fixed_dat <- omit_amino(alpha_dat)
+#' head(fixed_dat)
 #'
 #' @export
 

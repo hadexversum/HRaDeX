@@ -15,9 +15,8 @@
 #' @seealso
 #'
 #' @examples
-#' dat <- HaDeX::read_hdx()
-#' kin_dat <- prepare_kin_dat(dat, state = state_1)
-#' fit_dat <- kin_dat[kin_dat[["id"]]==1, ]
+#' kin_dat <- prepare_kin_dat(alpha_dat)
+#' fit_dat <- kin_dat[kin_dat[["ID"]]==1, ]
 #' plot_lm(fit_dat, class_name = unique(fit_dat[["class_name"]]))
 #'
 #' @export plot_lm

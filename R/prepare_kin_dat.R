@@ -19,8 +19,8 @@
 #' @seealso HaDeX::read_hdx
 #'
 #' @examples
-#' dat <- HaDeX::read_hdx(...)
-#' kin_dat <- prepare_kin_dat(dat, state = state_1)
+#' kin_dat <- prepare_kin_dat(alpha_dat)
+#' head(kin_dat)
 #'
 #' @export
 
@@ -91,8 +91,8 @@ prepare_kin_dat <- function(dat,
 #' @seealso HaDeX::read_hdx
 #'
 #' @examples
-#' dat <- HaDeX::read_hdx(...)
-#' TODO
+#' rep_peptide_dat <- ...
+#' calculate_replicate_state_uptake(rep_peptide_dat)
 #'
 #' @export
 calculate_replicate_state_uptake <- function(rep_peptide_dat,

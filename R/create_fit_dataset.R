@@ -1,4 +1,27 @@
+#' Create fits for all the peptides
+#'
 #' @importFrom dplyr bind_rows
+#'
+#' @param kin_dat ...
+#' @param fit_k_params ...
+#' @param control ...
+#' @param trace ...
+#' @param fractional ...
+#' @param workflow ...
+#'
+#' @description This is a wrapper function for get_fit_results, but for multiple peptides at
+#' the same time. First, it creates a peptide list from the supplied deuterium uptake data, and
+#' calls the fitting function for each, to create full dataset.
+#'
+#' @return a data.frame object.
+#'
+#' @seealso get_fit_results
+#'
+#' @examples
+#' kin_dat <- prepare_kin_dat(alpha_dat)
+#' fit_k_params <- get_example_fit_k_params()
+#' head(create_fit_dataset(kin_dat, fit_k_params))
+#'
 #' @export
 create_fit_dataset <- function(kin_dat,
                                fit_k_params,

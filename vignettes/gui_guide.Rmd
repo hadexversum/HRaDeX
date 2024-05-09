@@ -9,16 +9,98 @@ vignette: >
 
 Article under development.
 
-HRaDeX itself is just the package for the calculation and visualization. To make use of the solution more comfortable, we prepared shiny applications. To use them, there are two function calls:
+HRaDeX itself is just the package for the calculation and visualization. To make the solution more comfortable, we prepared shiny applications. To use them, there are two function calls:
 
+```{r eval=F}
+HRaDeX::run_hradex()
+HRaDeX::run_compahradex()
+```
 
 You can also use them online, here: [HRaDeX](https://hradex.mslab-ibb.pl/) and [compaHRaDeX](https://compahradex.mslab-ibb.pl/).
 
-Should you notice any inconveniences while using them, please let us know. The best way to contact us is to use the following email: hadex@ibb.waw.pl. 
+Should you notice any inconveniences while using them, please let us know. The best way to contact us is to use the following email: hadex@ibb.waw.pl.
 
 # HRaDeX
 
+HRaDeX GUI is an application for classification process for one biological state at the time.
+
+## Settings
+
+Here, we discuss briefly the possibilities for altering the workflow in the HRaDeX GUI.
+
+### Input file
+
+The required experimental file should be the `cluster file` from DynamX 3.0 or 2.0. In the future there will be more options available, but currently only one is supported.
+
+There is a message with the upload result. If none is provided by the user, there is loaded example file - A2. 
+
+### Uptake calculations
+
+#### Select state
+
+#### Omit residues
+
+#### Use replicate data
+
+### Sequence
+
+#### Sequence from the data
+
+#### Sequence from the pdb file
+
+#### Move the start of the sequence
+
+### Deuterium uptake controls
+
+#### Non-deuterated control
+
+#### Full deuterated control
+
+#### Use as FD
+
+#### Fractional values
+
+### Workflow
+
+#### Select workflow
+
+### Class definition
+
+#### Limits and boundaries
+
+#### Reset the values
+
+### Fit options
+
+#### Number of iterations
+
+#### Method
+
+### Structure
+
+## Tabs
+
+### Overview
+
+### Hires params
+
+### Fit params
+
+### Plots
+
+### Plots Data
+
+### Structure
+
+### About
+
 # compaHRaDeX
+
+compaHRaDeX GUI is an application for comparison of the results of classification process (performed in HRaDeX) for two biological states at the same time.
+
+## Settings
+
+### Input files
 
 Once you have processed two biological states using HRaDeX, there is a need for comparative analysis. What is necessary to perform one?
 
@@ -26,8 +108,10 @@ Once you have processed two biological states using HRaDeX, there is a need for 
 * fit_data_.csv and uc_data_.csv for the second state
 * PDB file structure for the protein.
 
-fit_data_.csv is to be found in the `Fit params` tab in HRaDeX, and uc_data_.csv is in `UC Data` tab. 
+fit_data_.csv is to be found in the `Fit params` tab in HRaDeX, and uc_data_.csv is in `UC Data` tab.
 
 Of course, you can perform compartive analysis providing only some of desired files, but then not all of the fetures will be available.
 
+### Structure
 
+## Tabs

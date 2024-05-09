@@ -16,7 +16,8 @@
 #'
 #' @seealso ...
 #'
-#' @examples TODO
+#' @examples
+#' kin_dat <- prepare_kin_dat(alpha_dat)
 #'
 #' @export
 

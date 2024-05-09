@@ -1,0 +1,125 @@
+---
+title: "Experimental example"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include = FALSE}
+library(HRaDeX)
+library(HaDeX)
+library(ggplot2)
+
+```
+
+```{r include = FALSE}
+# TODO put data into package
+dat <- HaDeX::read_hdx("C:/Users/User/Downloads/GAMMAalpha_cut.csv.csv")
+```
+
+This document is an adapted version of Supplement to the HRaDeX manuscript.
+
+Here we describe the detailed step-by-step analysis of experimental data using the hadexversum family tools: HaDeX, HRaDeX and compaHRaDeX. hadexversum availability is described in appropriate section below.
+
+The analysed protein is eEF1Bα subunit of the human guanine-nucleotide exchange factor (GEF) complex (eEF1B), measured in [Mass Spectrometry Lab](https://mslab-ibb.pl/) in [Institute of Biochemistry and Biophysics Polish Academy of Sciences](https://ibb.edu.pl/en/) and published by [Bondarchuk et al](https://doi.org/10.1093/nar/gkac685). In the one-state classification we will focus on pure alpha state, and in comparative analysis with regard to gamma-alpha state. 
+
+
+
+
+# HaDeX 
+
+HaDeX is available as a [web-server](), [R package](), and [standalone software](). The first version is already [published]() and the second version is in advanced state - [HadeX2](). 
+
+HaDeX is a general-use tool for widely understood analysis on the peptide level. Moreover, it provides many features for investigating directly the mass measurements and checking the experiment quality. The summary of the results is wrapped in a short and comprehensive report. 
+```{r}
+
+```
+
+To control the identification process, and labeling of the spectra, we check the overall uncertainty. If the uncertainty is very high in comparison with others and has obvious outliers, there is a probability that the outlier is mislabeled. 
+
+To check if the protein is covered by peptides on a satisfactory level, we check the coverage plot. There is also the numerical information of the coverage followed by redundancy, which is also presented on the plot, below the coverage plot. 
+
+
+
+To see both the uptake level (with uncertainty of measurement) and the position of each peptide on the protein sequence, we use the comparison plot. For readability purposes, on this type of plot, we can present the data only for a single time point, but multiple biological states. However, a quick glimpse of the plot enables a general view of the exchanged regions. Moreover, let’s suppose we aim for the comparative analysis of two biological states. In that case, we use the so-called Woods plot, with differences in uptake for each peptide and information on which differences are statistically significant for the desired level. As for the comparison plot, we only present the data for a single time point. 
+
+
+This plot presents the results for the measurement done after 150 min of exchange. It shows one significant exchange region - between positions 20 and 60 and two regions with values barely above the significance level.
+
+
+Measurement control. 
+
+
+
+
+
+# HRaDeX
+
+
+HRaDeX is currently available as a [web-server](), and [R package](). 
+
+HRaDeX provides classification results for one biological state at a time. To get data for comparative purposes, the classification process should be conducted twice, on selected states, with the same classification parameters. Adjusting the parameters can be challenging, especially for longer proteins due to the calculation time. 
+
+First, we upload the experimental data. The parameter options are adjusted to the content of the file.
+
+Then, we need to decide if the default parameters are sufficient. Of course, they can be adjusted in an interactive mode. Anyway, additional knowledge about the specificity of analyzed protein is helpful. Some of the peptides have a strong “medium” exchange phase shifted towards default “slow” exchange, with “slow” exchange being very slow, close to the bottom limit of class exchange. In such cases, the broadening of the medium class is desired. 
+
+In the case of our example, we use the default limits, as they are sufficient and the fit results are very good, with small rss.
+
+All parameters must be confirmed by clicking the button, to avoid unnecessary calculations while selecting the parameters.
+
+After a while, we have the results. 
+
+Let’s start with discussing the fitting results for example peptide.
+Measurement points are marked by circles, with the uncertainty of the measurement shown by the error bars. Mass spectrometry is a very accurate method, and the error bars are hardly visible, although present. The black line indicates the final fitted curve, with color lines indicating the three components of the final model. As described before, the red line presents the fast component, the green line is the medium exchange component, and the blue line is the slow component. Although all populations sum up to one, each population has its intensity that impacts the final classification. In this example, the 
+
+TODO example of one fit 
+
+
+
+After each peptide is assigned color code, we aggregate the data to obtain the simplified high-resolution result. For each residue in the protein structure, we select the classification belonging to the shortest peptide covering that residue, believing that this peptide is the most representative of that residue. 
+The classification of the whole sequence is presented below.
+
+
+However, presenting the classification results in a linear way is not quite satisfying. Adding the spatial information, obtained from different sources, provides additional depth to our analysis. 
+
+
+
+Here, we can make some additional observations. First, let’s look at the first part of the protein. Although the green region on the classification linear plot is interrupted by red regions, spatially the green regions are close, surrounded by the red region, on the outer side of the protein - as we suspect. On the second part of the protein, the regions with similar classifications are close to each other as well. We can see clearly that the blue regions of slow exchange are close, located in one specific place. 
+The linking between two parts of the protein is red - as we expect, as it is a singular structure, easily accessed by the solvent, and without structural protection from the exchange.
+
+
+Here we discuss only one biological state, but for the second one, the reasoning is similar.
+
+
+
+
+# compaHRaDeX
+
+compaHRaDeX is currently available as a [web-server]() using the code from HRaDeX [R package](). 
+
+
+The ultimate goal of the experiment is usually the comparative analysis between two biological states that provides information on how the exchange is changed by specific factors. In this case, we prepared a classification analysis for two biological states of alpha: the first state (discussed above is alpha without complex) and the second state (alpha in the presence of complex).
+
+Below we present the classification results for both states, the first one on the bottom and the second one on the top. We can see with bore eye the regions of difference.
+
+Unfortunately, it is hard to estimate the difference between the colors. We can quantify the color difference into one number, calculating the simple distance between populations used to obtain the classification color.
+
+
+
+We can see the obvious difference in the first part of the protein, in the same region as shown in the Woods plot above. We also see the small difference from Woods plot in the second part of the protein. Using x as the threshold, we plot the differences on the 3D structure.
+
+Although we see the regions of difference, it is hard to say which way goes the change.
+Alternative way to see the difference is a
+
+# Availability
+

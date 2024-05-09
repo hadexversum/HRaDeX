@@ -14,11 +14,9 @@
 #' @seealso create_fit_results
 #'
 #' @examples
-#' dat <- HaDeX::read_hdx(...)
 #' fit_k_params <- get_example_fit_k_params()
 #' control <- get_example_control()
-#' control <- get_example_control()
-#' kin_dat <- prepare_kin_dat(dat)
+#' kin_dat <- prepare_kin_dat(alpha_dat)
 #' fit_values <- create_fit_dataset(kin_dat, control, fit_k_params)
 #' plot_n(fit_values)
 #'

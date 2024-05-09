@@ -21,10 +21,10 @@ data, the uc distance is calculated. The method of uc distance calucation is
 described in the vigniette TODO.
 }
 \examples{
-dat <- HaDeX::read_hdx(...)
-kin_dat_1 <- prepare_kin_dat(dat, state = state_1)
-kin_dat_2 <- prepare_kin_dat(dat, state = state_2)
+kin_dat_1 <- prepare_kin_dat(alpha_dat, state = unique(alpha_dat[["State"]])[1])
+kin_dat_2 <- prepare_kin_dat(alpha_dat, state = unique(alpha_dat[["State"]])[2])
 uc_dist_dataset <- create_uc_distance_dataset(kin_dat_1, kin_dat_2)
+head(uc_dist_dataset)
 
 }
 \seealso{

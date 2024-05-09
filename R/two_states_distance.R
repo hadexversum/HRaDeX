@@ -12,14 +12,14 @@
 #' @seealso create_two_state_dataset
 #'
 #' @examples
-#' dat <- HaDeX::read_hdx(...)
 #' fit_k_params <- get_example_fit_k_params()
 #' control <- get_example_control()
-#' kin_dat <- prepare_kin_dat(dat)
+#' kin_dat <- prepare_kin_dat(alpha_dat)
 #' fit_values <- create_fit_dataset(kin_dat, control, fit_k_params)
 #' hires_params <- calculate_hires(fit_values)
-#' two_states_dataset <- create_two_state_dataset(hires_params_1, hires_params_2)
-#' plot_k_distance(two_states_dataset)
+#' # the same for the second state and then:
+#' # two_states_dataset <- create_two_state_dataset(hires_params_1, hires_params_2)
+#' # plot_k_distance(two_states_dataset)
 #'
 #' @export
 
@@ -66,9 +66,8 @@ plot_k_distance <- function(two_state_dataset,
 #' @seealso create_uc_distance_dataset
 #'
 #' @examples
-#' dat <- HaDeX::read_hdx(...)
-#' kin_dat_1 <- prepare_kin_dat(dat, state = state_1)
-#' kin_dat_2 <- prepare_kin_dat(dat, state = state_2)
+#' kin_dat_1 <- prepare_kin_dat(alpha_dat, state = unique(alpha_dat[["State"]])[1])
+#' kin_dat_2 <- prepare_kin_dat(alpha_dat, state = unique(alpha_dat[["State"]])[2])
 #' uc_distance_dataset <- create_uc_distance_dataset(kin_dat_1, kin_dat_2)
 #' plot_uc_real_dist(uc_distance_dataset)
 #'
@@ -157,14 +156,14 @@ plot_uc_real_dist <- function(uc_distance_dataset,
 #' @seealso calculate_hires create_fit_dataset
 #'
 #' @examples
-#' dat <- HaDeX::read_hdx(...)
 #' fit_k_params <- get_example_fit_k_params()
 #' control <- get_example_control()
 #' control <- get_example_control()
-#' kin_dat <- prepare_kin_dat(dat)
+#' kin_dat <- prepare_kin_dat(alpha_dat)
 #' fit_values <- create_fit_dataset(kin_dat, control, fit_k_params)
 #' hires_params <- calculate_hires(fit_values)
-#' plot_two_states(hires_params_1, hires_params_2)
+#' # the same for the second state, and then:
+#' # plot_two_states(hires_params_1, hires_params_2)
 #'
 #' @export plot_two_states
 
@@ -256,14 +255,14 @@ plot_two_states <- function(hires_params_1,
 #' @seealso create_two_state_dataset
 #'
 #' @examples
-#' dat <- HaDeX::read_hdx(...)
 #' fit_k_params <- get_example_fit_k_params()
 #' control <- get_example_control()
-#' kin_dat <- prepare_kin_dat(dat)
+#' kin_dat <- prepare_kin_dat(alpha_dat)
 #' fit_values <- create_fit_dataset(kin_dat, control, fit_k_params)
 #' hires_params <- calculate_hires(fit_values)
-#' two_states_dataset <- create_two_state_dataset(hires_params_1, hires_params_2)
-#' plot_color_distance(two_states_dataset)
+#' # the same for the second state, and then:
+#' # two_states_dataset <- create_two_state_dataset(hires_params_1, hires_params_2)
+#' # plot_color_distance(two_states_dataset)
 #'
 #' @export plot_color_distance
 
@@ -316,9 +315,8 @@ plot_color_distance <- function(two_state_dataset,
 #' @seealso create_uc_distance_dataset
 #'
 #' @examples
-#' dat <- HaDeX::read_hdx(...)
-#' kin_dat_1 <- prepare_kin_dat(dat, state = state_1)
-#' kin_dat_2 <- prepare_kin_dat(dat, state = state_2)
+#' kin_dat_1 <- prepare_kin_dat(alpha_dat, state = unique(alpha_dat[["State"]])[1])
+#' kin_dat_2 <- prepare_kin_dat(alpha_dat, state = unique(alpha_dat[["State"]])[2])
 #' uc_distance_dataset <- create_uc_distance_dataset(kin_dat_1, kin_dat_2)
 #' plot_uc_distance(uc_distance_dataset)
 #'
@@ -414,11 +412,11 @@ plot_uc_distance <- function(uc_distance_dataset,
 #' @seealso create_fit_dataset prepare_kin_dat
 #'
 #' @examples
-#' dat <- HaDeX::read_hdx(...)
-#' kin_dat_1 <- prepare_kin_dat(dat, state = state_1)
-#' fit_dat_1 <- kin_dat_1[ID == 1, ]
+#' kin_dat_1 <- prepare_kin_dat(alpha_dat, state = unique(alpha_dat[["State"]])[1])
+#' fit_dat_1 <- kin_dat_1[kin_dat_1[["ID"]] == 1, ]
 #' fit_values_1 <- create_fit_dataset(fit_dat_1, control, fit_k_params)
-#' plot_uc(fit_dat_1, fit_dat_2, fit_values_1, fit_values_2)
+#' # the same for the second state, and then:
+#' # plot_uc(fit_dat_1, fit_dat_2, fit_values_1, fit_values_2)
 #'
 #' @export plot_uc
 
