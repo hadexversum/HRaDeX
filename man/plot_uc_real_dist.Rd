@@ -29,9 +29,8 @@ Be careful, as uc_distance_dataset contains distances calculated using
 different methods, as described in vignette TODO.
 }
 \examples{
-dat <- HaDeX::read_hdx(...)
-kin_dat_1 <- prepare_kin_dat(dat, state = state_1)
-kin_dat_2 <- prepare_kin_dat(dat, state = state_2)
+kin_dat_1 <- prepare_kin_dat(alpha_dat, state = unique(alpha_dat[["State"]])[1])
+kin_dat_2 <- prepare_kin_dat(alpha_dat, state = unique(alpha_dat[["State"]])[2])
 uc_distance_dataset <- create_uc_distance_dataset(kin_dat_1, kin_dat_2)
 plot_uc_real_dist(uc_distance_dataset)
 

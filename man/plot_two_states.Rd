@@ -29,14 +29,14 @@ states at the same time. The results for the second state are on top, and for th
 first state on the bottom. The grey color indicates no data.
 }
 \examples{
-dat <- HaDeX::read_hdx(...)
 fit_k_params <- get_example_fit_k_params()
 control <- get_example_control()
 control <- get_example_control()
-kin_dat <- prepare_kin_dat(dat)
+kin_dat <- prepare_kin_dat(alpha_dat)
 fit_values <- create_fit_dataset(kin_dat, control, fit_k_params)
 hires_params <- calculate_hires(fit_values)
-plot_two_states(hires_params_1, hires_params_2)
+# the same for the second state, and then:
+# plot_two_states(hires_params_1, hires_params_2)
 
 }
 \seealso{

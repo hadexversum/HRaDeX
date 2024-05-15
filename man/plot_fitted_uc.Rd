@@ -32,13 +32,12 @@ fitted model is plotted in black, with its components (fast - red, medium - gree
 slow - blue). In case when peptide is classified as a edge case, the linear model is used.
 }
 \examples{
-HaDeX::read_hdx(...)
-kin_dat <- prepare_kin_dat(dat, state = state_1)
-fit_dat <- kin_dat[kin_dat[["id"]]==1, ]
+kin_dat <- prepare_kin_dat(alpha_dat)
+fit_dat <- kin_dat[kin_dat[["ID"]]==1, ]
 fit_k_params <- get_example_fit_k_params()
 control <- get_example_control()
 fit_values_all <- create_fit_dataset(kin_dat, control, fit_k_params)
-fit_values <- fit_values_all[fit_values_all[["id"]]==1, ]
+fit_values <- fit_values_all[fit_values_all[["ID"]]==1, ]
 plot_fitted_uc(fit_dat, fit_values)
 
 }

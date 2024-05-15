@@ -20,8 +20,7 @@ Plot the result of color classification analysis in
 high resolution in a linear form.
 }
 \examples{
-dat <- HaDeX::read_hdx()
-kin_dat <- prepare_kin_dat(dat, state = state_1)
+kin_dat <- prepare_kin_dat(alpha_dat)
 fit_k_params <- get_example_fit_k_params()
 control <- get_example_control()
 fit_values <- create_fit_dataset(kin_dat, control, fit_k_params)

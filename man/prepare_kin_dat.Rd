@@ -35,8 +35,8 @@ Function calculates deuterium uptake for each time point
 in the original data with respect to the parameters.
 }
 \examples{
-dat <- HaDeX::read_hdx(...)
-kin_dat <- prepare_kin_dat(dat, state = state_1)
+kin_dat <- prepare_kin_dat(alpha_dat)
+head(kin_dat)
 
 }
 \seealso{

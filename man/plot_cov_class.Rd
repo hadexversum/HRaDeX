@@ -23,11 +23,10 @@ estimated redundancy. It also allows to see if the tendencies for exchange are c
 in regions.
 }
 \examples{
-HaDeX::read_hdx(...)
-kin_dat <- prepare_kin_dat(dat, state = state_1)
+kin_dat <- prepare_kin_dat(alpha_dat)
 fit_k_params <- get_example_fit_k_params()
 control <- get_example_control()
-fit_values <- create_fit_dataset(kin_dat, control, fit_k_params)
+fit_values <- create_fit_dataset(kin_dat, fit_k_params, control)
 plot_cov_class(fit_values)
 
 }

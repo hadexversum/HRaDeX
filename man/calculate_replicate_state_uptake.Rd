@@ -29,8 +29,8 @@ Function calculates deuterim uptake for one biological state,
 for replicates, without additional aggregation of the data.
 }
 \examples{
-dat <- HaDeX::read_hdx(...)
-TODO
+rep_peptide_dat <- ...
+calculate_replicate_state_uptake(rep_peptide_dat)
 
 }
 \seealso{

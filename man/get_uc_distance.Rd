@@ -25,7 +25,7 @@ values \code{Start}, \code{End}, \code{MaxUptake} and \code{Exposure} are the sa
 kin_dat_1 <- prepare_kin_dat(alpha_dat, state = unique(alpha_dat[["State"]])[1])
 kin_dat_2 <- prepare_kin_dat(alpha_dat, state = unique(alpha_dat[["State"]])[2])
 fit_dat_1 <- kin_dat_1[kin_dat_1[["ID"]] == 1, ]
-fit_dat_2 <- kin_dat_2[kin_dat_1[["ID"]] == 1, ]
+fit_dat_2 <- kin_dat_2[kin_dat_2[["ID"]] == 1, ]
 get_uc_distance(fit_dat_1, fit_dat_2)
 
 }

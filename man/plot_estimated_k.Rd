@@ -21,11 +21,10 @@ from classification results, treating the n (population) as the probability of g
 corresponding rate of exchange. The aggregation of results is described in the vignette.
 }
 \examples{
-dat <- HaDeX::read_hdx(...)
-kin_dat <- prepare_kin_dat(dat)
+kin_dat <- prepare_kin_dat(alpha_dat)
 fit_k_params <- get_example_fit_k_params()
 control <- get_example_control()
-fit_values <- create_fit_dataset(kin_dat, control, fit_k_params)
+fit_values <- create_fit_dataset(kin_dat, fit_k_params, control)
 hires_params <- calculate_hires(fit_values)
 plot_estimated_k(hires_params)
 

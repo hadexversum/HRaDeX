@@ -36,11 +36,11 @@ in the whole protein sequence.The biological states are distinguishable by the l
 This is a part of comparative feature.
 }
 \examples{
-dat <- HaDeX::read_hdx(...)
-kin_dat_1 <- prepare_kin_dat(dat, state = state_1)
-fit_dat_1 <- kin_dat_1[ID == 1, ]
+kin_dat_1 <- prepare_kin_dat(alpha_dat, state = unique(alpha_dat[["State"]])[1])
+fit_dat_1 <- kin_dat_1[kin_dat_1[["ID"]] == 1, ]
 fit_values_1 <- create_fit_dataset(fit_dat_1, control, fit_k_params)
-plot_uc(fit_dat_1, fit_dat_2, fit_values_1, fit_values_2)
+# the same for the second state, and then:
+# plot_uc(fit_dat_1, fit_dat_2, fit_values_1, fit_values_2)
 
 }
 \seealso{

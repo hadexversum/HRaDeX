@@ -36,7 +36,7 @@ in a traditional mode.
 Currently not in use in GUIs.
 }
 \examples{
-TODO
+kin_dat <- prepare_kin_dat(alpha_dat)
 
 }
 \seealso{

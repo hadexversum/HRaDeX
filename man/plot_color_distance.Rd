@@ -22,14 +22,14 @@ The difference is always positive, as it is difficult to get the direction of ch
 for three parameters.
 }
 \examples{
-dat <- HaDeX::read_hdx(...)
 fit_k_params <- get_example_fit_k_params()
 control <- get_example_control()
-kin_dat <- prepare_kin_dat(dat)
+kin_dat <- prepare_kin_dat(alpha_dat)
 fit_values <- create_fit_dataset(kin_dat, control, fit_k_params)
 hires_params <- calculate_hires(fit_values)
-two_states_dataset <- create_two_state_dataset(hires_params_1, hires_params_2)
-plot_color_distance(two_states_dataset)
+# the same for the second state, and then:
+# two_states_dataset <- create_two_state_dataset(hires_params_1, hires_params_2)
+# plot_color_distance(two_states_dataset)
 
 }
 \seealso{

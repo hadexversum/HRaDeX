@@ -23,7 +23,23 @@ library(ggplot2)
 
 ```{r include = FALSE}
 # TODO put data into package
-dat <- HaDeX::read_hdx("C:/Users/User/Downloads/GAMMAalpha_cut.csv.csv")
+
+kin_dat <- HRaDeX::prepare_kin_dat(alpha_dat, 
+                                   state = "GAMMA_KSCN",
+                                   time_0 = 0,
+                                   time_100 = 1440)
+
+fit_values <- create_fit_dataset(kin_dat, 
+                                 fit_k_params = get_example_fit_k_params(), 
+                                 trace = F, 
+                                 fractional = T, 
+                                 workflow = 321)
+
+hires_params <- calculate_hires(fit_values,
+                                fractional = T, 
+                                method = "weighted")
+
+
 ```
 
 This document is an adapted version of Supplement to the HRaDeX manuscript.
@@ -40,9 +56,7 @@ The analysed protein is eEF1Bα subunit of the human guanine-nucleotide exchange
 HaDeX is available as a [web-server](), [R package](), and [standalone software](). The first version is already [published]() and the second version is in advanced state - [HadeX2](). 
 
 HaDeX is a general-use tool for widely understood analysis on the peptide level. Moreover, it provides many features for investigating directly the mass measurements and checking the experiment quality. The summary of the results is wrapped in a short and comprehensive report. 
-```{r}
 
-```
 
 To control the identification process, and labeling of the spectra, we check the overall uncertainty. If the uncertainty is very high in comparison with others and has obvious outliers, there is a probability that the outlier is mislabeled. 
 
@@ -86,9 +100,20 @@ TODO example of one fit
 
 
 
+
 After each peptide is assigned color code, we aggregate the data to obtain the simplified high-resolution result. For each residue in the protein structure, we select the classification belonging to the shortest peptide covering that residue, believing that this peptide is the most representative of that residue. 
 The classification of the whole sequence is presented below.
 
+
+```{r}
+HRaDeX::plot_hires(hires_params)
+```
+
+If we want to investigate on deep-level the wuality of fittness, we can check the intermediate results. Here, we present the fitting results on the coverage plot. The classficiation results are consistent in regions, therefore the aggregation is justified.
+
+```{r}
+HRaDeX::plot_cov_class(fit_values)
+```
 
 However, presenting the classification results in a linear way is not quite satisfying. Adding the spatial information, obtained from different sources, provides additional depth to our analysis. 
 
@@ -98,12 +123,32 @@ Here, we can make some additional observations. First, let’s look at the first
 The linking between two parts of the protein is red - as we expect, as it is a singular structure, easily accessed by the solvent, and without structural protection from the exchange.
 
 
+```{r}
+HRaDeX::plot_3d_structure_hires(pdb_file_path = "../data/Model_eEF1Bgamma.pdb",
+                                hires_params = hires_params)
+```
+
 Here we discuss only one biological state, but for the second one, the reasoning is similar.
 
-
-
-
 # compaHRaDeX
+
+```{r}
+
+kin_dat_2 <- HRaDeX::prepare_kin_dat(alpha_dat, 
+                                   state = "Complex_gamma_alpha_KSCN",
+                                   time_0 = 0,
+                                   time_100 = 1440)
+
+fit_values_2 <- create_fit_dataset(kin_dat_2, 
+                                 fit_k_params = get_example_fit_k_params(), 
+                                 trace = F, 
+                                 fractional = T, 
+                                 workflow = 321)
+
+hires_params_2 <- calculate_hires(fit_values_2,
+                                fractional = T, 
+                                method = "weighted")
+```
 
 compaHRaDeX is currently available as a [web-server]() using the code from HRaDeX [R package](). 
 
@@ -112,7 +157,21 @@ The ultimate goal of the experiment is usually the comparative analysis between 
 
 Below we present the classification results for both states, the first one on the bottom and the second one on the top. We can see with bore eye the regions of difference.
 
+```{r}
+HRaDeX::plot_two_states(hires_params, hires_params_2)
+```
+
+
 Unfortunately, it is hard to estimate the difference between the colors. We can quantify the color difference into one number, calculating the simple distance between populations used to obtain the classification color.
+
+```{r}
+two_states <- HRaDeX::create_two_state_dataset(hires_params, hires_params_2)
+HRaDeX::plot_color_distance(two_states)
+```
+
+```{r}
+HRaDeX::plot_k_distance(two_states)
+```
 
 
 

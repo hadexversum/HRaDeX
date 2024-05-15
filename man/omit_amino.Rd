@@ -9,7 +9,7 @@ omit_amino(dat, omit = 1)
 \arguments{
 \item{dat}{dataset to be modified}
 
-\item{omit}{numer of residues to me omitted}
+\item{omit}{numer of residues to me omitted for each peptide}
 }
 \value{
 data.frame in the same format as provided.
@@ -19,4 +19,9 @@ In some approach, ommitting the first amino residue in the peptide is a
 way to correct back-exchange. This function modifies provided dataset and omits desired
 number of residues (omit parameter) effectively changing the Start position of each
 peptide.
+}
+\examples{
+fixed_dat <- omit_amino(alpha_dat)
+head(fixed_dat)
+
 }
