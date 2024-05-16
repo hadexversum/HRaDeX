@@ -39,16 +39,16 @@ jobs:
         run: install.packages(c("devtools", "pkgdown"))
         shell: Rscript {0}
 
+      - name: Install r3dmol
+        run: devtools::install_github("swsoyee/r3dmol", upgrade = "never")
+        shell: Rscript {0}
+
       - name: Install HaDeX
         run: devtools::install_github("hadexversum/HaDeX@dev_2", upgrade = "never")
         shell: Rscript {0}
 
       - name: Install HRaDeX
         run: devtools::install_github("hadexversum/HRaDeX", upgrade = "never")
-        shell: Rscript {0}
-
-      - name: Install r3dmol
-        run: devtools::install_github("swsoyee/r3dmol", upgrade = "never")
         shell: Rscript {0}
 
       - name: Build site

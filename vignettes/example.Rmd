@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 library(HRaDeX)
 library(HaDeX)
 library(ggplot2)
+library(dplyr)
 
 ```
 
@@ -46,9 +47,9 @@ This document is an adapted version of Supplement to the HRaDeX manuscript.
 
 Here we describe the detailed step-by-step analysis of experimental data using the hadexversum family tools: HaDeX, HRaDeX and compaHRaDeX. hadexversum availability is described in appropriate section below.
 
-The analysed protein is eEF1Bα subunit of the human guanine-nucleotide exchange factor (GEF) complex (eEF1B), measured in [Mass Spectrometry Lab](https://mslab-ibb.pl/) in [Institute of Biochemistry and Biophysics Polish Academy of Sciences](https://ibb.edu.pl/en/) and published by [Bondarchuk et al](https://doi.org/10.1093/nar/gkac685). In the one-state classification we will focus on pure alpha state, and in comparative analysis with regard to gamma-alpha state. 
+The analysed protein is eEF1Bα subunit of the human guanine-nucleotide exchange factor (GEF) complex (eEF1B), measured in [Mass Spectrometry Lab](https://mslab-ibb.pl/) in [Institute of Biochemistry and Biophysics Polish Academy of Sciences](https://ibb.edu.pl/en/) and published by [Bondarchuk et al](https://doi.org/10.1093/nar/gkac685). In the one-state classification we will focus on pure gamma state, and in comparative analysis with regard to alpha state. 
 
-
+We discuss only the visualization methods of hadexversum, without making strict interpretations. For that, we suggest contacting the research group that published original research on this topic.
 
 
 # HaDeX 
@@ -93,15 +94,54 @@ All parameters must be confirmed by clicking the button, to avoid unnecessary ca
 
 After a while, we have the results. 
 
-Let’s start with discussing the fitting results for example peptide.
-Measurement points are marked by circles, with the uncertainty of the measurement shown by the error bars. Mass spectrometry is a very accurate method, and the error bars are hardly visible, although present. The black line indicates the final fitted curve, with color lines indicating the three components of the final model. As described before, the red line presents the fast component, the green line is the medium exchange component, and the blue line is the slow component. Although all populations sum up to one, each population has its intensity that impacts the final classification. In this example, the 
+Let’s start with discussing the fitting results for example peptide - peptide IAAQYSGAQ from the example gamma data.
+Below, there is a plot with two parts on the left, there is normalised uptake curve with fitted model and logarythmic x scale. On the right theres is the same uptake curve, but without normalization and with normal x scale, for better uderstanding of the uptace pattern.
 
-TODO example of one fit 
+Left plot: Measurement points are marked by circles, with the uncertainty of the measurement shown by the error bars. Mass spectrometry is a very accurate method, and the error bars are hardly visible, although present. The black line indicates the final fitted curve, with color lines indicating the three components of the final model. As described before, the red line presents the fast component, the green line is the medium exchange component, and the blue line is the slow component. Although all populations sum up to one, each population has its intensity that impacts the final classification. 
+
+```{r  include = FALSE}
+
+example_fit_dat <- filter(fit_values, id == 8)
+example_kin_dat <- filter(kin_dat, ID == 8)
 
 
+```
+
+```{r fig.width=7}
+
+plot_double_uc(example_kin_dat, example_fit_dat)
+
+```
 
 
-After each peptide is assigned color code, we aggregate the data to obtain the simplified high-resolution result. For each residue in the protein structure, we select the classification belonging to the shortest peptide covering that residue, believing that this peptide is the most representative of that residue. 
+The model parameters are shown below, and the resulting classficiation color is below the table.
+
+```{r}
+example_fit_dat
+```
+As we can see, the population of the slow group is the biggest, thus the final color is close to blue. However, the other groups are present and interefere with the purity of the color. Below there is also a legend, to have an understaing where in the color scale is located this classification result.
+
+
+```{r, fig.width=2, fig.height=2, echo=F}
+
+ggplot() + 
+  geom_rect(aes(xmin=0, xmax=1, ymin=0, ymax=1), fill = example_fit_dat[["color"]]) +
+  theme_bw() +
+  theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.ticks.x = element_blank(), axis.ticks.y = element_blank(),
+        axis.text.x = element_blank(), axis.text.y = element_blank())
+
+```
+
+
+Color legend:
+
+![]("figures/rgb_plaster.png")
+
+
+After each peptide is assigned color code, we aggregate the data to obtain the simplified high-resolution result. For each residue in the protein structure, we aggregate the values using selected method. The methods are described in the article discussing the workflow. Here, we use the "weighted" approach.
+
 The classification of the whole sequence is presented below.
 
 
@@ -109,7 +149,7 @@ The classification of the whole sequence is presented below.
 HRaDeX::plot_hires(hires_params)
 ```
 
-If we want to investigate on deep-level the wuality of fittness, we can check the intermediate results. Here, we present the fitting results on the coverage plot. The classficiation results are consistent in regions, therefore the aggregation is justified.
+If we want to investigate on deep-level the quality of fittness, we can check the intermediate results. Here, we present the fitting results on the coverage plot. The classficiation results are consistent in regions, therefore the aggregation is justified.
 
 ```{r}
 HRaDeX::plot_cov_class(fit_values)
@@ -117,18 +157,16 @@ HRaDeX::plot_cov_class(fit_values)
 
 However, presenting the classification results in a linear way is not quite satisfying. Adding the spatial information, obtained from different sources, provides additional depth to our analysis. 
 
-
-
-Here, we can make some additional observations. First, let’s look at the first part of the protein. Although the green region on the classification linear plot is interrupted by red regions, spatially the green regions are close, surrounded by the red region, on the outer side of the protein - as we suspect. On the second part of the protein, the regions with similar classifications are close to each other as well. We can see clearly that the blue regions of slow exchange are close, located in one specific place. 
-The linking between two parts of the protein is red - as we expect, as it is a singular structure, easily accessed by the solvent, and without structural protection from the exchange.
-
-
 ```{r}
 HRaDeX::plot_3d_structure_hires(pdb_file_path = "../data/Model_eEF1Bgamma.pdb",
                                 hires_params = hires_params)
 ```
 
-Here we discuss only one biological state, but for the second one, the reasoning is similar.
+
+Here, we can make some additional observations. First, let’s look at the first part of the protein. Although the green region on the classification linear plot is interrupted by red regions, spatially the green regions are close, surrounded by the red region, on the outer side of the protein - as we suspect. On the second part of the protein, the regions with similar classifications are close to each other as well. We can see clearly that the blue regions of slow exchange are close, located in one specific place. 
+The linking between two parts of the protein is red - as we expect, as it is a singular structure, easily accessed by the solvent, and without structural protection from the exchange.
+
+Here we discussed only one biological state, but for the second one, the reasoning is similar.
 
 # compaHRaDeX
 
@@ -153,7 +191,7 @@ hires_params_2 <- calculate_hires(fit_values_2,
 compaHRaDeX is currently available as a [web-server]() using the code from HRaDeX [R package](). 
 
 
-The ultimate goal of the experiment is usually the comparative analysis between two biological states that provides information on how the exchange is changed by specific factors. In this case, we prepared a classification analysis for two biological states of alpha: the first state (discussed above is alpha without complex) and the second state (alpha in the presence of complex).
+The ultimate goal of the experiment is usually the comparative analysis between two biological states that provides information on how the exchange is changed by specific factors. In this case, we prepared a classification analysis for two biological states of alpha: the first state (discussed above is gamma without complex) and the second state (gamma in the presence of alpha).
 
 Below we present the classification results for both states, the first one on the bottom and the second one on the top. We can see with bore eye the regions of difference.
 

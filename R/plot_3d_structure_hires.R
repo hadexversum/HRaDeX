@@ -1,7 +1,6 @@
 #' Presents classification results on 3D structure
 #'
 #' @import r3dmol
-#' @importFrom r3dmol m_button_spin
 #'
 #' @param hires_params ...
 #' @param pdb_file_path ...
