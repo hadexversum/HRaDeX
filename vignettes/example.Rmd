@@ -137,7 +137,7 @@ ggplot() +
 
 Color legend:
 
-![]("figures/rgb_plaster.png")
+![](figures/rgb_plaster.png)
 
 
 After each peptide is assigned color code, we aggregate the data to obtain the simplified high-resolution result. For each residue in the protein structure, we aggregate the values using selected method. The methods are described in the article discussing the workflow. Here, we use the "weighted" approach.
