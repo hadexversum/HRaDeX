@@ -48,6 +48,7 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/example.html">Experimental example</a>
     <a class="dropdown-item" href="../articles/gui_guide.html">How to use the apps?</a>
     <a class="dropdown-item" href="../articles/visualization.html">Visualization methods</a>
     <a class="dropdown-item" href="../articles/workflow.html">Workflow description</a>
@@ -81,18 +82,167 @@
     
 <p>Article under development.</p>
 <p>HRaDeX itself is just the package for the calculation and
-visualization. To make use of the solution more comfortable, we prepared
-shiny applications. To use them, there are two function calls:</p>
+visualization. To make the solution more comfortable, we prepared shiny
+applications. To use them, there are two function calls:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">HRaDeX</span><span class="fu">::</span><span class="fu">run_hradex</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">HRaDeX</span><span class="fu">::</span><span class="fu">run_compahradex</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>You can also use them online, here: <a href="https://hradex.mslab-ibb.pl/" class="external-link">HRaDeX</a> and <a href="https://compahradex.mslab-ibb.pl/" class="external-link">compaHRaDeX</a>.</p>
 <p>Should you notice any inconveniences while using them, please let us
 know. The best way to contact us is to use the following email: <a href="mailto:hadex@ibb.waw.pl" class="email">hadex@ibb.waw.pl</a>.</p>
 <div class="section level2">
 <h2 id="hradex">HRaDeX<a class="anchor" aria-label="anchor" href="#hradex"></a>
 </h2>
+<p>HRaDeX GUI is an application for classification process for one
+biological state at the time.</p>
+<div class="section level3">
+<h3 id="settings">Settings<a class="anchor" aria-label="anchor" href="#settings"></a>
+</h3>
+<p>Here, we discuss briefly the possibilities for altering the workflow
+in the HRaDeX GUI.</p>
+<div class="section level4">
+<h4 id="input-file">Input file<a class="anchor" aria-label="anchor" href="#input-file"></a>
+</h4>
+<p>The required experimental file should be the
+<code>cluster file</code> from DynamX 3.0 or 2.0. In the future there
+will be more options available, but currently only one is supported.</p>
+<p>There is a message with the upload result. If none is provided by the
+user, there is loaded example file - A2.</p>
+</div>
+<div class="section level4">
+<h4 id="uptake-calculations">Uptake calculations<a class="anchor" aria-label="anchor" href="#uptake-calculations"></a>
+</h4>
+<div class="section level5">
+<h5 id="select-state">Select state<a class="anchor" aria-label="anchor" href="#select-state"></a>
+</h5>
+</div>
+<div class="section level5">
+<h5 id="omit-residues">Omit residues<a class="anchor" aria-label="anchor" href="#omit-residues"></a>
+</h5>
+</div>
+<div class="section level5">
+<h5 id="use-replicate-data">Use replicate data<a class="anchor" aria-label="anchor" href="#use-replicate-data"></a>
+</h5>
+</div>
+</div>
+<div class="section level4">
+<h4 id="sequence">Sequence<a class="anchor" aria-label="anchor" href="#sequence"></a>
+</h4>
+<div class="section level5">
+<h5 id="sequence-from-the-data">Sequence from the data<a class="anchor" aria-label="anchor" href="#sequence-from-the-data"></a>
+</h5>
+</div>
+<div class="section level5">
+<h5 id="sequence-from-the-pdb-file">Sequence from the pdb file<a class="anchor" aria-label="anchor" href="#sequence-from-the-pdb-file"></a>
+</h5>
+</div>
+<div class="section level5">
+<h5 id="move-the-start-of-the-sequence">Move the start of the sequence<a class="anchor" aria-label="anchor" href="#move-the-start-of-the-sequence"></a>
+</h5>
+</div>
+</div>
+<div class="section level4">
+<h4 id="deuterium-uptake-controls">Deuterium uptake controls<a class="anchor" aria-label="anchor" href="#deuterium-uptake-controls"></a>
+</h4>
+<div class="section level5">
+<h5 id="non-deuterated-control">Non-deuterated control<a class="anchor" aria-label="anchor" href="#non-deuterated-control"></a>
+</h5>
+</div>
+<div class="section level5">
+<h5 id="full-deuterated-control">Full deuterated control<a class="anchor" aria-label="anchor" href="#full-deuterated-control"></a>
+</h5>
+</div>
+<div class="section level5">
+<h5 id="use-as-fd">Use as FD<a class="anchor" aria-label="anchor" href="#use-as-fd"></a>
+</h5>
+</div>
+<div class="section level5">
+<h5 id="fractional-values">Fractional values<a class="anchor" aria-label="anchor" href="#fractional-values"></a>
+</h5>
+</div>
+</div>
+<div class="section level4">
+<h4 id="workflow">Workflow<a class="anchor" aria-label="anchor" href="#workflow"></a>
+</h4>
+<div class="section level5">
+<h5 id="select-workflow">Select workflow<a class="anchor" aria-label="anchor" href="#select-workflow"></a>
+</h5>
+</div>
+</div>
+<div class="section level4">
+<h4 id="class-definition">Class definition<a class="anchor" aria-label="anchor" href="#class-definition"></a>
+</h4>
+<div class="section level5">
+<h5 id="limits-and-boundaries">Limits and boundaries<a class="anchor" aria-label="anchor" href="#limits-and-boundaries"></a>
+</h5>
+</div>
+<div class="section level5">
+<h5 id="reset-the-values">Reset the values<a class="anchor" aria-label="anchor" href="#reset-the-values"></a>
+</h5>
+</div>
+</div>
+<div class="section level4">
+<h4 id="fit-options">Fit options<a class="anchor" aria-label="anchor" href="#fit-options"></a>
+</h4>
+<div class="section level5">
+<h5 id="number-of-iterations">Number of iterations<a class="anchor" aria-label="anchor" href="#number-of-iterations"></a>
+</h5>
+</div>
+<div class="section level5">
+<h5 id="method">Method<a class="anchor" aria-label="anchor" href="#method"></a>
+</h5>
+</div>
+</div>
+<div class="section level4">
+<h4 id="structure">Structure<a class="anchor" aria-label="anchor" href="#structure"></a>
+</h4>
+</div>
+</div>
+<div class="section level3">
+<h3 id="tabs">Tabs<a class="anchor" aria-label="anchor" href="#tabs"></a>
+</h3>
+<div class="section level4">
+<h4 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h4>
+</div>
+<div class="section level4">
+<h4 id="hires-params">Hires params<a class="anchor" aria-label="anchor" href="#hires-params"></a>
+</h4>
+</div>
+<div class="section level4">
+<h4 id="fit-params">Fit params<a class="anchor" aria-label="anchor" href="#fit-params"></a>
+</h4>
+</div>
+<div class="section level4">
+<h4 id="plots">Plots<a class="anchor" aria-label="anchor" href="#plots"></a>
+</h4>
+</div>
+<div class="section level4">
+<h4 id="plots-data">Plots Data<a class="anchor" aria-label="anchor" href="#plots-data"></a>
+</h4>
+</div>
+<div class="section level4">
+<h4 id="structure-1">Structure<a class="anchor" aria-label="anchor" href="#structure-1"></a>
+</h4>
+</div>
+<div class="section level4">
+<h4 id="about">About<a class="anchor" aria-label="anchor" href="#about"></a>
+</h4>
+</div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="compahradex">compaHRaDeX<a class="anchor" aria-label="anchor" href="#compahradex"></a>
 </h2>
+<p>compaHRaDeX GUI is an application for comparison of the results of
+classification process (performed in HRaDeX) for two biological states
+at the same time.</p>
+<div class="section level3">
+<h3 id="settings-1">Settings<a class="anchor" aria-label="anchor" href="#settings-1"></a>
+</h3>
+<div class="section level4">
+<h4 id="input-files">Input files<a class="anchor" aria-label="anchor" href="#input-files"></a>
+</h4>
 <p>Once you have processed two biological states using HRaDeX, there is
 a need for comparative analysis. What is necessary to perform one?</p>
 <ul>
@@ -104,6 +254,16 @@ a need for comparative analysis. What is necessary to perform one?</p>
 HRaDeX, and uc_data_.csv is in <code>UC Data</code> tab.</p>
 <p>Of course, you can perform compartive analysis providing only some of
 desired files, but then not all of the fetures will be available.</p>
+</div>
+<div class="section level4">
+<h4 id="structure-2">Structure<a class="anchor" aria-label="anchor" href="#structure-2"></a>
+</h4>
+</div>
+</div>
+<div class="section level3">
+<h3 id="tabs-1">Tabs<a class="anchor" aria-label="anchor" href="#tabs-1"></a>
+</h3>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

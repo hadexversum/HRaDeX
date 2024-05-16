@@ -26,6 +26,7 @@ in the original data with respect to the parameters."><meta property="og:image" 
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/example.html">Experimental example</a>
     <a class="dropdown-item" href="../articles/gui_guide.html">How to use the apps?</a>
     <a class="dropdown-item" href="../articles/visualization.html">Visualization methods</a>
     <a class="dropdown-item" href="../articles/workflow.html">Workflow description</a>
@@ -103,10 +104,22 @@ only for normalization purposes, or left as time point of measurement</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">HaDeX</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/HaDeX/man/read_hdx.html" class="external-link">read_hdx</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> '...' used in an incorrect context</span>
-<span class="r-in"><span><span class="va">kin_dat</span> <span class="op">&lt;-</span> <span class="fu">prepare_kin_dat</span><span class="op">(</span><span class="va">dat</span>, state <span class="op">=</span> <span class="va">state_1</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'dat' not found</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">kin_dat</span> <span class="op">&lt;-</span> <span class="fu">prepare_kin_dat</span><span class="op">(</span><span class="va">alpha_dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">kin_dat</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ID Exposure   Protein      Sequence Start End                    State</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  1    0.167 db_eEF1Bg       HMAAGTL     0   6 Complex_gamma_alpha_KSCN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  2    0.167 db_eEF1Bg        YTYPEN     7  12 Complex_gamma_alpha_KSCN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  3    0.167 db_eEF1Bg       YTYPENW     7  13 Complex_gamma_alpha_KSCN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  4    0.167 db_eEF1Bg YTYPENWRAFKAL     7  19 Complex_gamma_alpha_KSCN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  5    0.167 db_eEF1Bg       WRAFKAL    13  19 Complex_gamma_alpha_KSCN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  6    0.167 db_eEF1Bg     WRAFKALIA    13  21 Complex_gamma_alpha_KSCN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   MaxUptake frac_deut_uptake err_frac_deut_uptake deut_uptake err_deut_uptake</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1         6       0.24329094          0.005053006  0.90717167     0.018360606</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         4       0.57277616          0.003608417  1.46347133     0.005858725</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3         5       0.71479291          0.011297598  2.19698940     0.025634256</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4        11       0.33215989          0.010390097  2.25696630     0.067907512</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5         6       0.02249580          0.008084143  0.06763289     0.024304458</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6         8      -0.01699015          0.011144772 -0.06035776     0.039584379</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

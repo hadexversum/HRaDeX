@@ -32,6 +32,7 @@ for three parameters."><meta property="og:image" content="https://hadexversum.gi
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/example.html">Experimental example</a>
     <a class="dropdown-item" href="../articles/gui_guide.html">How to use the apps?</a>
     <a class="dropdown-item" href="../articles/visualization.html">Visualization methods</a>
     <a class="dropdown-item" href="../articles/workflow.html">Workflow description</a>
@@ -88,20 +89,16 @@ for three parameters.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">HaDeX</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/HaDeX/man/read_hdx.html" class="external-link">read_hdx</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> '...' used in an incorrect context</span>
-<span class="r-in"><span><span class="va">fit_k_params</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_example_fit_k_params.html">get_example_fit_k_params</a></span><span class="op">(</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">fit_k_params</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_example_fit_k_params.html">get_example_fit_k_params</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">control</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_example_control.html">get_example_control</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">kin_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="prepare_kin_dat.html">prepare_kin_dat</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'dat' not found</span>
-<span class="r-in"><span><span class="va">fit_values</span> <span class="op">&lt;-</span> <span class="fu">create_fit_dataset</span><span class="op">(</span><span class="va">kin_dat</span>, <span class="va">control</span>, <span class="va">fit_k_params</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'kin_dat' not found</span>
+<span class="r-in"><span><span class="va">kin_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="prepare_kin_dat.html">prepare_kin_dat</a></span><span class="op">(</span><span class="va">alpha_dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="create_fit_dataset.html">create_fit_dataset</a></span><span class="op">(</span><span class="va">kin_dat</span>, <span class="va">control</span>, <span class="va">fit_k_params</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in rbind(deparse.level, ...):</span> numbers of columns of arguments do not match</span>
 <span class="r-in"><span><span class="va">hires_params</span> <span class="op">&lt;-</span> <span class="fu">calculate_hires</span><span class="op">(</span><span class="va">fit_values</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'fit_values' not found</span>
-<span class="r-in"><span><span class="va">two_states_dataset</span> <span class="op">&lt;-</span> <span class="fu"><a href="create_two_state_dataset.html">create_two_state_dataset</a></span><span class="op">(</span><span class="va">hires_params_1</span>, <span class="va">hires_params_2</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'hires_params_1' not found</span>
-<span class="r-in"><span><span class="fu">plot_color_distance</span><span class="op">(</span><span class="va">two_states_dataset</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'two_states_dataset' not found</span>
+<span class="r-in"><span><span class="co"># the same for the second state, and then:</span></span></span>
+<span class="r-in"><span><span class="co"># two_states_dataset &lt;- create_two_state_dataset(hires_params_1, hires_params_2)</span></span></span>
+<span class="r-in"><span><span class="co"># plot_color_distance(two_states_dataset)</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

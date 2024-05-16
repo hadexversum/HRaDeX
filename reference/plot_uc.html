@@ -30,6 +30,7 @@ This is a part of comparative feature."><meta property="og:image" content="https
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/example.html">Experimental example</a>
     <a class="dropdown-item" href="../articles/gui_guide.html">How to use the apps?</a>
     <a class="dropdown-item" href="../articles/visualization.html">Visualization methods</a>
     <a class="dropdown-item" href="../articles/workflow.html">Workflow description</a>
@@ -108,16 +109,12 @@ This is a part of comparative feature.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">HaDeX</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/HaDeX/man/read_hdx.html" class="external-link">read_hdx</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> '...' used in an incorrect context</span>
-<span class="r-in"><span><span class="va">kin_dat_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="prepare_kin_dat.html">prepare_kin_dat</a></span><span class="op">(</span><span class="va">dat</span>, state <span class="op">=</span> <span class="va">state_1</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'dat' not found</span>
-<span class="r-in"><span><span class="va">fit_dat_1</span> <span class="op">&lt;-</span> <span class="va">kin_dat_1</span><span class="op">[</span><span class="va">ID</span> <span class="op">==</span> <span class="fl">1</span>, <span class="op">]</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'kin_dat_1' not found</span>
-<span class="r-in"><span><span class="va">fit_values_1</span> <span class="op">&lt;-</span> <span class="fu">create_fit_dataset</span><span class="op">(</span><span class="va">fit_dat_1</span>, <span class="va">control</span>, <span class="va">fit_k_params</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'fit_dat_1' not found</span>
-<span class="r-in"><span><span class="fu">plot_uc</span><span class="op">(</span><span class="va">fit_dat_1</span>, <span class="va">fit_dat_2</span>, <span class="va">fit_values_1</span>, <span class="va">fit_values_2</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'fit_dat_1' not found</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">kin_dat_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="prepare_kin_dat.html">prepare_kin_dat</a></span><span class="op">(</span><span class="va">alpha_dat</span>, state <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">alpha_dat</span><span class="op">[[</span><span class="st">"State"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit_dat_1</span> <span class="op">&lt;-</span> <span class="va">kin_dat_1</span><span class="op">[</span><span class="va">kin_dat_1</span><span class="op">[[</span><span class="st">"ID"</span><span class="op">]</span><span class="op">]</span> <span class="op">==</span> <span class="fl">1</span>, <span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">fit_values_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="create_fit_dataset.html">create_fit_dataset</a></span><span class="op">(</span><span class="va">fit_dat_1</span>, <span class="va">control</span>, <span class="va">fit_k_params</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'control' not found</span>
+<span class="r-in"><span><span class="co"># the same for the second state, and then:</span></span></span>
+<span class="r-in"><span><span class="co"># plot_uc(fit_dat_1, fit_dat_2, fit_values_1, fit_values_2)</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

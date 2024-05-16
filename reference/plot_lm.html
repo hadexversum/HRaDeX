@@ -28,6 +28,7 @@ three-exponential model cannot be fitted."><meta property="og:image" content="ht
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/example.html">Experimental example</a>
     <a class="dropdown-item" href="../articles/gui_guide.html">How to use the apps?</a>
     <a class="dropdown-item" href="../articles/visualization.html">Visualization methods</a>
     <a class="dropdown-item" href="../articles/workflow.html">Workflow description</a>
@@ -88,14 +89,18 @@ three-exponential model cannot be fitted.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">HaDeX</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/HaDeX/man/read_hdx.html" class="external-link">read_hdx</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in HaDeX::read_hdx():</span> argument "filename" is missing, with no default</span>
-<span class="r-in"><span><span class="va">kin_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="prepare_kin_dat.html">prepare_kin_dat</a></span><span class="op">(</span><span class="va">dat</span>, state <span class="op">=</span> <span class="va">state_1</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'dat' not found</span>
-<span class="r-in"><span><span class="va">fit_dat</span> <span class="op">&lt;-</span> <span class="va">kin_dat</span><span class="op">[</span><span class="va">kin_dat</span><span class="op">[[</span><span class="st">"id"</span><span class="op">]</span><span class="op">]</span><span class="op">==</span><span class="fl">1</span>, <span class="op">]</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'kin_dat' not found</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">kin_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="prepare_kin_dat.html">prepare_kin_dat</a></span><span class="op">(</span><span class="va">alpha_dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit_dat</span> <span class="op">&lt;-</span> <span class="va">kin_dat</span><span class="op">[</span><span class="va">kin_dat</span><span class="op">[[</span><span class="st">"ID"</span><span class="op">]</span><span class="op">]</span><span class="op">==</span><span class="fl">1</span>, <span class="op">]</span></span></span>
 <span class="r-in"><span><span class="fu">plot_lm</span><span class="op">(</span><span class="va">fit_dat</span>, class_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">fit_dat</span><span class="op">[[</span><span class="st">"class_name"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'fit_dat' not found</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Ignoring unknown aesthetics: <span style="color: #00BB00;">tooltip</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in geom_point(aes(x = Exposure, y = deut_uptake, tooltip = glue("Sequence: {sequence}\n                                                Exposure: {Exposure}\n                                                DU = {formatC(deut_uptake, 2) Da}\n                                                Err DU = {formatC(err_deut_uptake, 2) Da}")),     shape = 1, size = 3):</span> Problem while computing aesthetics.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Error occurred in the 1st layer.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error:</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Failed to parse glue component</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `parse()`:</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> &lt;text&gt;:1:25: unexpected symbol</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> 1: formatC(deut_uptake, 2) Da</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span>                             ^</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

@@ -4,6 +4,9 @@
     <loc>https://hadexversum.github.io/HRaDeX/404.html</loc>
   </url>
   <url>
+    <loc>https://hadexversum.github.io/HRaDeX/articles/example.html</loc>
+  </url>
+  <url>
     <loc>https://hadexversum.github.io/HRaDeX/articles/gui_guide.html</loc>
   </url>
   <url>
@@ -23,6 +26,9 @@
   </url>
   <url>
     <loc>https://hadexversum.github.io/HRaDeX/reference/calculate_replicate_state_uptake.html</loc>
+  </url>
+  <url>
+    <loc>https://hadexversum.github.io/HRaDeX/reference/create_fit_dataset.html</loc>
   </url>
   <url>
     <loc>https://hadexversum.github.io/HRaDeX/reference/create_replicate_state_uptake_dataset.html</loc>

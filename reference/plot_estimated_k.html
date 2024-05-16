@@ -28,6 +28,7 @@ corresponding rate of exchange. The aggregation of results is described in the v
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/example.html">Experimental example</a>
     <a class="dropdown-item" href="../articles/gui_guide.html">How to use the apps?</a>
     <a class="dropdown-item" href="../articles/visualization.html">Visualization methods</a>
     <a class="dropdown-item" href="../articles/workflow.html">Workflow description</a>
@@ -83,16 +84,12 @@ calculate_hires.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">HaDeX</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/HaDeX/man/read_hdx.html" class="external-link">read_hdx</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> '...' used in an incorrect context</span>
-<span class="r-in"><span><span class="va">kin_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="prepare_kin_dat.html">prepare_kin_dat</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'dat' not found</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">kin_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="prepare_kin_dat.html">prepare_kin_dat</a></span><span class="op">(</span><span class="va">alpha_dat</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">fit_k_params</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_example_fit_k_params.html">get_example_fit_k_params</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">control</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_example_control.html">get_example_control</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">fit_values</span> <span class="op">&lt;-</span> <span class="fu">create_fit_dataset</span><span class="op">(</span><span class="va">kin_dat</span>, <span class="va">control</span>, <span class="va">fit_k_params</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'kin_dat' not found</span>
+<span class="r-in"><span><span class="va">fit_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="create_fit_dataset.html">create_fit_dataset</a></span><span class="op">(</span><span class="va">kin_dat</span>, <span class="va">fit_k_params</span>, <span class="va">control</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">hires_params</span> <span class="op">&lt;-</span> <span class="fu">calculate_hires</span><span class="op">(</span><span class="va">fit_values</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'fit_values' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in if (method == "shortest") {    hires_params_ &lt;- lapply(seq(1:protein_length), function(pos) {        if (fractional) {            tmp_params &lt;- fit_values %&gt;% filter(start &lt;= pos &amp;                 pos &lt;= end &amp; n_1 + n_2 + n_3 &lt; 1.25)        }        else {            tmp_params &lt;- fit_values %&gt;% filter(start &lt;= pos &amp;                 pos &lt;= end &amp; n_1 + n_2 + n_3 - max_uptake &lt;=                 0)        }        tmp_params &lt;- tmp_params %&gt;% arrange(nchar(sequence),             class_name) %&gt;% .[1, ]        if (nrow(tmp_params) == 0) {            data.frame(Protein = Protein, State = State, position = pos,                 n_1 = NA, n_2 = NA, n_3 = NA, k_est = NA, class_name = NA,                 color = NA)        }        else {            data.frame(Protein = Protein, State = State, position = pos,                 n_1 = tmp_params[["n_1"]], n_2 = tmp_params[["n_2"]],                 n_3 = tmp_params[["n_3"]], k_est = tmp_params[["k_est"]],                 class_name = tmp_params[["class_name"]], color = tmp_params[["color"]])        }    }) %&gt;% bind_rows()}:</span> the condition has length &gt; 1</span>
 <span class="r-in"><span><span class="fu">plot_estimated_k</span><span class="op">(</span><span class="va">hires_params</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'hires_params' not found</span>
 <span class="r-in"><span></span></span>
