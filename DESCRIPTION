@@ -25,6 +25,7 @@ Imports:
     gridExtra,
     magick, 
     minpack.lm,
+    purrr, 
     r3dmol,
     tibble
 Suggests: 

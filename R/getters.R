@@ -147,10 +147,12 @@ plot_k_params <- function(fit_k_params){
 }
 
 #' Get a data table with positions and residues
-#'
+#' @importFrom purrr map_chr
 #' @export
 
 get_residue_positions <- function(fit_values){
+
+  fit_values <- mutate(fit_values, sequence = strsplit(sequence, "[+]") %>% map_chr(., 1))
 
   do.call(rbind, lapply(1:nrow(fit_values), function(i){
     data.frame(position = fit_values[i, "start"]:fit_values[i, "end"],

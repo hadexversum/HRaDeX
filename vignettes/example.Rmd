@@ -22,11 +22,15 @@ library(dplyr)
 
 ```
 
+
+
+
+
 ```{r include = FALSE}
-# TODO put data into package
+
 
 kin_dat <- HRaDeX::prepare_kin_dat(alpha_dat, 
-                                   state = "GAMMA_KSCN",
+                                   state = "Alpha_KSCN",
                                    time_0 = 0,
                                    time_100 = 1440)
 
@@ -67,8 +71,36 @@ To check if the protein is covered by peptides on a satisfactory level, we check
 
 To see both the uptake level (with uncertainty of measurement) and the position of each peptide on the protein sequence, we use the comparison plot. For readability purposes, on this type of plot, we can present the data only for a single time point, but multiple biological states. However, a quick glimpse of the plot enables a general view of the exchanged regions. Moreover, let’s suppose we aim for the comparative analysis of two biological states. In that case, we use the so-called Woods plot, with differences in uptake for each peptide and information on which differences are statistically significant for the desired level. As for the comparison plot, we only present the data for a single time point. 
 
+```{r include=F}
+
+uptake_dat <- create_uptake_dataset(alpha_dat,
+                                    time_0 = 0, 
+                                    time_100 = 1440)
+```
+
+```{r}
+HaDeX::plot_state_comparison(uptake_dat,
+                             fractional = T,
+                             time_t = 150)
+
+```
+
+
+```{r}
+
+diff_p_uptake_dat <- create_p_diff_uptake_dataset(alpha_dat,
+                                                  state_1 = "Alpha_KSCN",
+                                                  state_2 = "ALPHA_Gamma")
+
+HaDeX::plot_differential(diff_p_uptake_dat = diff_p_uptake_dat,
+                         fractional = T, 
+                         show_houde_interval = T, 
+                         time_t = 150)
+```
+
 
 This plot presents the results for the measurement done after 150 min of exchange. It shows one significant exchange region - between positions 20 and 60 and two regions with values barely above the significance level.
+
 
 
 Measurement control. 
@@ -137,7 +169,13 @@ ggplot() +
 
 Color legend:
 
-![](figures/rgb_plaster.png)
+<!-- ![](figures/rgb_plaster.png) -->
+
+```{r out.width="30%"}
+knitr::include_graphics("figures/rgb_plaster.png")
+```
+
+
 
 
 After each peptide is assigned color code, we aggregate the data to obtain the simplified high-resolution result. For each residue in the protein structure, we aggregate the values using selected method. The methods are described in the article discussing the workflow. Here, we use the "weighted" approach.
@@ -158,7 +196,7 @@ HRaDeX::plot_cov_class(fit_values)
 However, presenting the classification results in a linear way is not quite satisfying. Adding the spatial information, obtained from different sources, provides additional depth to our analysis. 
 
 ```{r}
-HRaDeX::plot_3d_structure_hires(pdb_file_path = "../data/Model_eEF1Bgamma.pdb",
+HRaDeX::plot_3d_structure_hires(pdb_file_path = "../data/Model_eEF1Balpha.pdb",
                                 hires_params = hires_params)
 ```
 
@@ -173,7 +211,7 @@ Here we discussed only one biological state, but for the second one, the reasoni
 ```{r}
 
 kin_dat_2 <- HRaDeX::prepare_kin_dat(alpha_dat, 
-                                   state = "Complex_gamma_alpha_KSCN",
+                                   state = "ALPHA_Gamma",
                                    time_0 = 0,
                                    time_100 = 1440)
 
