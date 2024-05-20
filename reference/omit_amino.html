@@ -84,30 +84,30 @@ peptide.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">fixed_dat</span> <span class="op">&lt;-</span> <span class="fu">omit_amino</span><span class="op">(</span><span class="va">alpha_dat</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fixed_dat</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Protein Start   End Sequence Modification MaxUptake      MHP</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;char&gt; &lt;num&gt; &lt;int&gt;   &lt;char&gt;       &lt;lgcl&gt;     &lt;num&gt;    &lt;num&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: db_eEF1Bg     1     6   MAAGTL           NA         5 700.3447</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2: db_eEF1Bg     1     6   MAAGTL           NA         5 700.3447</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3: db_eEF1Bg     1     6   MAAGTL           NA         5 700.3447</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4: db_eEF1Bg     1     6   MAAGTL           NA         5 700.3447</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5: db_eEF1Bg     1     6   MAAGTL           NA         5 700.3447</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6: db_eEF1Bg     1     6   MAAGTL           NA         5 700.3447</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       State Exposure                                  File</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                      &lt;char&gt;    &lt;num&gt;                                &lt;char&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: Complex_gamma_alpha_KSCN    0.000              Tania_161108_Bg_KSCN_IMS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2: Complex_gamma_alpha_KSCN    0.167      Tania_161109_1eEF1Bag_KSCN_10sec</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3: Complex_gamma_alpha_KSCN    0.167      Tania_161109_2eEF1Bag_KSCN_10sec</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4: Complex_gamma_alpha_KSCN    0.167      Tania_161109_3eEF1Bag_KSCN_10sec</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5: Complex_gamma_alpha_KSCN    1.000 Tania_161108_1eEF1Bag_compl_KSCN_1min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6: Complex_gamma_alpha_KSCN    1.000 Tania_161108_2eEF1Bag_compl_KSCN_1min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        z  Inten   Center</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;int&gt;  &lt;num&gt;    &lt;num&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:     1 489367 700.7654</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:     1  65248 701.6613</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:     1  91720 701.7084</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4:     1  84790 701.6479</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5:     1 120038 702.0202</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6:     1 122983 702.0927</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Protein Start   End               Sequence Modification MaxUptake      MHP</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;char&gt; &lt;num&gt; &lt;int&gt;                 &lt;char&gt;       &lt;char&gt;     &lt;num&gt;    &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: db_eEF1Ba     3    24 SSHHHHHHSSGLVPRGSHRSEF                     20 2569.205</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2: db_eEF1Ba     3    24 SSHHHHHHSSGLVPRGSHRSEF                     20 2569.205</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3: db_eEF1Ba     3    24 SSHHHHHHSSGLVPRGSHRSEF                     20 2569.205</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4: db_eEF1Ba     3    24 SSHHHHHHSSGLVPRGSHRSEF                     20 2569.205</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5: db_eEF1Ba     3    24 SSHHHHHHSSGLVPRGSHRSEF                     20 2569.205</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6: db_eEF1Ba     3    24 SSHHHHHHSSGLVPRGSHRSEF                     20 2569.205</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          State Exposure                              File     z   Inten</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;char&gt;    &lt;num&gt;                            &lt;char&gt; &lt;int&gt;   &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: ALPHA_Gamma    0.000 Tania_161112_eEF1Ba_KSCN_IMS_seq1     2  424647</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2: ALPHA_Gamma    0.000 Tania_161112_eEF1Ba_KSCN_IMS_seq1     3 1028988</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3: ALPHA_Gamma    0.000 Tania_161112_eEF1Ba_KSCN_IMS_seq1     4 1890376</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4: ALPHA_Gamma    0.000 Tania_161112_eEF1Ba_KSCN_IMS_seq1     5 1400067</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5: ALPHA_Gamma    0.000 Tania_161112_eEF1Ba_KSCN_IMS_seq1     6 1385701</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6: ALPHA_Gamma    0.167  Tania_161109_1eEF1Bag_KSCN_10sec     2   58552</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       Center</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 1285.8850</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:  857.6226</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:  643.4922</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:  515.0285</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5:  429.3603</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6: 1288.5285</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

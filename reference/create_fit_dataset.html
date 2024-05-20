@@ -109,27 +109,27 @@ calls the fitting function for each, to create full dataset.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">kin_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="prepare_kin_dat.html">prepare_kin_dat</a></span><span class="op">(</span><span class="va">alpha_dat</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">fit_k_params</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_example_fit_k_params.html">get_example_fit_k_params</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">create_fit_dataset</span><span class="op">(</span><span class="va">kin_dat</span>, <span class="va">fit_k_params</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   id   Protein                    State      sequence start end max_uptake</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  1 db_eEF1Bg Complex_gamma_alpha_KSCN       HMAAGTL     0   6          6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  2 db_eEF1Bg Complex_gamma_alpha_KSCN        YTYPEN     7  12          4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  3 db_eEF1Bg Complex_gamma_alpha_KSCN       YTYPENW     7  13          5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  4 db_eEF1Bg Complex_gamma_alpha_KSCN YTYPENWRAFKAL     7  19         11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  5 db_eEF1Bg Complex_gamma_alpha_KSCN       WRAFKAL    13  19          6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  6 db_eEF1Bg Complex_gamma_alpha_KSCN     WRAFKALIA    13  21          8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         n_1       k_1       n_2       k_2       n_3         k_3          rss</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 1.0795599  9.830836 1.1758730 0.1656377 1.4733194 0.018635757 0.000000e+00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 1.4387804 24.941683 0.8115543 0.3492958 0.3047146 0.020538473 2.465190e-31</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2.1306782 30.000000 0.9040288 0.4054116 0.0000000 0.000000000 5.955066e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2.4817788 11.261405 3.3513147 0.2791409 0.9618553 0.006187044 1.972152e-31</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 0.3313133  1.000000 1.7537404 0.1234905 0.9244457 0.003912709 4.435695e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 0.0000000  0.000000 2.0261454 0.1652463 1.5698388 0.002491184 1.514066e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           bic class_name       k_est fitted   color</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1        -Inf       &lt;NA&gt;  2.90585177      3 #4A5065</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 -404.048191       &lt;NA&gt; 14.15837000      3 #90511E</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  -15.505575       &lt;NA&gt; 21.18387402      2 #B34C00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 -405.387053       &lt;NA&gt;  4.25165187      3 #5D7E24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  -27.504914       &lt;NA&gt;  0.18325326      3 #1C954E</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   -9.906726       &lt;NA&gt;  0.09419501      2 #00906F</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   id   Protein       State                     sequence start end max_uptake</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  1 db_eEF1Ba ALPHA_Gamma      GSSHHHHHHSSGLVPRGSHRSEF     2  24         21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  2 db_eEF1Ba ALPHA_Gamma                       FMGFGD    24  29          5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  3 db_eEF1Ba ALPHA_Gamma                FMGFGDLKSPAGL    24  36         11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  4 db_eEF1Ba ALPHA_Gamma                        MGFGD    25  29          4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  5 db_eEF1Ba ALPHA_Gamma MGFGDLKSPAGL+Oxidation M (1)    25  36         10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  6 db_eEF1Ba ALPHA_Gamma              MGFGDLKSPAGLQVL    25  39         13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        n_1       k_1      n_2       k_2        n_3          k_3          rss</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 4.924900 30.000000 0.000000 0.0000000  0.4280529 3.415637e-03 0.1190088607</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2.187280 30.000000 0.000000 0.0000000  0.0000000 0.000000e+00 0.0018699772</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 4.497364  9.304868 1.418531 0.3363397  0.0000000 0.000000e+00 0.0015235683</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 1.693638 30.000000 0.000000 0.0000000  0.0000000 0.000000e+00 0.0052734124</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 3.930655  9.922608 1.690979 0.4989142  0.0000000 0.000000e+00 0.0048889619</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 4.069289  9.436621 3.225931 0.3248138 13.0000000 4.561215e-05 0.0003895398</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          bic class_name     k_est fitted   color</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   2.464159         NA 27.601300      2 #EB0014</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 -26.038990         NA 30.000000      1 #FF0000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 -23.684698         NA  7.154367      2 #C23D00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 -19.818482         NA 30.000000      1 #FF0000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 -16.689149         NA  7.087975      2 #B24D00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 -28.284244         NA  1.943746      3 #3329A3</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
