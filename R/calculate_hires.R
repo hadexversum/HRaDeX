@@ -150,7 +150,7 @@ calculate_hires <- function(fit_values,
            class_name = "none",
            color = "#000000")
 
-  hires_params <- filter(hires_params, aa!="PP" | is.na(aa)) %>%
+  hires_params <- filter(hires_params, aa!="P" | is.na(aa)) %>%
     rbind(hires_params_p) %>%
     arrange(position)
 
