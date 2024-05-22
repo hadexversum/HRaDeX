@@ -106,20 +106,20 @@ only for normalization purposes, or left as time point of measurement</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">kin_dat</span> <span class="op">&lt;-</span> <span class="fu">prepare_kin_dat</span><span class="op">(</span><span class="va">alpha_dat</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">kin_dat</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ID Exposure   Protein                     Sequence Start End       State</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  1    0.167 db_eEF1Ba      GSSHHHHHHSSGLVPRGSHRSEF     2  24 ALPHA_Gamma</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  2    0.167 db_eEF1Ba                       FMGFGD    24  29 ALPHA_Gamma</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  3    0.167 db_eEF1Ba                FMGFGDLKSPAGL    24  36 ALPHA_Gamma</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  4    0.167 db_eEF1Ba                        MGFGD    25  29 ALPHA_Gamma</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  5    0.167 db_eEF1Ba MGFGDLKSPAGL+Oxidation M (1)    25  36 ALPHA_Gamma</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  6    0.167 db_eEF1Ba              MGFGDLKSPAGLQVL    25  39 ALPHA_Gamma</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   MaxUptake frac_deut_uptake err_frac_deut_uptake deut_uptake err_deut_uptake</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1        21        0.9525516          0.025707443    5.098016     0.012896475</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2         5        1.0154452          0.020267468    2.194507     0.023370098</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3        11        0.6114155          0.004053593    3.624016     0.016261556</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4         4        1.0095756          0.028675730    1.694090     0.009286482</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5        10        0.5926917          0.004760097    3.316276     0.005617954</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6        13        0.4183319          0.003182058    3.398111     0.017202403</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ID Exposure   Protein    Sequence Start End       State MaxUptake</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  1    0.167 db_eEF1Ba GFGDLKSPAGL     1  11 ALPHA_Gamma         9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  2    0.167 db_eEF1Ba  FGDLKSPAGL     2  11 ALPHA_Gamma         8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  3    0.167 db_eEF1Ba   GDLKSPAGL     3  11 ALPHA_Gamma         7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  4    0.167 db_eEF1Ba      LKSPAG     5  10 ALPHA_Gamma         4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  5    0.167 db_eEF1Ba     LKSPAGL     5  11 ALPHA_Gamma         5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  6    0.167 db_eEF1Ba      AGLQVL     9  14 ALPHA_Gamma         5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   frac_deut_uptake err_frac_deut_uptake deut_uptake err_deut_uptake</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       0.30648518          0.002215405   1.6650534     0.003059254</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       0.45857271          0.004640503   1.9851358     0.015897816</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       0.46212246          0.004916810   2.0723573     0.018277096</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       0.37704598          0.003147925   1.0428597     0.008524509</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       0.37237034          0.002004330   1.1624757     0.006165483</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       0.06834131          0.010370966   0.2395107     0.036235039</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

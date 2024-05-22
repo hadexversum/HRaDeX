@@ -84,30 +84,22 @@ peptide.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">fixed_dat</span> <span class="op">&lt;-</span> <span class="fu">omit_amino</span><span class="op">(</span><span class="va">alpha_dat</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fixed_dat</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Protein Start   End               Sequence Modification MaxUptake      MHP</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;char&gt; &lt;num&gt; &lt;int&gt;                 &lt;char&gt;       &lt;char&gt;     &lt;num&gt;    &lt;num&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: db_eEF1Ba     3    24 SSHHHHHHSSGLVPRGSHRSEF                     20 2569.205</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2: db_eEF1Ba     3    24 SSHHHHHHSSGLVPRGSHRSEF                     20 2569.205</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3: db_eEF1Ba     3    24 SSHHHHHHSSGLVPRGSHRSEF                     20 2569.205</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4: db_eEF1Ba     3    24 SSHHHHHHSSGLVPRGSHRSEF                     20 2569.205</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5: db_eEF1Ba     3    24 SSHHHHHHSSGLVPRGSHRSEF                     20 2569.205</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6: db_eEF1Ba     3    24 SSHHHHHHSSGLVPRGSHRSEF                     20 2569.205</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          State Exposure                              File     z   Inten</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;char&gt;    &lt;num&gt;                            &lt;char&gt; &lt;int&gt;   &lt;num&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: ALPHA_Gamma    0.000 Tania_161112_eEF1Ba_KSCN_IMS_seq1     2  424647</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2: ALPHA_Gamma    0.000 Tania_161112_eEF1Ba_KSCN_IMS_seq1     3 1028988</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3: ALPHA_Gamma    0.000 Tania_161112_eEF1Ba_KSCN_IMS_seq1     4 1890376</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4: ALPHA_Gamma    0.000 Tania_161112_eEF1Ba_KSCN_IMS_seq1     5 1400067</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5: ALPHA_Gamma    0.000 Tania_161112_eEF1Ba_KSCN_IMS_seq1     6 1385701</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6: ALPHA_Gamma    0.167  Tania_161109_1eEF1Bag_KSCN_10sec     2   58552</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       Center</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        &lt;num&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 1285.8850</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:  857.6226</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:  643.4922</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4:  515.0285</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5:  429.3603</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6: 1288.5285</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Protein Start   End   Sequence Modification MaxUptake      MHP       State</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;char&gt; &lt;num&gt; &lt;num&gt;     &lt;char&gt;       &lt;char&gt;     &lt;num&gt;    &lt;num&gt;      &lt;char&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: db_eEF1Ba     2    11 FGDLKSPAGL                      8 1061.563 ALPHA_Gamma</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2: db_eEF1Ba     2    11 FGDLKSPAGL                      8 1061.563 ALPHA_Gamma</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3: db_eEF1Ba     2    11 FGDLKSPAGL                      8 1061.563 ALPHA_Gamma</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4: db_eEF1Ba     2    11 FGDLKSPAGL                      8 1061.563 ALPHA_Gamma</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5: db_eEF1Ba     2    11 FGDLKSPAGL                      8 1061.563 ALPHA_Gamma</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6: db_eEF1Ba     2    11 FGDLKSPAGL                      8 1061.563 ALPHA_Gamma</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Exposure                              File     z  Inten    Center</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;num&gt;                            &lt;char&gt; &lt;int&gt;  &lt;num&gt;     &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:    0.000 Tania_161112_eEF1Ba_KSCN_IMS_seq1     1 138844 1062.1913</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:    0.000 Tania_161112_eEF1Ba_KSCN_IMS_seq1     2 728218  531.6754</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:    0.167  Tania_161109_1eEF1Bag_KSCN_10sec     1  41100 1064.0150</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:    0.167  Tania_161109_1eEF1Bag_KSCN_10sec     2 393115  532.4975</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5:    0.167  Tania_161109_2eEF1Bag_KSCN_10sec     1  46642 1063.9682</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6:    0.167  Tania_161109_2eEF1Bag_KSCN_10sec     2 466233  532.4951</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
