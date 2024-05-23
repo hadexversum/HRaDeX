@@ -50,7 +50,6 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/example.html">Experimental example</a>
     <a class="dropdown-item" href="../articles/gui_guide.html">How to use the apps?</a>
-    <a class="dropdown-item" href="../articles/visualization.html">Visualization methods</a>
     <a class="dropdown-item" href="../articles/workflow.html">Workflow description</a>
   </div>
 </li>
@@ -81,8 +80,8 @@
     
     
 <p>Article under development.</p>
-<p>HRaDeX itself is just the package for the calculation and
-visualization. To make the solution more comfortable, we prepared shiny
+<p>HRaDeX is the package for the backend calculation and visualization.
+To make the solution more comfortable, we prepared dedicated
 applications. To use them, there are two function calls:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">HRaDeX</span><span class="fu">::</span><span class="fu">run_hradex</span><span class="op">(</span><span class="op">)</span></span>
@@ -94,12 +93,12 @@ know. The best way to contact us is to use the following email: <a href="mailto:
 <h2 id="hradex">HRaDeX<a class="anchor" aria-label="anchor" href="#hradex"></a>
 </h2>
 <p>HRaDeX GUI is an application for classification process for one
-biological state at the time.</p>
+biological state at the time. The workflow is described in the dedicated
+article. Here we explain the elements of GUI, with regard to every
+parameter.</p>
 <div class="section level3">
 <h3 id="settings">Settings<a class="anchor" aria-label="anchor" href="#settings"></a>
 </h3>
-<p>Here, we discuss briefly the possibilities for altering the workflow
-in the HRaDeX GUI.</p>
 <div class="section level4">
 <h4 id="input-file">Input file<a class="anchor" aria-label="anchor" href="#input-file"></a>
 </h4>
@@ -107,7 +106,8 @@ in the HRaDeX GUI.</p>
 <code>cluster file</code> from DynamX 3.0 or 2.0. In the future there
 will be more options available, but currently only one is supported.</p>
 <p>There is a message with the upload result. If none is provided by the
-user, there is loaded example file - A2.</p>
+user, there is loaded example file. The analysis is initiated by
+clicking the “Calculate things!” button.</p>
 </div>
 <div class="section level4">
 <h4 id="uptake-calculations">Uptake calculations<a class="anchor" aria-label="anchor" href="#uptake-calculations"></a>
@@ -115,14 +115,30 @@ user, there is loaded example file - A2.</p>
 <div class="section level5">
 <h5 id="select-state">Select state<a class="anchor" aria-label="anchor" href="#select-state"></a>
 </h5>
+<p>If there is more than one state in supplied data file, there is a
+possibility to select one. The classification process is done on only
+one state at the time. When state is reselected, and the process
+initiated by the button, previous results are overwritten.</p>
 </div>
 <div class="section level5">
 <h5 id="omit-residues">Omit residues<a class="anchor" aria-label="anchor" href="#omit-residues"></a>
 </h5>
+<p>The first residue is known to undergo fast back-exchange, and cannot
+cause the measured mass increase, as described in the literature <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3438223/" class="external-link">1</a>, <a href="https://pubmed.ncbi.nlm.nih.gov/8234247/" class="external-link">2</a>. We offer a
+possibility to either omit the first residue (or first two) or not -
+depending on the user’s approach to the matter.</p>
 </div>
 <div class="section level5">
 <h5 id="use-replicate-data">Use replicate data<a class="anchor" aria-label="anchor" href="#use-replicate-data"></a>
 </h5>
+<p>The data in required format - <code>cluster</code> format, contains
+unaggregated centroid values for each spectrum - for every charge value
+of peptides in every technical replicate. The
+<code>use replicate data</code> option allows the use of data aggregated
+only on replicate level, not through them. Using this option, there are
+as many measurement points for each time point as there are replicates.
+Without this option, there is only one measurement point for each time
+point.</p>
 </div>
 </div>
 <div class="section level4">
@@ -131,6 +147,8 @@ user, there is loaded example file - A2.</p>
 <div class="section level5">
 <h5 id="sequence-from-the-data">Sequence from the data<a class="anchor" aria-label="anchor" href="#sequence-from-the-data"></a>
 </h5>
+<p>This is the sequence reconstruced only based on the experimental
+data.</p>
 </div>
 <div class="section level5">
 <h5 id="sequence-from-the-pdb-file">Sequence from the pdb file<a class="anchor" aria-label="anchor" href="#sequence-from-the-pdb-file"></a>
