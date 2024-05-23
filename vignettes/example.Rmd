@@ -170,7 +170,7 @@ Color legend:
 
 <!-- ![](figures/rgb_plaster.png) -->
 
-```{r out.width="30%", include = FALSE}
+```{r out.width="30%", echo = FALSE}
 knitr::include_graphics("figures/rgb_plaster.png")
 ```
 

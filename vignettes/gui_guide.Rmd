@@ -9,7 +9,7 @@ vignette: >
 
 Article under development.
 
-HRaDeX itself is just the package for the calculation and visualization. To make the solution more comfortable, we prepared shiny applications. To use them, there are two function calls:
+HRaDeX is the package for the backend calculation and visualization. To make the solution more comfortable, we prepared dedicated applications. To use them, there are two function calls:
 
 ```{r eval=F}
 HRaDeX::run_hradex()
@@ -22,29 +22,35 @@ Should you notice any inconveniences while using them, please let us know. The b
 
 # HRaDeX
 
-HRaDeX GUI is an application for classification process for one biological state at the time.
+HRaDeX GUI is an application for classification process for one biological state at the time. The workflow is described in the dedicated article. Here we explain the elements of GUI, with regard to every parameter.
 
 ## Settings
-
-Here, we discuss briefly the possibilities for altering the workflow in the HRaDeX GUI.
 
 ### Input file
 
 The required experimental file should be the `cluster file` from DynamX 3.0 or 2.0. In the future there will be more options available, but currently only one is supported.
 
-There is a message with the upload result. If none is provided by the user, there is loaded example file - A2. 
+There is a message with the upload result. If none is provided by the user, there is loaded example file. The analysis is initiated by clicking the "Calculate things!" button. 
 
 ### Uptake calculations
 
 #### Select state
 
+If there is more than one state in supplied data file, there is a possibility to select one. The classification process is done on only one state at the time. When state is reselected, and the process initiated by the button, previous results are overwritten. 
+
 #### Omit residues
 
+The first residue is known to undergo fast back-exchange, and cannot cause the measured mass increase, as described in the literature [1](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3438223/), [2](https://pubmed.ncbi.nlm.nih.gov/8234247/). We offer a possibility to either omit the first residue (or first two) or not - depending on the user's approach to the matter.
+
 #### Use replicate data
+
+The data in required format - `cluster` format, contains unaggregated centroid values for each spectrum - for every charge value of peptides in every technical replicate. The `use replicate data` option allows the use of data aggregated only on replicate level, not through them. Using this option, there are as many measurement points for each time point as there are replicates. Without this option, there is only one measurement point for each time point. 
 
 ### Sequence
 
 #### Sequence from the data
+
+This is the sequence reconstruced only based on the experimental data.
 
 #### Sequence from the pdb file
 

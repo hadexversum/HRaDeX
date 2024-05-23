@@ -12,6 +12,6 @@ The applications are available for use online: [HRaDeX](https://hradex.mslab-ibb
 The project is currently under development.
 
 For more information on pepitde-level analysis, see [documentation](https://hadexversum.github.io/HaDeX/) for HaDeX.
-For detailed explanation  how the classification workflow works see this [article](https://hadexversum.github.io/HRaDeX/articles/workflow.html).
-and how to visualize the results, see this [article](https://hadexversum.github.io/HRaDeX/articles/visualization.html).
+For detailed explanation of the classification workflow works see this [article](https://hadexversum.github.io/HRaDeX/articles/workflow.html).
+and of visualization the results, see this [article](https://hadexversum.github.io/HRaDeX/articles/visualization.html).
 The documentation is available [here](https://hadexversum.github.io/HRaDeX/).
