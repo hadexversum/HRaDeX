@@ -54,27 +54,54 @@ This is the sequence reconstruced only based on the experimental data.
 
 #### Sequence from the pdb file
 
+This is the sequence read from the pdb file.
+
 #### Move the start of the sequence
+
+If the sequence from experimental file is different than one from the pdb file, we can shift the position of peptides from experimental data. The shift value can be positivie - than there will be 'no data' information at the beggining of the sequence. If the shift value is set to negative number, the data is shifted and cut. All the peptides with start position left to the shift, are disregarded as we cannot "cut" peptide.
 
 ### Deuterium uptake controls
 
 #### Non-deuterated control
 
+The time point of measurement associated with the an non-deuterated sample.
+
 #### Full deuterated control
+
+The time point of measurement associated with the an fully deuterated sample.
 
 #### Use as FD
 
+There are at least two approaches to the fully deuterated sample: 
+1) the measurement is done in the same conditions as measurement for time points, but in this case the time of exchange is long, commonly 24h. It is the same measurement as for different time points, and shown on the plot (with value 100% if using fractional values).
+2) the sample is obtained in different experiment than other measurements, and cannot be treated as measurement as other. It is not shown on the uptake plot and is used only as the normalization value.
+
+Checking this box is equivalent with approach no. 2.
+
 #### Fractional values
+
+Fractional values are normalized with regard to the full deuterated sample, and shown as percentaged. If not chosen, the values are in daltons, but the requirement of sum of n equal to 1, is not valid.
 
 ### Workflow
 
 #### Select workflow
 
+There are multiple choices for workflow type. We advise using the 3exp/2exp/1exp - in this case try all three models and select the best.
+If the data set contains sufficient time point number only to perform 2-exponent fitting, the workflow 2exp/1exp should be selected to avoid unnecessary calculations.
+
+The detailed description of the fitted functions is in the workflow description article.
+
 ### Class definition
 
 #### Limits and boundaries
 
+The table contains the upper and lower limits for each of the exchange group, and initial values. The plot below the table shows graphical representation of the values - each color are represents the possible values based on the limits, and solid lines represents the initial values.
+
+The plotted values are D = 1 - exp(-kt), where k is the fitted exchange rate.
+
 #### Reset the values
+
+Clicking this button resets all of the values from the table to the default values.
 
 ### Fit options
 
