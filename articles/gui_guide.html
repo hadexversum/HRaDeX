@@ -147,7 +147,7 @@ point.</p>
 <div class="section level5">
 <h5 id="sequence-from-the-data">Sequence from the data<a class="anchor" aria-label="anchor" href="#sequence-from-the-data"></a>
 </h5>
-<p>This is the sequence reconstruced only based on the experimental
+<p>This is the sequence reconstructed only based on the experimental
 data.</p>
 </div>
 <div class="section level5">
@@ -245,15 +245,23 @@ default values.</p>
 <div class="section level5">
 <h5 id="number-of-iterations">Number of iterations<a class="anchor" aria-label="anchor" href="#number-of-iterations"></a>
 </h5>
+<p>Maximal number of performed iterations during the fitting
+process.</p>
 </div>
 <div class="section level5">
 <h5 id="method">Method<a class="anchor" aria-label="anchor" href="#method"></a>
 </h5>
+<p>Used method is Levenberg-Marquardt nonlinear least squares algorithm.
+For more information check the used package <a href="https://cran.r-project.org/web/packages/minpack.lm/minpack.lm.pdf" class="external-link">documentation</a>.</p>
 </div>
 </div>
 <div class="section level4">
 <h4 id="structure">Structure<a class="anchor" aria-label="anchor" href="#structure"></a>
 </h4>
+<p>If it is possible, there is a place to upload the PDB file with 3D
+structure of analysed protein. The high-resolution classification
+results can be presented on the given structure. It is not required in
+order to perform the classification process.</p>
 </div>
 </div>
 <div class="section level3">
@@ -262,30 +270,55 @@ default values.</p>
 <div class="section level4">
 <h4 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h4>
+<p>This is the summary of the classification process.</p>
+<p>Classification results for peptides are aggregated into the residue
+level using selected method of aggregation. For more information check
+this <a href="workflow%20description">article</a>.</p>
+<p>The results are presented in the linear form. If PDB file is
+supplied, this results presented on the 3D structure are available in
+the tab <code>Structure</code>.</p>
 </div>
 <div class="section level4">
 <h4 id="hires-params">Hires params<a class="anchor" aria-label="anchor" href="#hires-params"></a>
 </h4>
+<p>This is the numerical data presented on the first plot in the
+<code>Overview</code> tab. The classification colors are presented in
+the <code>position</code> column.</p>
 </div>
 <div class="section level4">
 <h4 id="fit-params">Fit params<a class="anchor" aria-label="anchor" href="#fit-params"></a>
 </h4>
+<p>This table contains the parameters of fitted function for the
+peptides - based on their uptake curves. Upon clicking the row with
+selected peptide, the scaled uptake curve with fitted model is presented
+below the table, alongside the regular uptake curve.</p>
 </div>
 <div class="section level4">
 <h4 id="plots">Plots<a class="anchor" aria-label="anchor" href="#plots"></a>
 </h4>
+<p>In this tab the uptake plots for all of the peptides are presented
+one by one. It is particularly useful for getting the sense of accuracy
+of the fitting process and to have general overview of the method. It
+may take a while to be displayed, depending of the number of peptides in
+the supplied data file.</p>
 </div>
 <div class="section level4">
 <h4 id="plots-data">Plots Data<a class="anchor" aria-label="anchor" href="#plots-data"></a>
 </h4>
+<p>This table contains the numerical data used for plotting the uptake
+curves - but only experimental data! The parameters of the fitted
+functions are to be found in the <code>Fit params</code> tab.</p>
 </div>
 <div class="section level4">
 <h4 id="structure-1">Structure<a class="anchor" aria-label="anchor" href="#structure-1"></a>
 </h4>
+<p>If the file is provided, the high-resolution classification results
+can be presented on the 3D protein structure.</p>
 </div>
 <div class="section level4">
 <h4 id="about">About<a class="anchor" aria-label="anchor" href="#about"></a>
 </h4>
+<p>Basic information on the teamt that developed HRaDeX.</p>
 </div>
 </div>
 </div>
@@ -310,8 +343,9 @@ a need for comparative analysis. What is necessary to perform one?</p>
 </ul>
 <p>fit_data_.csv is to be found in the <code>Fit params</code> tab in
 HRaDeX, and uc_data_.csv is in <code>UC Data</code> tab.</p>
-<p>Of course, you can perform compartive analysis providing only some of
-desired files, but then not all of the fetures will be available.</p>
+<p>Of course, you can perform comparative analysis providing only some
+of desired files, but then not all of the features will be
+available.</p>
 </div>
 <div class="section level4">
 <h4 id="structure-2">Structure<a class="anchor" aria-label="anchor" href="#structure-2"></a>
