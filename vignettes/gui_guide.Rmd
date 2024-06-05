@@ -50,7 +50,7 @@ The data in required format - `cluster` format, contains unaggregated centroid v
 
 #### Sequence from the data
 
-This is the sequence reconstruced only based on the experimental data.
+This is the sequence reconstructed only based on the experimental data.
 
 #### Sequence from the pdb file
 
@@ -107,25 +107,50 @@ Clicking this button resets all of the values from the table to the default valu
 
 #### Number of iterations
 
+Maximal number of performed iterations during the fitting process.
+
 #### Method
 
+Used method is Levenberg-Marquardt nonlinear least squares algorithm. 
+For more information check the used package [documentation](https://cran.r-project.org/web/packages/minpack.lm/minpack.lm.pdf).
+
 ### Structure
+
+If it is possible, there is a place to upload the PDB file with 3D structure of analysed protein. The high-resolution classification results can be presented on the given structure. It is not required in order to perform the classification process.
 
 ## Tabs
 
 ### Overview
 
+This is the summary of the classification process.
+
+Classification results for peptides are aggregated into the residue level using selected method of aggregation. For more information check this [article](workflow description). 
+
+The results are presented in the linear form. If PDB file is supplied, this results presented on the 3D structure are available in the tab `Structure`.
+
 ### Hires params
+
+This is the numerical data presented on the first plot in the `Overview` tab. The classification colors are presented in the `position` column.
 
 ### Fit params
 
+This table contains the parameters of fitted function for the peptides - based on their uptake curves. Upon clicking the row with selected peptide, the scaled uptake curve with fitted model is presented below the table, alongside the regular uptake curve.
+
 ### Plots
+
+In this tab the uptake plots for all of the peptides are presented one by one. It is particularly useful for getting the sense of accuracy of the fitting process and to have general overview of the method. It may take a while to be displayed, depending of the number of peptides in the supplied data file.
 
 ### Plots Data
 
+This table contains the numerical data used for plotting the uptake curves - but only experimental data! The parameters of the fitted functions are to be found in the `Fit params` tab.
+
 ### Structure
 
+If the file is provided, the high-resolution classification results can be presented on the 3D protein structure.
+
 ### About
+
+Basic information on the teamt that developed HRaDeX.
 
 # compaHRaDeX
 
@@ -143,7 +168,7 @@ Once you have processed two biological states using HRaDeX, there is a need for 
 
 fit_data_.csv is to be found in the `Fit params` tab in HRaDeX, and uc_data_.csv is in `UC Data` tab.
 
-Of course, you can perform compartive analysis providing only some of desired files, but then not all of the fetures will be available.
+Of course, you can perform comparative analysis providing only some of desired files, but then not all of the features will be available.
 
 ### Structure
 
