@@ -153,10 +153,18 @@ data.</p>
 <div class="section level5">
 <h5 id="sequence-from-the-pdb-file">Sequence from the pdb file<a class="anchor" aria-label="anchor" href="#sequence-from-the-pdb-file"></a>
 </h5>
+<p>This is the sequence read from the pdb file.</p>
 </div>
 <div class="section level5">
 <h5 id="move-the-start-of-the-sequence">Move the start of the sequence<a class="anchor" aria-label="anchor" href="#move-the-start-of-the-sequence"></a>
 </h5>
+<p>If the sequence from experimental file is different than one from the
+pdb file, we can shift the position of peptides from experimental data.
+The shift value can be positivie - than there will be ‘no data’
+information at the beggining of the sequence. If the shift value is set
+to negative number, the data is shifted and cut. All the peptides with
+start position left to the shift, are disregarded as we cannot “cut”
+peptide.</p>
 </div>
 </div>
 <div class="section level4">
@@ -165,18 +173,34 @@ data.</p>
 <div class="section level5">
 <h5 id="non-deuterated-control">Non-deuterated control<a class="anchor" aria-label="anchor" href="#non-deuterated-control"></a>
 </h5>
+<p>The time point of measurement associated with the an non-deuterated
+sample.</p>
 </div>
 <div class="section level5">
 <h5 id="full-deuterated-control">Full deuterated control<a class="anchor" aria-label="anchor" href="#full-deuterated-control"></a>
 </h5>
+<p>The time point of measurement associated with the an fully deuterated
+sample.</p>
 </div>
 <div class="section level5">
 <h5 id="use-as-fd">Use as FD<a class="anchor" aria-label="anchor" href="#use-as-fd"></a>
 </h5>
+<p>There are at least two approaches to the fully deuterated sample: 1)
+the measurement is done in the same conditions as measurement for time
+points, but in this case the time of exchange is long, commonly 24h. It
+is the same measurement as for different time points, and shown on the
+plot (with value 100% if using fractional values). 2) the sample is
+obtained in different experiment than other measurements, and cannot be
+treated as measurement as other. It is not shown on the uptake plot and
+is used only as the normalization value.</p>
+<p>Checking this box is equivalent with approach no. 2.</p>
 </div>
 <div class="section level5">
 <h5 id="fractional-values">Fractional values<a class="anchor" aria-label="anchor" href="#fractional-values"></a>
 </h5>
+<p>Fractional values are normalized with regard to the full deuterated
+sample, and shown as percentaged. If not chosen, the values are in
+daltons, but the requirement of sum of n equal to 1, is not valid.</p>
 </div>
 </div>
 <div class="section level4">
@@ -185,6 +209,13 @@ data.</p>
 <div class="section level5">
 <h5 id="select-workflow">Select workflow<a class="anchor" aria-label="anchor" href="#select-workflow"></a>
 </h5>
+<p>There are multiple choices for workflow type. We advise using the
+3exp/2exp/1exp - in this case try all three models and select the best.
+If the data set contains sufficient time point number only to perform
+2-exponent fitting, the workflow 2exp/1exp should be selected to avoid
+unnecessary calculations.</p>
+<p>The detailed description of the fitted functions is in the workflow
+description article.</p>
 </div>
 </div>
 <div class="section level4">
@@ -193,10 +224,19 @@ data.</p>
 <div class="section level5">
 <h5 id="limits-and-boundaries">Limits and boundaries<a class="anchor" aria-label="anchor" href="#limits-and-boundaries"></a>
 </h5>
+<p>The table contains the upper and lower limits for each of the
+exchange group, and initial values. The plot below the table shows
+graphical representation of the values - each color are represents the
+possible values based on the limits, and solid lines represents the
+initial values.</p>
+<p>The plotted values are D = 1 - exp(-kt), where k is the fitted
+exchange rate.</p>
 </div>
 <div class="section level5">
 <h5 id="reset-the-values">Reset the values<a class="anchor" aria-label="anchor" href="#reset-the-values"></a>
 </h5>
+<p>Clicking this button resets all of the values from the table to the
+default values.</p>
 </div>
 </div>
 <div class="section level4">
