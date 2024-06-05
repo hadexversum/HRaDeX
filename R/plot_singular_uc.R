@@ -28,7 +28,7 @@ plot_singular_uc <- function(fit_dat,
                              fractional = T,
                              interactive = F){
 
-    plot_title <- paste0(unique(fit_dat[["sequence"]]), " (", unique(fit_dat[["start"]]), "-", unique(fit_dat[["end"]]), ") ")
+    plot_title <- paste0(unique(fit_values[["sequence"]]), " (", unique(fit_values[["start"]]), "-", unique(fit_values[["end"]]), ") ")
 
     if(replicate){
 
@@ -51,8 +51,8 @@ plot_singular_uc <- function(fit_dat,
         sel_points +
         geom_line(data = avg_fit_dat, aes(x = Exposure, y = avg_deut_uptake), linetype = 2)  +
         ylim(c(0, NA)) +
-        theme_gray(base_size = 18) +
-        labs(title = paste0(plot_title, " without fit"),
+        theme_gray(base_size = 15) +
+        labs(title = paste0(plot_title, ""),
              x = "Exposure [min]",
              y = "Deuterium uptake [Da]")
 
@@ -75,8 +75,8 @@ plot_singular_uc <- function(fit_dat,
         sel_points+
         geom_line(linetype = 2) +
         ylim(c(0, NA)) +
-        theme_gray(base_size = 18) +
-        labs(title = paste0(plot_title, " without fit"),
+        theme_gray(base_size = 15) +
+        labs(title = paste0(plot_title, ""),
              x = "Exposure [min]",
              y = "Deuterium uptake [Da]")
 

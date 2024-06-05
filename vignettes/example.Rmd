@@ -58,7 +58,8 @@ uptake_dat <- create_uptake_dataset(alpha_dat,
 ```{r fig.width=7}
 HaDeX::plot_state_comparison(uptake_dat,
                              fractional = T,
-                             time_t = 150)
+                             time_t = 150) +
+  labs(title = "Comparison plot for eEF1Bα")
 
 ```
 
@@ -75,7 +76,8 @@ HaDeX::plot_differential(diff_p_uptake_dat = diff_p_uptake_dat,
                          fractional = T, 
                          show_houde_interval = T, 
                          time_t = 150) +
-  labs(title = "Differential plot in 150 min between Alpha and Alpha+Gamma state")
+  labs(title = "Differential plot in 150 min between eEF1Bα and eEF1Bα with eEF1Bγ",
+       y = "Fractional DU [%]")
 ```
 
 

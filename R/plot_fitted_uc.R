@@ -66,12 +66,12 @@ plot_fitted_uc <- function(fit_dat,
 
     final_plot <- ggplot(data = fit_dat) +
       sel_points +
-      labs(title = paste0(plot_title, " scaled in log with fit components"),
+      labs(title = paste0(plot_title, " scaled"),
            y = "Fractional DU [%]",
            x = "Exposure [min]") +
       stat_function(fun=function(x){n_1*(1-exp(-k_1*x)) + n_2*(1-exp(-k_2*x)) + n_3*(1-exp(-k_3*x))}) +
       ylim(c(0, 1.25)) +
-      theme_gray(base_size = 18) +
+      theme_gray(base_size = 15) +
       stat_function(fun = function(x){n_1*(1-exp(-k_1*x))}, color = "red") +
       stat_function(fun = function(x){n_2*(1-exp(-k_2*x))}, color = "green") +
       stat_function(fun = function(x){n_3*(1-exp(-k_3*x))}, color = "blue") +
@@ -101,12 +101,12 @@ plot_fitted_uc <- function(fit_dat,
 
     final_plot <- ggplot() +
       sel_points +
-      labs(title = paste0(plot_title, " scaled in log with fit components"),
+      labs(title = paste0(plot_title, " scaled"),
            y = "Fractional DU [Da]",
            x = "Exposure [min]") +
       stat_function(fun=function(x){n_1*(1-exp(-k_1*x)) + n_2*(1-exp(-k_2*x)) + n_3*(1-exp(-k_3*x))}) +
       ylim(c(0, max_uptake + 1)) +
-      theme_gray(base_size = 18) +
+      theme_gray(base_size = 15) +
       stat_function(fun = function(x){n_1*(1-exp(-k_1*x))}, color = "red") +
       stat_function(fun = function(x){n_2*(1-exp(-k_2*x))}, color = "green") +
       stat_function(fun = function(x){n_3*(1-exp(-k_3*x))}, color = "blue") +
