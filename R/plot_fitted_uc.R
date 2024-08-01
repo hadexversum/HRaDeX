@@ -24,7 +24,7 @@
 #' fit_dat <- kin_dat[kin_dat[["ID"]]==1, ]
 #' fit_k_params <- get_example_fit_k_params()
 #' control <- get_example_control()
-#' fit_values_all <- create_fit_dataset(kin_dat, control, fit_k_params)
+#' fit_values_all <- create_fit_dataset(kin_dat, fit_k_params, control)
 #' fit_values <- fit_values_all[fit_values_all[["ID"]]==1, ]
 #' plot_fitted_uc(fit_dat, fit_values)
 #'
