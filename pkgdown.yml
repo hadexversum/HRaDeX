@@ -1,12 +1,11 @@
 pandoc: 3.1.11
-pkgdown: 2.0.9
+pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
   example: example.html
   gui_guide: gui_guide.html
   workflow: workflow.html
-last_built: 2024-06-05T14:47Z
+last_built: 2024-08-01T10:16Z
 urls:
   reference: https://hadexversum.github.io/HRaDeX/reference
   article: https://hadexversum.github.io/HRaDeX/articles
-
