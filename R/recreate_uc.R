@@ -1,4 +1,4 @@
-#'
+#'@export
 
 
 calculate_uc_from_hires_peptide <- function(fit_dat, ## uc filtered dat
@@ -42,7 +42,14 @@ calculate_uc_from_hires_peptide <- function(fit_dat, ## uc filtered dat
   return(res)
 }
 
+#' @examples
+#' kin_dat <- prepare_kin_dat(alpha_dat, state = "Alpha_KSCN")
+#' fit_values_all <- create_fit_dataset(kin_dat, control = get_example_control(),
+#'                                      fit_k_params = get_example_fit_k_params(),
+#'                                      fractional = T)
+#' create_uc_from_hires_dataset(kin_dat, fit_values_all, hires_method = "shortest")
 #'
+#' @export
 create_uc_from_hires_dataset <- function(kin_dat,
                                          fit_values_all,
                                          fractional = T,
@@ -61,13 +68,31 @@ create_uc_from_hires_dataset <- function(kin_dat,
 
   }) %>% bind_rows()
 
+  res <- select(res,
+                ID, Protein, State, Sequence, Start, End, MaxUptake, Exposure, frac_deut_uptake, err_frac_deut_uptake, hr_frac_deut_uptake, hr_diff)
+
+  attr(res, "hires_method") <- hires_method
   return(res)
 }
 
 #'
+#' @param fit_dat experimental uptake data filter for chosen peptide
+#' @param fit_values_all fit parameters for whole peptide pool
+#' @param fractional indicator if the fractional deuterium uptake is used
+#' @param hires_method method of aggregation
+#'
+#' @examples
+#' kin_dat <- prepare_kin_dat(alpha_dat, state = "Alpha_KSCN")
+#' fit_dat <- kin_dat[kin_dat[["ID"]]==3, ]
+#' fit_values_all <- create_fit_dataset(kin_dat, control = get_example_control(),
+#'                                      fit_k_params = get_example_fit_k_params(),
+#'                                      fractional = T)
+#' recreate_uc(fit_dat, fit_values_all, hires_method = "shortest")
+#'
+#' @export
 recreate_uc <- function(fit_dat, ## uc filtered dat
                         fit_values_all, ## fit unfiltered
-                        fractional = T,
+                        fractional = TRUE,
                         hires_method = c("shortest", "weighted")){
 
   peptide_sequence <- unique(fit_dat[["Sequence"]])
@@ -93,120 +118,114 @@ recreate_uc <- function(fit_dat, ## uc filtered dat
               n_3 = mean(n_3),
               k_3 = mean(k_3))
 
+  if(fractional){label_y <- "Fractional DU [%]"
+  } else { label_y <- "Deuterium Uptake [Da]"}
+
   uc_plot <- ggplot(fit_dat) +
-    geom_point(aes(x = Exposure, y = frac_deut_uptake)) +
-    geom_errorbar(aes(ymin = frac_deut_uptake - err_frac_deut_uptake,
+    geom_point(aes(x = Exposure, y = frac_deut_uptake, shape = "experimental")) +
+    geom_linerange(aes(ymin = frac_deut_uptake - err_frac_deut_uptake,
                       ymax = frac_deut_uptake + err_frac_deut_uptake,
                       x = Exposure)) +
-    geom_line(aes(x = Exposure, y = frac_deut_uptake)) +
+    # geom_line(aes(x = Exposure, y = frac_deut_uptake)) +
     ylim(c(0, 1.2)) +
     scale_x_log10() +
-    labs(title = paste0(peptide_sequence, " ", peptide_start, "-", peptide_end, ", ", hires_method))
+    labs(title = paste0(peptide_sequence, " ", peptide_start, "-", peptide_end, ", method: ", hires_method),
+         y = label_y,
+         x = "Exposure [min]")
 
   uc_plot +
     stat_function(fun = function(x){peptide_hr[['n_1']]*(1-exp(-peptide_hr[['k_1']]*x)) + peptide_hr[['n_2']]*(1-exp(-peptide_hr[['k_2']]*x)) + peptide_hr[['n_3']]*(1-exp(-peptide_hr[['k_3']]*x))
-    }, color = "blue") +
+    }, aes(color = "reconstructed")) +
     stat_function(fun = function(x){fit_values[['n_1']]*(1-exp(-fit_values[['k_1']]*x)) + fit_values[['n_2']]*(1-exp(-fit_values[['k_2']]*x)) + fit_values[['n_3']]*(1-exp(-fit_values[['k_3']]*x))
-    }, color = "red")
-
+    }, aes(color = "fitted")) +
+    scale_colour_manual(name = "",
+                        values = c("blue", "red")) +
+    scale_shape_manual(name = "",
+                       values = c(16)) +
+    theme(legend.position = "bottom")
 }
 
-##############
-# #
-# dat <- omit_amino(alpha_dat, 1)
-# kin_dat <- prepare_kin_dat(alpha_dat, state = "Alpha_KSCN")
-# kin_dat <- prepare_kin_dat(dat, state = "Alpha_KSCN")
-#
-#
-# fit_k_params <- get_example_fit_k_params()
-# control <- get_example_control()
-# fit_values_all <- create_fit_dataset(kin_dat, control = control,
-#                                      fit_k_params = fit_k_params,
-#                                      fractional = T)
-#
-#
-# fit_values <- fit_values_all[fit_values_all[["id"]]==1, ]
-# fit_dat <- kin_dat[kin_dat[["ID"]]==1, ]
-#
-# library(gridExtra)
-# # comparison of methods
-#
-# plt_shrtst_list <- lapply(1:106, function(i){
-#   fit_dat <-  kin_dat[kin_dat[["ID"]]==i, ]
-#   recreate_uc(fit_dat, fit_values_all, hires_method = "shortest")
-# })
-#
-# plt_wghtd_list <- lapply(1:106, function(i){
-#   fit_dat <-  kin_dat[kin_dat[["ID"]]==i, ]
-#   recreate_uc(fit_dat, fit_values_all, hires_method = "weighted")
-# })
-#
-# plt <- rep(1, 212)
-# for(i in 1:106){
-#   plt[2*i - 1] <- plt_shrtst_list[i]
-#   plt[2*i] <- plt_wghtd_list[i]
-# }
-# mg_all <- marrangeGrob(plt, nrow = 2, ncol = 2)
-# ggsave("all_omitted.pdf", mg_all, units="mm", height = 210, width = 297)
-#
-#
-# ##
-#
-# hr_dat <- create_uc_from_hires_dataset(kin_dat,
-#                                        fit_values_all,
-#                                        hires_method = "weighted")
-#
-#
-# hr_dat %>%
-#   group_by(ID, Sequence, Start, End, State)%>%
-#   summarize(sum_diff = sum(abs(hr_diff))) %>%
-#   arrange(desc(sum_diff))
-#
-# ids <- hr_dat %>%
-#   group_by(ID, Sequence, Start, End, State)%>%
-#   summarize(sum_diff = sum(hr_diff)) %>%
-#   arrange(desc(sum_diff)) %>%
-#   head(10) %>%
-#   ungroup() %>%
-#   select(ID) %>% .[[1]]
-#
-# ## ID = 75
-# recreate_uc(fit_dat = filter(kin_dat, ID == 75),
-#             fit_values_all,
-#             hires_method = "weighted")
-#
-# filter(fit_values_all, id == 75) %>%
-#   mutate(n = n_1 + n_2 + n_3)
-#
-# pep_57 <- peptide_hr %>%
-#   summarise(n_1 = mean(n_1),
-#             k_1 = mean(k_1),
-#             n_2 = mean(n_2),
-#             k_2 = mean(k_2),
-#             n_3 = mean(n_3),
-#             k_3 = mean(k_3))
-#
-#
-# dat_75 <- hr_dat %>%
-#   filter(ID == 75)
-#
-# fit_values_75 <- filter(fit_values_all, id == 75)
-#
-# ggplot(dat_75) +
-#   geom_point(aes(x = Exposure, y = frac_deut_uptake), color = "aquamarine") +
-#   geom_line(aes(x = Exposure, y = frac_deut_uptake), color = "aquamarine") +
-#   geom_point(aes(x = Exposure, y = hr_frac_deut_uptake), color = "orange") +
-#   geom_line(aes(x = Exposure, y = hr_frac_deut_uptake), color = "orange") +
-#   stat_function(fun = function(x){pep_57[['n_1']]*(1-exp(-pep_57[['k_1']]*x)) + pep_57[['n_2']]*(1-exp(-pep_57[['k_2']]*x)) + pep_57[['n_3']]*(1-exp(-pep_57[['k_3']]*x))}, color = "orange") +
-#   stat_function(fun = function(x){pep_57[['n_1']]*(1-exp(-pep_57[['k_1']]*x))}, color = "red") +
-#   stat_function(fun = function(x){pep_57[['n_2']]*(1-exp(-pep_57[['k_2']]*x))}, color = "green") +
-#   stat_function(fun = function(x){pep_57[['n_3']]*(1-exp(-pep_57[['k_3']]*x))}, color = "blue") +
-#   ylim(c(0, 1.2)) +
-#   scale_x_log10()
-#
-# fit_values
-#
-# fit_values_all %>%
-#   filter(id %in% ids[[1]]) %>%
-#   select(sequence, n_1, k_1, n_2, k_2, n_3, k_3)
 
+
+#' @examples
+#' rec_uc_dat <- create_uc_from_hires_dataset(kin_dat,
+#'                                        fit_values_all,
+#'                                        hires_method = "shortest")
+#' calculate_reconstructed_uc_rmse(rec_uc_dat)
+#'
+#' @export
+calculate_reconstructed_uc_rmse <- function(rec_uc_dat,
+                                           sort = c("ID", "rmse")){
+
+
+  res <- rec_uc_dat %>%
+    mutate(hr_diff2 = hr_diff^2) %>%
+    group_by(ID, Sequence, Start, End, State) %>%
+    summarize(rmse = sqrt(mean(hr_diff2))) %>%
+    ungroup()
+
+  if(sort == "mse") res <- arrange(desc(rmse))
+
+  attr(res, "mean_rmse") <- mean(res[["rmse"]])
+  attr(res, "hires_method") <- attr(rec_uc_dat, "hires_method")
+  return(res)
+}
+
+#' @examples
+#' rec_uc_rmse_dat <- calculate_reconstructed_uc_rmse(rec_uc_dat)
+#' plot_reconstructed_uc_coverage(rec_uc_rmse_dat, style = "butterfly")
+#'
+#' @export
+plot_reconstructed_uc_coverage <- function(rec_uc_rmse_dat,
+                                           style = c("coverage", "butterfly")){
+
+  if(style == "coverage"){
+
+    ## levels
+    levels <- rep(NA, (nrow(rec_uc_rmse_dat)))
+    levels[1] <- 1
+    start <- rec_uc_rmse_dat[["Start"]]
+    end <- rec_uc_rmse_dat[["End"]]
+
+    for(i in 1:(nrow(rec_uc_rmse_dat) - 1)) {
+      for(level in 1:max(levels, na.rm = TRUE)) {
+        if(all(start[i + 1] > end[1:i][levels == level] | end[i + 1] < start[1:i][levels == level], na.rm = TRUE)) {
+          levels[i + 1] <- level
+          break
+        } else {
+          if(level == max(levels, na.rm = TRUE)) {
+            levels[i + 1] <- max(levels, na.rm = TRUE) + 1
+          }
+        }
+      }
+    }
+
+    rec_uc_rmse_dat[["ID"]] <- levels
+
+    plt <- ggplot(data = rec_uc_rmse_dat,
+           mapping = aes(xmin = Start, xmax = End + 1,
+                         ymin = ID, ymax = ID - 1)) +
+      geom_rect(aes(fill = rmse)) +
+      labs(title = "",
+           x = "Position",
+           y = "") +
+      theme(legend.position = "bottom",
+            axis.ticks.y = element_blank(),
+            axis.text.y = element_blank())
+
+
+  } else if (style == "butterfly"){
+
+    plt <- ggplot(rec_uc_rmse_dat, aes(x = ID, y = rmse)) +
+      geom_point() +
+      geom_line(linetype = 2, linewidth = 0.01)
+      ylim(c(0, NA)) +
+      labs(x = "Peptide ID",
+           title = paste0("mean RMSE ", round(attr(rec_uc_rmse_dat, "mean_rmse"), 3),", hires method: ", attr(rec_uc_rmse_dat, "hires_method")))
+
+  }
+
+  return(plt)
+
+
+}
