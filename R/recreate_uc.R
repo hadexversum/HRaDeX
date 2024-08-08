@@ -75,6 +75,8 @@ create_uc_from_hires_dataset <- function(kin_dat,
   return(res)
 }
 
+#' @importFrom dplyr summarise
+#' @importFrom ggplot2 scale_colour_manual
 #'
 #' @param fit_dat experimental uptake data filter for chosen peptide
 #' @param fit_values_all fit parameters for whole peptide pool
@@ -151,7 +153,7 @@ recreate_uc <- function(fit_dat, ## uc filtered dat
 #' rec_uc_dat <- create_uc_from_hires_dataset(kin_dat,
 #'                                        fit_values_all,
 #'                                        hires_method = "shortest")
-#' calculate_reconstructed_uc_rmse(rec_uc_dat)
+#' calculate_reconstructed_uc_rmse(rec_uc_dat, sort = "rmse")
 #'
 #' @export
 calculate_reconstructed_uc_rmse <- function(rec_uc_dat,
@@ -164,16 +166,18 @@ calculate_reconstructed_uc_rmse <- function(rec_uc_dat,
     summarize(rmse = sqrt(mean(hr_diff2))) %>%
     ungroup()
 
-  if(sort == "mse") res <- arrange(desc(rmse))
+  if(sort == "rmse") res <- arrange(desc(rmse))
 
   attr(res, "mean_rmse") <- mean(res[["rmse"]])
   attr(res, "hires_method") <- attr(rec_uc_dat, "hires_method")
+
   return(res)
 }
 
 #' @examples
 #' rec_uc_rmse_dat <- calculate_reconstructed_uc_rmse(rec_uc_dat)
 #' plot_reconstructed_uc_coverage(rec_uc_rmse_dat, style = "butterfly")
+#' plot_reconstructed_uc_coverage(rec_uc_rmse_dat, style = "coverage")
 #'
 #' @export
 plot_reconstructed_uc_coverage <- function(rec_uc_rmse_dat,
@@ -218,7 +222,7 @@ plot_reconstructed_uc_coverage <- function(rec_uc_rmse_dat,
 
     plt <- ggplot(rec_uc_rmse_dat, aes(x = ID, y = rmse)) +
       geom_point() +
-      geom_line(linetype = 2, linewidth = 0.01)
+      geom_line(linetype = 2, linewidth = 0.01) +
       ylim(c(0, NA)) +
       labs(x = "Peptide ID",
            title = paste0("mean RMSE ", round(attr(rec_uc_rmse_dat, "mean_rmse"), 3),", hires method: ", attr(rec_uc_rmse_dat, "hires_method")))

@@ -1,4 +1,13 @@
 #' @importFrom dplyr reframe
+#'
+#' @example
+#' kin_dat <- HRaDeX::prepare_kin_dat(alpha_dat,
+#'                                    state = "Alpha_KSCN",
+#'                                    time_0 = 0,
+#'                                    time_100 = 1440)
+#' fit_values <- create_fit_dataset(kin_dat,
+#'                                  fit_k_params = get_example_fit_k_params())
+#' calculate_hires(fit_values, method = "shortest")
 #' @export
 
 calculate_hires <- function(fit_values,
@@ -72,7 +81,6 @@ calculate_hires <- function(fit_values,
 
     hires_params_ <- lapply(seq(1:protein_length), function(pos){
 
-      # print(pos)
       if(fractional){
 
         tmp_params <- fit_values %>%
