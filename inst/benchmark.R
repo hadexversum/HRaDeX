@@ -1,4 +1,7 @@
 library(patchwork)
+library(ggplot2)
+library(dplyr)
+library(HRaDeX)
 
 calculate_uc_from_hires_peptide <- function(fit_dat, ## uc filtered dat
                                             fit_values_all, ## fit unfiltered
@@ -63,7 +66,6 @@ create_uc_from_hires_dataset <- function(kin_dat,
   return(res)
 }
 dat <- omit_amino(alpha_dat, 1)
-kin_dat <- prepare_kin_dat(alpha_dat, state = "Alpha_KSCN")
 kin_dat <- prepare_kin_dat(dat, state = "Alpha_KSCN")
 
 
@@ -76,11 +78,11 @@ fit_values_all <- create_fit_dataset(kin_dat, control = control,
 hr_dat <- rbind(create_uc_from_hires_dataset(kin_dat,
                                              fit_values_all,
                                              hires_method = "weighted") %>%
-                  mutate(type = "weighted"),
+                  mutate(type = "weighted average"),
                 hr_dat <- create_uc_from_hires_dataset(kin_dat,
                                                        fit_values_all,
                                                        hires_method = "shortest") %>%
-                  mutate(type = "shortest"))
+                  mutate(type = "shortest peptide"))
 
 mean_err_dat <- mutate(hr_dat, hr_diff2 = hr_diff^2) %>%
   group_by(ID, Sequence, Start, End, State, type) %>%
@@ -90,7 +92,8 @@ mean_err_dat %>%
   ungroup() %>%
   group_by(type) %>%
   mutate(less_05 = mean_err < 0.05) %>%
-  summarise(1 - mean(less_05))
+  summarise(1 - mean(less_05),
+            avg = mean(mean_err))
 
 
 ggplot(mean_err_dat, aes(x = mean_err, fill = type)) +
@@ -157,7 +160,7 @@ p1 <- mean_err_dat %>%
 
 
 
-png("benchmark.png", width = 680, height = 680*1.1)
+png("benchmark.png", width = 680, height = 680*0.9)
 p1/p2 +
   plot_annotation(tag_levels = "A") &
   theme(plot.tag = element_text(size = 24))
