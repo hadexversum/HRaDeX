@@ -68,9 +68,13 @@ kin_dat <- prepare_kin_dat(dat, state = "Alpha_KSCN")
 
 
 fit_k_params <- get_example_fit_k_params()
+fit_k_params_2 <- data.frame(
+  start = c(k_1 = 2, k_2 = 0.2, k_3 = 0.02),
+  lower = c(k_1 = 1, k_2 = 0.1, k_3 = 0.0001),
+  upper = c(k_1 = 30, k_2 = 1, k_3 = 0.1))
 control <- get_example_control()
 fit_values_all <- create_fit_dataset(kin_dat, control = control,
-                                     fit_k_params = fit_k_params,
+                                     fit_k_params = fit_k_params_2,
                                      fractional = TRUE)
 
 hr_dat <- rbind(create_uc_from_hires_dataset(kin_dat,
@@ -90,8 +94,14 @@ mean_err_dat %>%
   ungroup() %>%
   group_by(type) %>%
   mutate(less_05 = mean_err < 0.05) %>%
-  summarise(1 - mean(less_05))
+  summarise(err = 1 - mean(less_05),
+            no_err = 1 - err,
+            cnt = 106-sum(less_05))
 
+mean_err_dat %>%
+  ungroup() %>%
+  group_by(type) %>%
+  summarise(err = mean(mean_err))
 
 ggplot(mean_err_dat, aes(x = mean_err, fill = type)) +
   geom_histogram() +

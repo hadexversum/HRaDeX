@@ -1,6 +1,6 @@
 #' @importFrom dplyr reframe
 #'
-#' @example
+#' @examples
 #' kin_dat <- HRaDeX::prepare_kin_dat(alpha_dat,
 #'                                    state = "Alpha_KSCN",
 #'                                    time_0 = 0,

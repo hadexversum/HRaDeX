@@ -95,6 +95,11 @@ kin_dat <- HRaDeX::prepare_kin_dat(alpha_dat,
                                    time_0 = 0,
                                    time_100 = 1440)
 
+fit_k_params_2 <- data.frame(
+  start = c(k_1 = 2, k_2 = 0.2, k_3 = 0.02),
+  lower = c(k_1 = 1, k_2 = 0.1, k_3 = 0.0001),
+  upper = c(k_1 = 30, k_2 = 1, k_3 = 0.1))
+
 fit_values <- create_fit_dataset(kin_dat, 
                                  fit_k_params = get_example_fit_k_params(), 
                                  trace = F, 
