@@ -6,11 +6,15 @@
 <url><loc>https://hadexversum.github.io/HRaDeX/articles/workflow.html</loc></url>
 <url><loc>https://hadexversum.github.io/HRaDeX/authors.html</loc></url>
 <url><loc>https://hadexversum.github.io/HRaDeX/index.html</loc></url>
+<url><loc>https://hadexversum.github.io/HRaDeX/reference/calculate_recovered_uc_rmse.html</loc></url>
 <url><loc>https://hadexversum.github.io/HRaDeX/reference/calculate_replicate_state_uptake.html</loc></url>
+<url><loc>https://hadexversum.github.io/HRaDeX/reference/calculate_uc_from_hires_peptide.html</loc></url>
+<url><loc>https://hadexversum.github.io/HRaDeX/reference/compare_aggregation_methods.html</loc></url>
 <url><loc>https://hadexversum.github.io/HRaDeX/reference/create_fit_dataset.html</loc></url>
 <url><loc>https://hadexversum.github.io/HRaDeX/reference/create_replicate_state_uptake_dataset.html</loc></url>
 <url><loc>https://hadexversum.github.io/HRaDeX/reference/create_two_state_dataset.html</loc></url>
 <url><loc>https://hadexversum.github.io/HRaDeX/reference/create_uc_distance_dataset.html</loc></url>
+<url><loc>https://hadexversum.github.io/HRaDeX/reference/create_uc_from_hires_dataset.html</loc></url>
 <url><loc>https://hadexversum.github.io/HRaDeX/reference/get_example_control.html</loc></url>
 <url><loc>https://hadexversum.github.io/HRaDeX/reference/get_example_fit_k_params.html</loc></url>
 <url><loc>https://hadexversum.github.io/HRaDeX/reference/get_params_summary_image.html</loc></url>
@@ -35,6 +39,7 @@
 <url><loc>https://hadexversum.github.io/HRaDeX/reference/plot_lm.html</loc></url>
 <url><loc>https://hadexversum.github.io/HRaDeX/reference/plot_n.html</loc></url>
 <url><loc>https://hadexversum.github.io/HRaDeX/reference/plot_params_map.html</loc></url>
+<url><loc>https://hadexversum.github.io/HRaDeX/reference/plot_recovered_uc_coverage.html</loc></url>
 <url><loc>https://hadexversum.github.io/HRaDeX/reference/plot_rss_hist.html</loc></url>
 <url><loc>https://hadexversum.github.io/HRaDeX/reference/plot_singular_uc.html</loc></url>
 <url><loc>https://hadexversum.github.io/HRaDeX/reference/plot_start_params.html</loc></url>
