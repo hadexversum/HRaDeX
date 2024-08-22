@@ -142,22 +142,21 @@ p2 <- mean_err_dat %>%
   ggplot(data = .,
          mapping = aes(xmin = Start, xmax = End + 1,
                        ymin = ID, ymax = ID - 0.75, fill = mean_err, linetype = type)) +
-  geom_rect(color = "black") +
+  geom_rect(color = "black", size = 1) +
   scale_x_continuous("Position") +
-  scale_fill_gradient("Mean error", low = "white", high = "red") +
+  scale_fill_gradient("RMSE", low = "white", high = "red") +
   guides(
     linetype = guide_legend("Type of aggregation", override.aes = aes(fill = "grey")),
     #fill = guide_legend(override.aes = aes(linetype = "solid"))
   ) +
-  theme_bw() +
+  theme_bw(base_size = 18) +
   theme(legend.position = "bottom",
-        legend.key.width = unit(1, "cm"),
+        legend.key.width = unit(1.5, "cm"),
         axis.text.y = element_blank(),
         axis.ticks.y = element_blank(),
         panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank())
 
-plot_cov_class
 
 
 p1 <- mean_err_dat %>%
@@ -165,16 +164,16 @@ p1 <- mean_err_dat %>%
   geom_point() +
   geom_line(linetype = "dashed") +
   scale_x_continuous("Peptide ID") +
-  scale_y_continuous("Mean error") +
+  scale_y_continuous("RMSE") +
   facet_wrap(~ type, ncol = 1) +
-  theme_bw()
+  theme_bw(base_size = 18)
 
 
 
-png("benchmark.png", width = 680, height = 680*0.9)
+png("benchmark.png", width = 680*4, height = 680*0.9*4, res = 180)
 p1/p2 +
   plot_annotation(tag_levels = "A") &
-  theme(plot.tag = element_text(size = 24))
+  theme(plot.tag = element_text(size = 26))
 dev.off()
 
 
