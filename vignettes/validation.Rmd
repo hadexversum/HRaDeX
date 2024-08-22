@@ -1,0 +1,119 @@
+---
+title: "validation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{validation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include = FALSE}
+library(HRaDeX)
+library(dplyr)
+```
+
+# How to validate the results?
+
+
+
+HRaDeX workflow is based on the peptide uptake curve fitting, and the aggregation of fitted parameters from the peptide level into high-resolution. As this process is dependent on many parameters, we offer the possibility to validate the analysis on multiple steps.
+
+HRaDeX workflow is described in dedicated article. Here, we focus strictly on validation features.
+
+Let's start with running the analysis.
+
+```{r }
+protein_length <- 224 + 1 ## as r3dmol counts differently
+
+kin_dat <- HRaDeX::prepare_kin_dat(alpha_dat, 
+                                   state = "Alpha_KSCN",
+                                   time_0 = 0,
+                                   time_100 = 1440)
+
+fit_k_params_2 <- data.frame(
+  start = c(k_1 = 2, k_2 = 0.2, k_3 = 0.02),
+  lower = c(k_1 = 1, k_2 = 0.1, k_3 = 0.0001),
+  upper = c(k_1 = 30, k_2 = 1, k_3 = 0.1))
+
+fit_values <- create_fit_dataset(kin_dat, 
+                                 fit_k_params = fit_k_params_2, 
+                                 trace = F, 
+                                 fractional = T, 
+                                 workflow = 321)
+
+hires_params <- calculate_hires(fit_values,
+                                fractional = T, 
+                                method = "weighted",
+                                protein_length = protein_length)
+```
+
+## Fit selection
+
+Depending on the supplied data, the fitting process for each peptide includes fitting all selected possible functions: three-, two- and one-component exchange function. The best fitted model is selected based on the BIC value. Althought it is not possible to investigate the results of all possible models, we can analyse the chosen, best one. 
+
+The BIC values is presented in the data frame containing fitting results, as well as rss. Then, it is possible to draw the fitted model alongside the experimental data to control if the result is satisfactory. 
+
+```{r include = FALSE}
+example_fit_dat <- filter(fit_values, id == 106)
+example_kin_dat <- filter(kin_dat, ID == 106)
+```
+
+Here are the results for one, selected peptide:
+
+```{r}
+example_fit_dat
+```
+
+```{r fig.width=7}
+plot_double_uc(example_kin_dat, example_fit_dat)
+
+```
+
+### In GUI
+
+In the `UC plots` tab, there are listed plots for all of the available peptides. Left column shows the experimentaly obtained deuterium uptake curve, with fitted model. It also prsents the components of the fitted model - shown as groups of exchange: fast (red), medium (green) and blue (slow). If there is no detected deuterium uptake during the whole experimental timecourse, that peptide is classified as `very slow` exchange and annotated with black color, as shown on the color legend.
+
+## Region classification consistency
+
+Before the final data aggregation step, it is important to check if the classification results are consistent for overlapping peptides within regions. The peptides close to each other should be classified similarly, that can be noted by the presence of similar colors. The long peptides (with length exceeding 10 amino acids) should be treated carefully, as in their case it is harder to pin-point the exact region of exchange and distinquish between the exchange rates of the residues. 
+
+
+```{r}
+HRaDeX::plot_cov_class(fit_values)
+```
+
+## High-resolution results
+
+Once we have the data aggregated into high-resolution level, using one of two available methods, we can take a step back and calculated the deuterium uptake for each peptide using the high-resolution data for amino acids building that peptide. Then, we plot the result next to the experimental data to check the goodnes of the data. Than, we calculate the mrse - for each peptide and for the whole peptide pool.
+
+Here, we use the `weighted` approach.
+
+```{r }
+rec_uc_dat_alpha <- create_uc_from_hires_dataset(kin_dat,
+                                           fit_values,
+                                            hires_method = "weighted")
+rec_uc_rmse_dat_alpha <- calculate_recovered_uc_rmse(rec_uc_dat_alpha, sort = "ID")
+```
+
+
+```{r fig.width=7}
+plot_recovered_uc_coverage(rec_uc_rmse_dat_alpha, style = "butterfly")
+```
+
+```{r fig.width=7}
+plot_recovered_uc_coverage(rec_uc_rmse_dat_alpha, style = "coverage")
+```
+
+
+This step is currently only available on the package side, but it will be featured in the web-server as well, when time comes.
+
+## What to improve?
+
+We controlled the steps of the analysis, and what to do next? If there are some inconsistencies that are affecting the final result, it may be benefitial to re-run the analysis with changed parameters. Sometimes, when the regions of protein undergo the exchnange slowly, the `slow` exchange group shoul be shifted, leaving the `medium` exchange ranges more broad. 

@@ -98,6 +98,7 @@ create_uc_from_hires_dataset <- function(kin_dat,
                 ID, Protein, State, Sequence, Start, End, MaxUptake, Exposure, frac_deut_uptake, err_frac_deut_uptake, hr_frac_deut_uptake, hr_diff)
 
   attr(res, "hires_method") <- hires_method
+
   return(res)
 }
 
@@ -201,7 +202,7 @@ recreate_uc <- function(fit_dat, ## uc filtered dat
 #'
 #' @export
 calculate_recovered_uc_rmse <- function(rec_uc_dat,
-                                           sort = c("ID", "rmse")){
+                                        sort = c("ID", "rmse")){
 
 
   res <- rec_uc_dat %>%
@@ -219,6 +220,8 @@ calculate_recovered_uc_rmse <- function(rec_uc_dat,
 }
 
 #' Plots recovered DU rmse
+#'
+#' @importFrom ggplot2 scale_fill_gradient unit
 #'
 #' @param rec_uc_rmse_dat recovered deuterium uptake with calculated rmse,
 #' produced by calculate_recovered_uc_rmse

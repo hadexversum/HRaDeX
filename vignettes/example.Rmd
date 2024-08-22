@@ -101,7 +101,7 @@ fit_k_params_2 <- data.frame(
   upper = c(k_1 = 30, k_2 = 1, k_3 = 0.1))
 
 fit_values <- create_fit_dataset(kin_dat, 
-                                 fit_k_params = get_example_fit_k_params(), 
+                                 fit_k_params = fit_k_params_2, 
                                  trace = F, 
                                  fractional = T, 
                                  workflow = 321)
@@ -127,7 +127,8 @@ Then, we need to decide if the default parameters are sufficient or should be ad
 In the case of our example, we use the default limits, as they are sufficient and the fit results are very good, with small rss. The default parameters are as follows:
 
 ```{r}
-get_example_fit_k_params()
+# get_example_fit_k_params()
+fit_k_params_2
 ```
 
 
