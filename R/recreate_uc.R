@@ -102,6 +102,8 @@ create_uc_from_hires_dataset <- function(kin_dat,
   return(res)
 }
 
+#' Plots recovered DU of a peptide
+#'
 #' @importFrom dplyr summarise
 #' @importFrom ggplot2 scale_colour_manual
 #'
