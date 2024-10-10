@@ -16,7 +16,7 @@
 #'
 calculate_uc_from_hires_peptide <- function(fit_dat, ## uc filtered dat
                                             fit_values_all, ## fit unfiltered
-                                            fractional = T,
+                                            fractional = TRUE,
                                             hires_method = c("shortest", "weighted")){
 
   # hires_method <- "weighted"
@@ -26,7 +26,7 @@ calculate_uc_from_hires_peptide <- function(fit_dat, ## uc filtered dat
   peptide_start <- unique(fit_dat[["Start"]])
   peptide_end <- unique(fit_dat[["End"]])
 
-  hires <- calculate_hires(fit_values_all, method = hires_method, fractional = T)
+  hires <- calculate_hires(fit_values_all, method = hires_method, fractional = fractional)
 
   fit_values <- filter(fit_values_all,
                        sequence == peptide_sequence,
@@ -78,7 +78,7 @@ calculate_uc_from_hires_peptide <- function(fit_dat, ## uc filtered dat
 #' @export
 create_uc_from_hires_dataset <- function(kin_dat,
                                          fit_values_all,
-                                         fractional = T,
+                                         fractional = TRUE,
                                          hires_method = c("shortest", "weighted")){
 
   peptide_list <- unique(select(kin_dat, ID, Sequence, Start, End))
@@ -89,7 +89,7 @@ create_uc_from_hires_dataset <- function(kin_dat,
 
     calculate_uc_from_hires_peptide(fit_dat,
                                     fit_values_all,
-                                    fractional = T,
+                                    fractional = fractional,
                                     hires_method = hires_method)
 
   }) %>% bind_rows()

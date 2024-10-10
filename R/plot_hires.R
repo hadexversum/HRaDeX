@@ -26,7 +26,7 @@
 #' @export
 
 plot_hires <- function(hires_params,
-                       interactive = F){
+                       interactive = FALSE){
 
 
   if(interactive){
@@ -97,7 +97,7 @@ plot_hires <- function(hires_params,
 #' @export
 
 create_monotony <- function(hires_params,
-                            fractional = T){
+                            fractional = TRUE){
 
   lapply(c(2:nrow(hires_params)), function(i){
 
@@ -133,8 +133,8 @@ plot_monotony <- function(mono_dat){
 #'
 #' @export
 plot_hires_components <- function(hires_params,
-                                  fractional = F,
-                                  interactive = F){
+                                  fractional = FALSE,
+                                  interactive = FALSE){
 
   protein_length = max(hires_params[["position"]])
 

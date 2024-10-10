@@ -19,7 +19,7 @@
 #'
 #' @export
 plot_rss_hist <- function(fit_values,
-                          interactive = F){
+                          interactive = FALSE){
 
   if(interactive){
     sel_histogram <-  geom_histogram_interactive(aes(x = rss,

@@ -23,7 +23,7 @@
 #' @export
 
 plot_estimated_k <- function(hires_params,
-                             interactive = F){
+                             interactive = FALSE){
 
   if(interactive){
     sel_points <- geom_point_interactive(aes(x = position, y = k_est,

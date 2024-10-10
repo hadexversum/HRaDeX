@@ -10,7 +10,7 @@
 #'
 #' @export
 plot_params_map <- function(fit_values,
-                            interactive = F){
+                            interactive = FALSE){
 
   if(interactive){
     sel_points <- geom_point_interactive(aes(x = dom_exp, y = sec_dom_exp,

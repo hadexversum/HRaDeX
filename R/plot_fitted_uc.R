@@ -31,9 +31,9 @@
 #' @export
 plot_fitted_uc <- function(fit_dat,
                            fit_values,
-                           replicate = F,
-                           fractional = T,
-                           interactive = F){
+                           replicate = FALSE,
+                           fractional = TRUE,
+                           interactive = FALSE){
 
   plot_title <- paste0(fit_values[["sequence"]], " (", fit_values[["start"]], "-", fit_values[["end"]], ") ")
 

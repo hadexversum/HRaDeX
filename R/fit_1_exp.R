@@ -6,8 +6,8 @@
 fit_1_exp <- function(fit_dat,
                       control,
                       fit_k_params,
-                      fractional = T,
-                      trace = F){
+                      fractional = TRUE,
+                      trace = FALSE){
 
 
   if(length(unique(fit_dat[["Sequence"]])) > 1){
