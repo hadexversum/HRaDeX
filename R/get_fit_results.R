@@ -92,6 +92,8 @@ get_fit_results <- function(fit_dat,
 
   }
 
+  if(res[["n_1"]] < 0) res[["class_name "]] <- "failure"
+
   res[["Protein"]] <- protein
   res[["State"]] <- state
 
