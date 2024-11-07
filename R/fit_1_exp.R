@@ -20,11 +20,8 @@ fit_1_exp <- function(fit_dat,
 
   max_uptake <- fit_dat[["MaxUptake"]][1]
 
-  if(fractional){
-    fit_params <- rbind(get_1_k_params(fit_k_params), get_1_n_params())
-  } else {
-    fit_params <- rbind(get_1_k_params(fit_k_params), get_1_n_params(MaxUptake = max_uptake))
-  }
+  fit_params <- rbind(get_1_k_params(fit_k_params), get_1_n_params(fractional = fractional,
+                                                                   MaxUptake = max_uptake))
 
   tryCatch({
     if(fractional){
