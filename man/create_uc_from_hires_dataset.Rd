@@ -7,7 +7,7 @@
 create_uc_from_hires_dataset(
   kin_dat,
   fit_values_all,
-  fractional = T,
+  fractional = TRUE,
   hires_method = c("shortest", "weighted")
 )
 }

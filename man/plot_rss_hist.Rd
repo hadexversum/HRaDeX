@@ -4,7 +4,7 @@
 \alias{plot_rss_hist}
 \title{Histogram of fit rss values}
 \usage{
-plot_rss_hist(fit_values, interactive = F)
+plot_rss_hist(fit_values, interactive = FALSE)
 }
 \arguments{
 \item{fit_values}{data.frame with fit values}

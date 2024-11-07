@@ -7,9 +7,9 @@
 plot_fitted_uc(
   fit_dat,
   fit_values,
-  replicate = F,
-  fractional = T,
-  interactive = F
+  replicate = FALSE,
+  fractional = TRUE,
+  interactive = FALSE
 )
 }
 \arguments{

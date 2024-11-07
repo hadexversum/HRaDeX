@@ -4,7 +4,7 @@
 \alias{plot_estimated_k}
 \title{Plots estimated k}
 \usage{
-plot_estimated_k(hires_params, interactive = F)
+plot_estimated_k(hires_params, interactive = FALSE)
 }
 \arguments{
 \item{hires_params}{data.frame with hires results, calculate using

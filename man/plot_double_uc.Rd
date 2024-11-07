@@ -4,7 +4,7 @@
 \alias{plot_double_uc}
 \title{Plots two uc plots side by side}
 \usage{
-plot_double_uc(fit_dat, fit_values, replicate = F, fractional = T)
+plot_double_uc(fit_dat, fit_values, replicate = FALSE, fractional = TRUE)
 }
 \arguments{
 \item{fit_dat}{uptake data for selected peptide.}

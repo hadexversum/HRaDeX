@@ -4,7 +4,7 @@
 \alias{plot_params_map}
 \title{Plots map of params}
 \usage{
-plot_params_map(fit_values, interactive = F)
+plot_params_map(fit_values, interactive = FALSE)
 }
 \arguments{
 \item{fit_values}{...}

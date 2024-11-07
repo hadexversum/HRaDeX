@@ -6,9 +6,9 @@
 \usage{
 plot_uc_real_dist(
   uc_distance_dataset,
-  squared = F,
-  fractional = T,
-  interactive = F
+  squared = FALSE,
+  fractional = TRUE,
+  interactive = FALSE
 )
 }
 \arguments{

@@ -4,7 +4,7 @@
 \alias{plot_k_distance}
 \title{Plots estimated k distance}
 \usage{
-plot_k_distance(two_state_dataset, interactive = F)
+plot_k_distance(two_state_dataset, interactive = FALSE)
 }
 \arguments{
 \item{two_state_dataset}{data.frame produced by \link{create_two_state_dataset}}
