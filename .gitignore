@@ -5,3 +5,6 @@
 .RProj
 docs
 inst/doc
+*.pdf
+*.csv
+*.png
