@@ -26,8 +26,8 @@
 create_fit_dataset <- function(kin_dat,
                                fit_k_params,
                                control = list(maxiter = 1000,  scale = "levenberg"),
-                               trace = F,
-                               fractional = F,
+                               trace = FALSE,
+                               fractional = FALSE,
                                workflow = 321){
 
   peptide_list <- kin_dat %>%

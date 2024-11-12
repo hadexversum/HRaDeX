@@ -4,7 +4,7 @@
 \alias{plot_cov_class}
 \title{Plots coverage with classification results}
 \usage{
-plot_cov_class(fit_values, fractional = T, interactive = F)
+plot_cov_class(fit_values, fractional = TRUE, interactive = FALSE)
 }
 \arguments{
 \item{fit_values}{...}

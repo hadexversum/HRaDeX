@@ -1,5 +1,4 @@
-
-# hadexversum
+# HRaDeX
 
 HRaDeX is a part of tool family for analysing HDX-MS data, HaDeXversum. It is developed in Mass Spectrometry Lab in Institute of Biophysics and Biochemistry, Polish Acadamy of Sciences.
 
@@ -15,3 +14,13 @@ For more information on pepitde-level analysis, see [documentation](https://hade
 For detailed explanation of the classification workflow works see this [article](https://hadexversum.github.io/HRaDeX/articles/workflow.html).
 and of visualization the results, see this [article](https://hadexversum.github.io/HRaDeX/articles/visualization.html).
 The documentation is available [here](https://hadexversum.github.io/HRaDeX/).
+
+
+## Installation
+
+HRaDeX can be downloaded directly from GitHub repository:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("hadexversum/HRaDeX")
+```

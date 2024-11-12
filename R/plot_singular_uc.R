@@ -23,10 +23,10 @@
 
 plot_singular_uc <- function(fit_dat,
                              fit_values,
-                             include_uc = T,
-                             replicate = F,
-                             fractional = T,
-                             interactive = F){
+                             include_uc = TRUE,
+                             replicate = FALSE,
+                             fractional = TRUE,
+                             interactive = FALSE){
 
     plot_title <- paste0(unique(fit_values[["sequence"]]), " (", unique(fit_values[["start"]]), "-", unique(fit_values[["end"]]), ") ")
 

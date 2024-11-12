@@ -29,8 +29,8 @@
 
 plot_double_uc <- function(fit_dat,
                            fit_values,
-                           replicate = F,
-                           fractional = T){
+                           replicate = FALSE,
+                           fractional = TRUE){
 
    plot_left <- plot_fitted_uc(fit_dat = fit_dat,
                                fit_values = fit_values,

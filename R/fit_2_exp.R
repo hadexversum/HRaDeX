@@ -5,8 +5,8 @@
 fit_2_exp <- function(fit_dat,
                       control,
                       fit_k_params,
-                      fractional = T,
-                      trace = F){
+                      fractional = TRUE,
+                      trace = FALSE){
 
   if(length(unique(fit_dat[["Sequence"]])) > 1){
     stop("More than one sequence in supplied data!")
@@ -18,11 +18,9 @@ fit_2_exp <- function(fit_dat,
   fit_2_types <- get_2_k_params(fit_k_params)
   max_uptake <- fit_dat[["MaxUptake"]][1]
 
-  if(fractional){
-    fit_2_n_params <- get_2_n_params()
-  } else {
-    fit_2_n_params <- get_2_n_params(MaxUptake = max_uptake)
-  }
+  fit_2_n_params <- get_2_n_params(fractional = fractional,
+                                   MaxUptake = max_uptake)
+
 
   fit_2_res <- lapply(fit_2_types, function(fit_2_params){
 

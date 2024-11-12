@@ -7,10 +7,10 @@
 plot_singular_uc(
   fit_dat,
   fit_values,
-  include_uc = T,
-  replicate = F,
-  fractional = T,
-  interactive = F
+  include_uc = TRUE,
+  replicate = FALSE,
+  fractional = TRUE,
+  interactive = FALSE
 )
 }
 \arguments{

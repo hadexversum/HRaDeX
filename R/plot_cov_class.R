@@ -24,8 +24,8 @@
 #'
 #' @export
 plot_cov_class <- function(fit_values,
-                           fractional = T,
-                           interactive = F){
+                           fractional = TRUE,
+                           interactive = FALSE){
 
 
   ## levels

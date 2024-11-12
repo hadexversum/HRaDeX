@@ -7,7 +7,8 @@
 calculate_uc_from_hires_peptide(
   fit_dat,
   fit_values_all,
-  fractional = T,
+  hires_dat = NULL,
+  fractional = TRUE,
   hires_method = c("shortest", "weighted")
 )
 }

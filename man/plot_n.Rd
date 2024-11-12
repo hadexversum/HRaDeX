@@ -4,7 +4,7 @@
 \alias{plot_n}
 \title{Plots n values}
 \usage{
-plot_n(list_params, fractional = F, interactive = F)
+plot_n(list_params, fractional = FALSE, interactive = FALSE)
 }
 \arguments{
 \item{list_params}{list of fit parameters}

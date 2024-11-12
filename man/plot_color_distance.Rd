@@ -4,7 +4,7 @@
 \alias{plot_color_distance}
 \title{Plots assigned color distance}
 \usage{
-plot_color_distance(two_state_dataset, interactive = T)
+plot_color_distance(two_state_dataset, interactive = FALSE)
 }
 \arguments{
 \item{two_state_dataset}{data.frame produced by \link{create_two_state_dataset}}

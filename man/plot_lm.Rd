@@ -4,7 +4,7 @@
 \alias{plot_lm}
 \title{Plots uc with linear fit}
 \usage{
-plot_lm(fit_dat, class_name = NA, interactive = T)
+plot_lm(fit_dat, class_name = NA, interactive = TRUE)
 }
 \arguments{
 \item{fit_dat}{deuterium uptake data for selected peptide.}
@@ -25,8 +25,5 @@ three-exponential model cannot be fitted.
 kin_dat <- prepare_kin_dat(alpha_dat)
 fit_dat <- kin_dat[kin_dat[["ID"]]==1, ]
 plot_lm(fit_dat, class_name = unique(fit_dat[["class_name"]]))
-
-}
-\seealso{
 
 }

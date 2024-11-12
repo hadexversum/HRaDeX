@@ -5,7 +5,7 @@ library(HRaDeX)
 
 calculate_uc_from_hires_peptide <- function(fit_dat, ## uc filtered dat
                                             fit_values_all, ## fit unfiltered
-                                            fractional = T,
+                                            fractional = TRUE,
                                             hires_method = c("shortest", "weighted")){
 
   # hires_method <- "weighted"

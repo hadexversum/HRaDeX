@@ -2,9 +2,9 @@
 get_fit_results <- function(fit_dat,
                             fit_k_params,
                             control = list(maxiter = 1000,  scale = "levenberg"),
-                            trace = F,
+                            trace = FALSE,
                             workflow = 31,
-                            fractional = T,
+                            fractional = TRUE,
                             edge_times = c(min(fit_dat[["Exposure"]]), max(fit_dat[["Exposure"]]))){
 
   workflow <- match.arg(as.character(workflow), choices = c(31, 21, 321))
@@ -91,6 +91,8 @@ get_fit_results <- function(fit_dat,
       .[1, ]
 
   }
+
+  if(res[["n_1"]] < 0) res[["class_name "]] <- "failure"
 
   res[["Protein"]] <- protein
   res[["State"]] <- state

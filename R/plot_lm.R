@@ -23,7 +23,7 @@
 
 plot_lm <- function(fit_dat,
                     class_name = NA,
-                    interactive = T){
+                    interactive = TRUE){
 
   sequence <- unique(fit_dat[["Sequence"]])
   start <- unique(fit_dat[["Start"]])

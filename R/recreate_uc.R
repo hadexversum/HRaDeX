@@ -16,24 +16,24 @@
 #'
 calculate_uc_from_hires_peptide <- function(fit_dat, ## uc filtered dat
                                             fit_values_all, ## fit unfiltered
-                                            fractional = T,
+                                            hires_dat = NULL,
+                                            fractional = TRUE,
                                             hires_method = c("shortest", "weighted")){
 
-  # hires_method <- "weighted"
 
   peptide_sequence <- unique(fit_dat[["Sequence"]])
   if(length(peptide_sequence) > 1) stop("More than one peptide!")
   peptide_start <- unique(fit_dat[["Start"]])
   peptide_end <- unique(fit_dat[["End"]])
 
-  hires <- calculate_hires(fit_values_all, method = hires_method, fractional = T)
+  if(is.null(hires_dat)) hires_dat <- calculate_hires(fit_values_all, method = hires_method, fractional = fractional)
 
   fit_values <- filter(fit_values_all,
                        sequence == peptide_sequence,
                        start == peptide_start,
                        end == peptide_end)
 
-  peptide_hr <- filter(hires,
+  peptide_hr <- filter(hires_dat,
                        position >= peptide_start,
                        position <= peptide_end,
                        aa!='P') %>%
@@ -48,9 +48,17 @@ calculate_uc_from_hires_peptide <- function(fit_dat, ## uc filtered dat
     peptide_hr[['n_1']]*(1-exp(-peptide_hr[['k_1']]*x)) + peptide_hr[['n_2']]*(1-exp(-peptide_hr[['k_2']]*x)) + peptide_hr[['n_3']]*(1-exp(-peptide_hr[['k_3']]*x))
   }
 
-  res <- fit_dat %>%
-    mutate(hr_frac_deut_uptake = exp_3(Exposure),
-           hr_diff = frac_deut_uptake - hr_frac_deut_uptake)
+  if(fractional){
+    res <- fit_dat %>%
+      mutate(hr_deut_uptake = exp_3(Exposure),
+             hr_diff = frac_deut_uptake - hr_deut_uptake)
+
+  } else {
+    res <- fit_dat %>%
+      mutate(hr_deut_uptake = exp_3(Exposure),
+             hr_diff = deut_uptake - hr_deut_uptake)
+  }
+
 
   return(res)
 }
@@ -78,10 +86,12 @@ calculate_uc_from_hires_peptide <- function(fit_dat, ## uc filtered dat
 #' @export
 create_uc_from_hires_dataset <- function(kin_dat,
                                          fit_values_all,
-                                         fractional = T,
+                                         fractional = TRUE,
                                          hires_method = c("shortest", "weighted")){
 
   peptide_list <- unique(select(kin_dat, ID, Sequence, Start, End))
+
+  hires_dat <- calculate_hires(fit_values_all, method = hires_method, fractional = fractional)
 
   res <- lapply(1:nrow(fit_values_all), function(i){
 
@@ -89,13 +99,14 @@ create_uc_from_hires_dataset <- function(kin_dat,
 
     calculate_uc_from_hires_peptide(fit_dat,
                                     fit_values_all,
-                                    fractional = T,
+                                    hires_dat = hires_dat,
+                                    fractional = fractional,
                                     hires_method = hires_method)
 
   }) %>% bind_rows()
 
   res <- select(res,
-                ID, Protein, State, Sequence, Start, End, MaxUptake, Exposure, frac_deut_uptake, err_frac_deut_uptake, hr_frac_deut_uptake, hr_diff)
+                ID, Protein, State, Sequence, Start, End, MaxUptake, Exposure, contains("deut_uptake"), hr_diff)
 
   attr(res, "hires_method") <- hires_method
 

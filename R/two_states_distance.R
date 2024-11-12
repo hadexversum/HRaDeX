@@ -24,7 +24,7 @@
 #' @export
 
 plot_k_distance <- function(two_state_dataset,
-                            interactive = F){
+                            interactive = FALSE){
 
   protein_length <- max(two_state_dataset[["position"]])
 
@@ -74,9 +74,9 @@ plot_k_distance <- function(two_state_dataset,
 #' @export
 
 plot_uc_real_dist <- function(uc_distance_dataset,
-                              squared = F,
-                              fractional = T,
-                              interactive = F){
+                              squared = FALSE,
+                              fractional = TRUE,
+                              interactive = FALSE){
 
   y_axis_label <- ""
 
@@ -267,7 +267,7 @@ plot_two_states <- function(hires_params_1,
 #' @export plot_color_distance
 
 plot_color_distance <- function(two_state_dataset,
-                                interactive = T){
+                                interactive = FALSE){
 
   protein_length <- max(two_state_dataset[["position"]])
 
@@ -323,9 +323,9 @@ plot_color_distance <- function(two_state_dataset,
 #' @export plot_uc_distance
 
 plot_uc_distance <- function(uc_distance_dataset,
-                             squared = F,
-                             fractional = T,
-                             interactive = F){
+                             squared = FALSE,
+                             fractional = TRUE,
+                             interactive = FALSE){
 
   protein_length <- max(uc_distance_dataset[["End"]])
 
@@ -424,8 +424,8 @@ plot_uc <- function(fit_dat_1,
                     fit_dat_2,
                     fit_values_1,
                     fit_values_2,
-                    fractional = F,
-                    interactive = F){
+                    fractional = FALSE,
+                    interactive = FALSE){
 
   v_sequence = paste(unique(na.omit(c(fit_dat_1[["Sequence"]][1], fit_dat_2[["Sequence"]][1]))), collapse = "/")
   v_start = unique(na.omit(c(fit_dat_1[["Start"]][1], fit_dat_2[["Start"]][1])))

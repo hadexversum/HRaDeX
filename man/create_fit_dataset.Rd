@@ -8,8 +8,8 @@ create_fit_dataset(
   kin_dat,
   fit_k_params,
   control = list(maxiter = 1000, scale = "levenberg"),
-  trace = F,
-  fractional = F,
+  trace = FALSE,
+  fractional = FALSE,
   workflow = 321
 )
 }

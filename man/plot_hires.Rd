@@ -4,7 +4,7 @@
 \alias{plot_hires}
 \title{Plots high resolution classification plot}
 \usage{
-plot_hires(hires_params, interactive = F)
+plot_hires(hires_params, interactive = FALSE)
 }
 \arguments{
 \item{hires_params}{data.frame with hires results, calculate using

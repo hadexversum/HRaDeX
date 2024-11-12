@@ -7,8 +7,8 @@
 fit_3_exp <- function(fit_dat,
                       control,
                       fit_k_params,
-                      fractional = T,
-                      trace = F){
+                      fractional = TRUE,
+                      trace = FALSE){
 
   if(length(unique(fit_dat[["Sequence"]])) > 1){
     stop("More than one sequence in supplied data!")
@@ -23,11 +23,9 @@ fit_3_exp <- function(fit_dat,
 
   max_uptake <- fit_dat[["MaxUptake"]][1]
 
-  if(fractional){
-    fit_params <- rbind(fit_k_params, get_3_n_params())
-  } else {
-    fit_params <- rbind(fit_k_params, get_3_n_params(MaxUptake = max_uptake))
-  }
+  fit_params <- rbind(fit_k_params, get_3_n_params(fractional = fractional,
+                                                   MaxUptake = max_uptake))
+
 
   tryCatch({
 

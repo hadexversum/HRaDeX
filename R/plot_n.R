@@ -22,8 +22,8 @@
 #'
 #' @export
 plot_n <- function(list_params,
-                   fractional = F,
-                   interactive = F){
+                   fractional = FALSE,
+                   interactive = FALSE){
 
   if(fractional){
 

@@ -9,8 +9,8 @@ plot_uc(
   fit_dat_2,
   fit_values_1,
   fit_values_2,
-  fractional = F,
-  interactive = F
+  fractional = FALSE,
+  interactive = FALSE
 )
 }
 \arguments{
