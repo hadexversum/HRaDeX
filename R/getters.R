@@ -11,6 +11,19 @@ get_example_fit_k_params <- function(){
 
 }
 
+#' Example k parameters
+#'
+#' @export
+
+get_example_fit_k_params_2 <- function(){
+
+  return(data.frame(
+    start = c(k_1 = 2, k_2 = 0.2, k_3 = 0.02),
+    lower = c(k_1 = 1, k_2 = 0.1, k_3 = 0.0001),
+    upper = c(k_1 = 30, k_2 = 1, k_3 = 0.1)))
+
+}
+
 #' Example control
 #'
 #' @export

@@ -5,6 +5,7 @@ get_fit_results <- function(fit_dat,
                             trace = FALSE,
                             workflow = 31,
                             fractional = TRUE,
+                            omit_t_100 = FALSE,
                             edge_times = c(min(fit_dat[["Exposure"]]), max(fit_dat[["Exposure"]]))){
 
   workflow <- match.arg(as.character(workflow), choices = c(31, 21, 321))
@@ -25,6 +26,11 @@ get_fit_results <- function(fit_dat,
                             protein,
                             state,
                             fit_k_params))
+  }
+
+  if(omit_t_100){
+    time_100 <- attr(fit_dat, "time_100")
+    fit_dat <- filter(fit_dat, Exposure < time_100)
   }
 
   if(workflow == 31){
@@ -145,7 +151,7 @@ fix_class_result <- function(fit_dat,
     color = "#000000"
   }
 
-  if(class_name == "invalid"){
+  if(class_name %in% c("invalid", "invalid_uc")){
     k_1 = n_1 = k_2 = n_2 = k_3 = n_3 = NA
     color = "#808080"
   }
@@ -199,6 +205,9 @@ detect_class <-  function(fit_dat, edge_times = NULL){
   threshold = 0.1
   if(du_100/ max_uptake < threshold & du_100 < 1) return("none")
   # if((du_100 - du_1)/max_uptake < threshold &  du_1 / du_100 > 1 - threshold) return("immediate")
+
+  accepted_fluctuation = 0.5 ## 0.5 Da doesnt significate exchange
+  if(du_100 < du_1 & !all(fit_dat[["deut_uptake"]] - du_100 < 0.5)) return("invalid_uc")
 
   class_name
 

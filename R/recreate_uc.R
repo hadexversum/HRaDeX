@@ -8,6 +8,16 @@
 #' @description This function recovers fractional deuterium uptake from high-resolution level
 #' back to the peptide level. First, the values are aggregated into high-resolution
 #' level using selected aggregation method.
+#' If there are no calculated recovered values, probably the peptide was calssified as
+#' invalid - check that in fit_values_all param to be sure.
+#'
+#' @examples
+#' kin_dat <- prepare_kin_dat(alpha_dat)
+#' fit_values_all <- create_fit_dataset(kin_dat, control = get_example_control(),
+#'                                      fit_k_params = get_example_fit_k_params_2(),
+#'                                      fractional = TRUE)
+#' fit_dat <- kin_dat[kin_dat[["ID"]] == 54, ]
+#' calculate_uc_from_hires_peptide(fit_dat, fit_values_all, hires_method = "weighted")
 #'
 #' @seealso
 #' \code{\link{create_uc_from_hires_dataset}}
@@ -58,7 +68,6 @@ calculate_uc_from_hires_peptide <- function(fit_dat, ## uc filtered dat
       mutate(hr_deut_uptake = exp_3(Exposure),
              hr_diff = deut_uptake - hr_deut_uptake)
   }
-
 
   return(res)
 }

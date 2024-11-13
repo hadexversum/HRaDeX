@@ -10,6 +10,7 @@ create_fit_dataset(
   control = list(maxiter = 1000, scale = "levenberg"),
   trace = FALSE,
   fractional = FALSE,
+  omit_t_100 = FALSE,
   workflow = 321
 )
 }
