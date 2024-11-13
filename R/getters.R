@@ -62,27 +62,15 @@ get_2_k_params <- function(fit_k_params){
 }
 
 #' @noRd
-get_3_n_params <- function(fractional = TRUE,
-                           MaxUptake = NA){
+get_3_n_params <- function(MaxUptake = NA){
 
-  if(fractional){
+  if(is.na(MaxUptake)){
 
-    if(is.na(MaxUptake)){
-
-      data.frame(
-        start = c(n_1 = 0.33, n_2 = 0.33, n_3 = 0.33),
-        lower = c(n_1 = 0, n_2 = 0, n_3 = 0),
-        upper = c(n_1 = 1, n_2 = 1, n_3 = 1)
-      )
-
-    } else {
-
-      data.frame(
-        start = c(n_1 = 0.33, n_2 = 0.33, n_3 = 0.33),
-        lower = c(n_1 = 1/MaxUptake, n_2 = 1/MaxUptake, n_3 = 1/MaxUptake),
-        upper = c(n_1 = 1, n_2 = 1, n_3 = 1)
-      )
-    }
+    data.frame(
+      start = c(n_1 = 0.33, n_2 = 0.33, n_3 = 0.33),
+      lower = c(n_1 = 0, n_2 = 0, n_3 = 0),
+      upper = c(n_1 = 1, n_2 = 1, n_3 = 1)
+    )
 
   } else {
 
@@ -94,32 +82,19 @@ get_3_n_params <- function(fractional = TRUE,
 
   }
 
+
 }
 
 #' @noRd
-get_2_n_params <- function(fractional = TRUE,
-                           MaxUptake = NA){
+get_2_n_params <- function(MaxUptake = NA){
 
-
-  if(fractional){
-
-    if(is.na(MaxUptake)){
-      data.frame(
-        start = c(n_1 = 0.5, n_2 = 0.5),
-        lower = c(n_1 = 0, n_2 = 0),
-        upper = c(n_1 = 1, n_2 = 1)
-      )
-    } else {
-
-      data.frame(
-        start = c(n_1 = 0.5, n_2 = 0.5),
-        lower = c(n_1 = 1/MaxUptake, n_2 = 1/MaxUptake),
-        upper = c(n_1 = 1, n_2 = 1)
-      )
-    }
-
+  if(is.na(MaxUptake)){
+    data.frame(
+      start = c(n_1 = 0.5, n_2 = 0.5),
+      lower = c(n_1 = 0, n_2 = 0),
+      upper = c(n_1 = 1, n_2 = 1)
+    )
   } else {
-
     data.frame(
       start = c(n_1 = MaxUptake/2, n_2 = MaxUptake/2),
       lower = c(n_1 = 0, n_2 = 0),
@@ -127,41 +102,24 @@ get_2_n_params <- function(fractional = TRUE,
     )
   }
 
-
-
 }
 
 #' @noRd
-get_1_n_params <- function(fractional = TRUE,
-                           MaxUptake = NA){
+get_1_n_params <- function(MaxUptake = NA){
 
-  if(fractional){
-
-    if(is.na(MaxUptake)){
-      data.frame(
-        start = c(n_1 = 1),
-        lower = c(n_1 = 0),
-        upper = c(n_1 = 1)
-      )
-    } else {
-      data.frame(
-        start = c(n_1 = 1),
-        lower = c(n_1 = 1/MaxUptake),
-        upper = c(n_1 = 1)
-      )
-    }
-
+  if(is.na(MaxUptake)){
+    data.frame(
+      start = c(n_1 = 1),
+      lower = c(n_1 = 0),
+      upper = c(n_1 = 1)
+    )
   } else {
-
     data.frame(
       start = c(n_1 = MaxUptake*0.7),
       lower = c(n_1 = 0),
       upper = c(n_1 = MaxUptake)
     )
-
   }
-
-
 
 
 }
@@ -202,4 +160,3 @@ get_residue_positions <- function(fit_values){
   })) %>% unique(.) %>% arrange(position)
 
 }
-
