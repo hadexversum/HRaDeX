@@ -164,6 +164,7 @@ p1 <- mean_err_dat %>%
   geom_point() +
   geom_line(linetype = "dashed") +
   scale_x_continuous("Peptide ID") +
+
   scale_y_continuous("RMSE") +
   facet_wrap(~ type, ncol = 1) +
   theme_bw(base_size = 18)
