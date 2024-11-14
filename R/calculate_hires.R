@@ -40,6 +40,7 @@ calculate_hires <- function(fit_values,
       }
 
       tmp_params <- tmp_params %>%
+        filter(!class_name %in% c("invalid", "invalid_uc")) %>%
         arrange(nchar(sequence), class_name) %>%
         .[1, ]
 
@@ -119,13 +120,13 @@ calculate_hires <- function(fit_values,
           res <- data.frame(Protein = Protein,
                      State = State,
                      position = pos,
-                     n_1 = NA,
-                     k_1 = NA,
-                     n_2 = NA,
-                     k_2 = NA,
-                     n_3 = NA,
-                     k_3 = NA,
-                     k_est = NA,
+                     n_1 = class_example[["n_1"]],
+                     k_1 = class_example[["k_1"]],
+                     n_2 = class_example[["n_2"]],
+                     k_2 = class_example[["k_3"]],
+                     n_3 = class_example[["n_3"]],
+                     k_3 = class_example[["k_3"]],
+                     k_est = class_example[["k_est"]],
                      class_name = class_example[["class_name"]],
                      color = class_example[["color"]])
 
