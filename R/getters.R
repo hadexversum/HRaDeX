@@ -11,6 +11,19 @@ get_example_fit_k_params <- function(){
 
 }
 
+#' Example k parameters
+#'
+#' @export
+
+get_example_fit_k_params_2 <- function(){
+
+  return(data.frame(
+    start = c(k_1 = 2, k_2 = 0.2, k_3 = 0.02),
+    lower = c(k_1 = 1, k_2 = 0.1, k_3 = 0.0001),
+    upper = c(k_1 = 30, k_2 = 1, k_3 = 0.1)))
+
+}
+
 #' Example control
 #'
 #' @export
@@ -76,7 +89,7 @@ get_3_n_params <- function(MaxUptake = NA){
 
     data.frame(
       start = c(n_1 = MaxUptake/3, n_2 = MaxUptake/3, n_3 = MaxUptake/3),
-      lower = c(n_1 = 0, n_2 = 0, n_3 = 0),
+      lower = c(n_1 = 1, n_2 = 1, n_3 = 1),
       upper = c(n_1 = MaxUptake, n_2 = MaxUptake, n_3 = MaxUptake)
     )
 
@@ -97,7 +110,7 @@ get_2_n_params <- function(MaxUptake = NA){
   } else {
     data.frame(
       start = c(n_1 = MaxUptake/2, n_2 = MaxUptake/2),
-      lower = c(n_1 = 0, n_2 = 0),
+      lower = c(n_1 = 1, n_2 = 1),
       upper = c(n_1 = MaxUptake, n_2 = MaxUptake)
     )
   }
@@ -116,7 +129,7 @@ get_1_n_params <- function(MaxUptake = NA){
   } else {
     data.frame(
       start = c(n_1 = MaxUptake*0.7),
-      lower = c(n_1 = 0),
+      lower = c(n_1 = 1),
       upper = c(n_1 = MaxUptake)
     )
   }
