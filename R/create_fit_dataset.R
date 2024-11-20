@@ -1,21 +1,33 @@
-#' Create fits for all the peptides
+#' Create fits for the whole peptide pool
 #'
 #' @importFrom dplyr bind_rows
 #'
-#' @param kin_dat ...
-#' @param fit_k_params ...
-#' @param control ...
-#' @param trace ...
-#' @param fractional ...
-#' @param workflow ...
+#' @param kin_dat calculated uptake data for
+#' one biological state, result of e.q.
+#' \code{\link{prepare_kin_dat}}
+#' @param fit_k_params boundaries for exchange
+#' groups, example in prepare_kin_dat
+#' @param control control options for the fitting process,
+#' example in \code{\link{get_example_control}}
+#' @param trace logical, indicator if fitting trace is to
+#' be displayed
+#' @param fractional logical, indicator if normalized values
+#' are used in the fitting process
+#' @param workflow workflow type, options: 321, 31, 21, indicating
+#' the types of functions used in fitting process
 #'
-#' @description This is a wrapper function for get_fit_results, but for multiple peptides at
-#' the same time. First, it creates a peptide list from the supplied deuterium uptake data, and
-#' calls the fitting function for each, to create full dataset.
+#' @description
+#' This function calls the fitting function \code{\link{get_fit_results}}
+#' for each peptide in supplied kin_dat creating the dataset for whole
+#' peptide pool.
 #'
 #' @return a data.frame object.
 #'
-#' @seealso get_fit_results
+#' @seealso
+#' \code{\link{get_fit_results}}
+#' \code{\link{prepare_kin_dat}}
+#' \code{\link{get_example_fit_k_params}}
+#' \code{\link{get_example_control}}
 #'
 #' @examples
 #' kin_dat <- prepare_kin_dat(alpha_dat)

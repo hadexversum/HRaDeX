@@ -1,3 +1,40 @@
+#' Uptake curve fitting function
+#'
+#' @param fit_dat uptake data used for fit,
+#' filtered uptake data for specific peptide
+#' @param fit_k_params boundaries for exchange
+#' groups, example in prepare_kin_dat
+#' @param control control options for the fitting process,
+#' example in \code{\link{get_example_control}}
+#' @param trace logical, indicator if fitting trace is to
+#' be displayed
+#' @param fractional logical, indicator if normalized values
+#' are used in the fitting process
+#' @param workflow workflow type, options: 321, 31, 21, indicating
+#' the types of functions used in fitting process
+#' @param omit_t_100 logical, indicator if the measurement associated
+#' with t_100 is included in the fitting process or not
+#' @param edge_times edge measurement times of the uptake curve
+#'
+#' @description
+#' This function analyses the supplied deuterium uptake curve
+#' for specific peptide and provides the fitting results or
+#' assigned class.
+#' Firstly, based on the absolute uptake values, the function
+#' check if the data fulfills requirements to be assigned
+#' a class (invalid, none exchange). If not, it is possible
+#' to fit a function in a specific workflow.
+#' To create results for more than one peptide, see
+#' \code{\link{create_fit_dataset}}
+#'
+#' @return a data.frame object.
+#'
+#' @examples
+#' kin_dat <- prepare_kin_dat(alpha_dat)
+#' fit_dat <- kin_dat[kin_dat[["ID"]]==1,  ]
+#' fit_k_params <- get_example_fit_k_params()
+#' get_fit_results(fit_dat, fit_k_params)
+#'
 #' @export
 get_fit_results <- function(fit_dat,
                             fit_k_params,
@@ -107,30 +144,6 @@ get_fit_results <- function(fit_dat,
 
 }
 
-# get_fit_results(fit_dat, fit_k_params, workflow = 21)
-
-# fit_k_params <- data.frame(
-#   start = c(k_1 = 2, k_2 = 0.1, k_3 = 0.01),
-#   lower = c(k_1 = 1, k_2 = 0.1, k_3 = 0),
-#   upper = c(k_1 = 30, k_2 = 1, k_3 = 0.1)
-# )
-
-# szybciak
-# sequence = "DKLKAERERGITID"
-# start = 61
-# end = 74
-
-# zwyklak
-# sequence = "IVVIGHVD"
-# start = 10
-# end = 17
-
-# fit_dat <- kin_dat %>%
-#   filter(Sequence == sequence,
-#          Start == start,
-#          End == end)
-
-##
 
 #' @export
 fix_class_result <- function(fit_dat,
