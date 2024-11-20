@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_fit_dataset.R
 \name{create_fit_dataset}
 \alias{create_fit_dataset}
-\title{Create fits for all the peptides}
+\title{Create fits for the whole peptide pool}
 \usage{
 create_fit_dataset(
   kin_dat,
@@ -15,25 +15,32 @@ create_fit_dataset(
 )
 }
 \arguments{
-\item{kin_dat}{...}
+\item{kin_dat}{calculated uptake data for
+one biological state, result of e.q.
+\code{\link{prepare_kin_dat}}}
 
-\item{fit_k_params}{...}
+\item{fit_k_params}{boundaries for exchange
+groups, example in prepare_kin_dat}
 
-\item{control}{...}
+\item{control}{control options for the fitting process,
+example in \code{\link{get_example_control}}}
 
-\item{trace}{...}
+\item{trace}{logical, indicator if fitting trace is to
+be displayed}
 
-\item{fractional}{...}
+\item{fractional}{logical, indicator if normalized values
+are used in the fitting process}
 
-\item{workflow}{...}
+\item{workflow}{workflow type, options: 321, 31, 21, indicating
+the types of functions used in fitting process}
 }
 \value{
 a data.frame object.
 }
 \description{
-This is a wrapper function for get_fit_results, but for multiple peptides at
-the same time. First, it creates a peptide list from the supplied deuterium uptake data, and
-calls the fitting function for each, to create full dataset.
+This function calls the fitting function \code{\link{get_fit_results}}
+for each peptide in supplied kin_dat creating the dataset for whole
+peptide pool.
 }
 \examples{
 kin_dat <- prepare_kin_dat(alpha_dat)
@@ -42,5 +49,8 @@ head(create_fit_dataset(kin_dat, fit_k_params))
 
 }
 \seealso{
-get_fit_results
+\code{\link{get_fit_results}}
+\code{\link{prepare_kin_dat}}
+\code{\link{get_example_fit_k_params}}
+\code{\link{get_example_control}}
 }
