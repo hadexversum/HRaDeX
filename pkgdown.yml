@@ -5,8 +5,9 @@ articles:
   example: example.html
   gui_guide: gui_guide.html
   validation: validation.html
+  workflow_performance: workflow_performance.html
   workflow: workflow.html
-last_built: 2024-11-20T09:21Z
+last_built: 2024-12-06T10:17Z
 urls:
   reference: https://hadexversum.github.io/HRaDeX/reference
   article: https://hadexversum.github.io/HRaDeX/articles
