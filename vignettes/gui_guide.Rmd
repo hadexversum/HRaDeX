@@ -7,7 +7,6 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Article under development.
 
 HRaDeX is the package for the backend calculation and visualization. To make the solution more comfortable, we prepared dedicated applications. To use them, there are two function calls:
 
@@ -29,6 +28,28 @@ HRaDeX GUI is an application for classification process for one biological state
 ### Input file
 
 The required experimental file should be the `cluster file` from DynamX 3.0 or 2.0. In the future there will be more options available, but currently only one is supported.
+
+That means that the necessary columns are as follows:
+
+| Column name | Type |
+| ----------- | ----------- |
+| Protein | chr |
+| Start | int |
+| End | int | 
+| Sequence | chr |
+| Modification | logi / chr |
+| Fragment | logi / chr |
+| MaxUptake | num |
+| MHP | num |
+| State | chr |
+| Exposure | num | 
+| File | chr |
+| z | int |
+| RT | num |
+| Inten | num |
+| Center | num |
+
+
 
 There is a message with the upload result. If none is provided by the user, there is loaded example file. The analysis is initiated by clicking the "Calculate things!" button. 
 
