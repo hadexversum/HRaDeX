@@ -123,14 +123,14 @@ The number of unknown parameters is 6.
 The two-component fitting function, is described as follows:
 
 $$
-D = n_a \cdot (1 - exp(-k_a \cdot t)) + n_b \cdot (1-exp(-k_b \cdot t)) 
+D = n_1 \cdot (1 - exp(-k_1 \cdot t)) + n_2 \cdot (1-exp(-k_2 \cdot t)) 
 $$
 
-Where $a$ and $b$ are two of three exchange groups defined for the Zhang \& Smith equation. We perform three fitting processes (for each group combination) and select the best result comparing the $R^2$ value. That means we look for the fit using $k_1$ with $k_2$, $k_2$ with $k_3$, or $k_1$ with $k_3$ and select one as the answer.
+Where $1$ and $2$ are two of three exchange groups defined for the Zhang \& Smith equation. We perform three fitting processes (for each group combination) and select the best result comparing the $R^2$ value. That means we look for the fit using $k_1$ with $k_2$, $k_2$ with $k_3$, or $k_1$ with $k_3$ and select one as the answer.
 
-The initial value for $n_a$ and $n_b$ is 0.5. The initial values for $k$ are the same with analogical cases from the three-component equation (see section *x*).
+The initial value for $n_1$ and $n_2$ is 0.5. The initial values for $k$ are the same with analogical cases from the three-component equation (see section *x*).
 
-In this case, we assume that $n_a$ of hydrogen particles are undergoing the exchange with $k_a$ exchange rate, an $n_b$ with exchange rate $k_b$. 
+In this case, we assume that $n_1$ of hydrogen particles are undergoing the exchange with $k_1$ exchange rate, an $n_2$ with exchange rate $k_2$. 
 
 The number of unknown parameters is 4.
 
