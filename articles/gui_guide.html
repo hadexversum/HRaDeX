@@ -72,7 +72,6 @@
 
     
     
-<p>Article under development.</p>
 <p>HRaDeX is the package for the backend calculation and visualization.
 To make the solution more comfortable, we prepared dedicated
 applications. To use them, there are two function calls:</p>
@@ -98,6 +97,75 @@ parameter.</p>
 <p>The required experimental file should be the
 <code>cluster file</code> from DynamX 3.0 or 2.0. In the future there
 will be more options available, but currently only one is supported.</p>
+<p>That means that the necessary columns are as follows:</p>
+<table class="table">
+<thead><tr class="header">
+<th>Column name</th>
+<th>Type</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Protein</td>
+<td>chr</td>
+</tr>
+<tr class="even">
+<td>Start</td>
+<td>int</td>
+</tr>
+<tr class="odd">
+<td>End</td>
+<td>int</td>
+</tr>
+<tr class="even">
+<td>Sequence</td>
+<td>chr</td>
+</tr>
+<tr class="odd">
+<td>Modification</td>
+<td>logi / chr</td>
+</tr>
+<tr class="even">
+<td>Fragment</td>
+<td>logi / chr</td>
+</tr>
+<tr class="odd">
+<td>MaxUptake</td>
+<td>num</td>
+</tr>
+<tr class="even">
+<td>MHP</td>
+<td>num</td>
+</tr>
+<tr class="odd">
+<td>State</td>
+<td>chr</td>
+</tr>
+<tr class="even">
+<td>Exposure</td>
+<td>num</td>
+</tr>
+<tr class="odd">
+<td>File</td>
+<td>chr</td>
+</tr>
+<tr class="even">
+<td>z</td>
+<td>int</td>
+</tr>
+<tr class="odd">
+<td>RT</td>
+<td>num</td>
+</tr>
+<tr class="even">
+<td>Inten</td>
+<td>num</td>
+</tr>
+<tr class="odd">
+<td>Center</td>
+<td>num</td>
+</tr>
+</tbody>
+</table>
 <p>There is a message with the upload result. If none is provided by the
 user, there is loaded example file. The analysis is initiated by
 clicking the “Calculate things!” button.</p>
