@@ -56,8 +56,8 @@ plot_fitted_uc <- function(fit_dat,
 
       sel_points <- geom_point_interactive(aes(x = Exposure, y = frac_deut_uptake,
                                    tooltip = glue("Exposure: {Exposure}
-                                                  FDU = {formatC(100*frac_deut_uptake, 2)} %
-                                                  Err FDU = {formatC(100*err_frac_deut_uptake, 2)} %")),
+                                                  FDU = {formatC(100*frac_deut_uptake, 2)}
+                                                  Err FDU = {formatC(100*err_frac_deut_uptake, 2)} ")),
                                shape = 1, size = 3)
 
     } else {
@@ -67,7 +67,7 @@ plot_fitted_uc <- function(fit_dat,
     final_plot <- ggplot(data = fit_dat) +
       sel_points +
       labs(title = paste0(plot_title, " scaled"),
-           y = "Fractional DU [%]",
+           y = "Fractional DU ",
            x = "Exposure [min]") +
       stat_function(fun=function(x){n_1*(1-exp(-k_1*x)) + n_2*(1-exp(-k_2*x)) + n_3*(1-exp(-k_3*x))}) +
       ylim(c(0, 1.25)) +

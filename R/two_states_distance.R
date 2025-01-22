@@ -84,13 +84,13 @@ plot_uc_real_dist <- function(uc_distance_dataset,
 
   if(fractional){
 
-    y_axis_label <- "Frac uptake diff [%]"
+    y_axis_label <- "Frac uptake diff"
 
     if(squared) {
       uc_distance_dataset <- mutate(uc_distance_dataset,
                                     frac_uptake_dist = frac_uptake_dist^2)
 
-      y_axis_label <- "Frac uptake diff ^2 [%]"
+      y_axis_label <- "Frac uptake diff ^2 "
     }
 
     if(interactive){
@@ -334,13 +334,13 @@ plot_uc_distance <- function(uc_distance_dataset,
 
   if (fractional){
 
-    y_axis_label <- "Abs frac diff DU [%]"
+    y_axis_label <- "Abs frac diff DU "
     plot_title <- "Fractional uptake difference"
 
     if(squared){
       uc_distance_dataset <- mutate(uc_distance_dataset,
                                     frac_uptake_diff = frac_uptake_diff^2)
-      y_axis_label <- "Abs frac diff DU ^2 [%]"
+      y_axis_label <- "Abs frac diff DU ^2"
     }
 
     if(interactive){
@@ -360,7 +360,7 @@ plot_uc_distance <- function(uc_distance_dataset,
     if(squared){
       uc_distance_dataset <- mutate(uc_distance_dataset,
                                     uptake_diff = uptake_diff^2)
-      y_axis_label <- "Abs diff DU ^2 [%]"
+      y_axis_label <- "Abs diff DU ^2 "
     }
 
 
@@ -527,7 +527,7 @@ plot_uc <- function(fit_dat_1,
       theme_gray(base_size = 15) +
       theme(legend.position = "bottom") +
       labs(x = "Exposure [min]",
-           y = "Fractional DU [%]",
+           y = "Fractional DU ",
            title = paste0("Uptake curve for peptide ", v_sequence, " (", v_start, "-", v_end, ")"))
 
   } else {

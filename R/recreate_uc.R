@@ -173,7 +173,7 @@ recreate_uc <- function(fit_dat, ## uc filtered dat
               n_3 = mean(n_3),
               k_3 = mean(k_3))
 
-  if(fractional){label_y <- "Fractional DU [%]"
+  if(fractional){label_y <- "Fractional DU"
   } else { label_y <- "Deuterium Uptake [Da]"}
 
   uc_plot <- ggplot(fit_dat) +

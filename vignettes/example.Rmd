@@ -77,7 +77,7 @@ HaDeX::plot_differential(diff_p_uptake_dat = diff_p_uptake_dat,
                          show_houde_interval = T, 
                          time_t = 150) +
   labs(title = "Differential plot in 150 min between eEF1Bα and eEF1Bα with eEF1Bγ",
-       y = "Fractional DU [%]")
+       y = "Fractional DU")
 ```
 
 
