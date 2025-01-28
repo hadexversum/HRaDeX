@@ -1,7 +1,7 @@
 #' Creates uptake data from mass measurements
 #'
 #' @importFrom HaDeX create_control_dataset create_kinetic_dataset create_state_uptake_dataset calculate_exp_masses_per_replicate
-#' @importFrom dplyr %>% select filter mutate
+#' @importFrom dplyr %>% select filter mutate reframe
 #'
 #' @param dat experimental data read by HaDeX::read_hdx
 #' @param state biological state
