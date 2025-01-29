@@ -113,7 +113,7 @@ fd_dat <- filter(kin_dat, Exposure == time_100) %>%
 
 If FD is labeled differently, adjust the code.
 
-Calculated kin_dat can be used in e.q. create_fit_dataset() function. For more information check `Workflow` article.
+Calculated kin_dat can be used in e.q. `create_fit_dataset()` function. For more information check `vignette("workflow")` article.
 
 ## HDeXaminer
 
