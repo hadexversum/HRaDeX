@@ -85,23 +85,21 @@ mocking data.</p>
 accepted into HRaDeX workflow. We do not discuss the content of the
 file, without minor comment addressing already calculated uptake
 data.</p>
-<p><em>Keep in mind that this guide is based on the file types we
-encountered. As there are many formats and local custom in labeling the
-data, this article should be treated as a hint how to start, and not
-finite tutorial. The user needs to be carefull and react
-accordingly.</em></p>
-<div class="section level2">
-<h2 id="application">Application<a class="anchor" aria-label="anchor" href="#application"></a>
-</h2>
+<p><em>Keep in mind that this guide is based on the limited amount of
+file types from popular vendors. As there are many formats and local
+custom in labeling the data, this article should be treated as a hint
+how to start, and not finite tutorial. The user needs to be careful and
+react accordingly. In case of any doubt, feel free to contact us, we
+will be glad to help!</em></p>
 <p>The best way to check if the file is suitable for the application is
 load in (using e.q. web-server) and see the file status. If the file is
 in wrong format, there should be appropriate message. Another way is to
 use HaDeX::read_hdx() function. Be careful, as HaDeX::read_hdx() allows
 the use of specific files of HDeXaminer origin, but only from the code
 level, it is not implemented in the application.</p>
-<div class="section level3">
-<h3 id="dynamx-cluster-file">DynamX cluster file<a class="anchor" aria-label="anchor" href="#dynamx-cluster-file"></a>
-</h3>
+<div class="section level2">
+<h2 id="dynamx-cluster-file">DynamX cluster file<a class="anchor" aria-label="anchor" href="#dynamx-cluster-file"></a>
+</h2>
 <p>This is the preferable file format, that does not need any
 processing. The required columns are:</p>
 <pre><code><span><span class="co">#&gt;  [1] "Protein"      "Start"        "End"          "Sequence"     "Modification"</span></span>
@@ -110,9 +108,9 @@ processing. The required columns are:</p>
 <p>If the file have all required columns, it should be accepted by the
 HaDeX::read_hdx() function.</p>
 </div>
-<div class="section level3">
-<h3 id="dynamx-state-file">DynamX state file<a class="anchor" aria-label="anchor" href="#dynamx-state-file"></a>
-</h3>
+<div class="section level2">
+<h2 id="dynamx-state-file">DynamX state file<a class="anchor" aria-label="anchor" href="#dynamx-state-file"></a>
+</h2>
 <p>If the user already have an exported file from DynamX in
 <code>state</code> format, we assume they have an access to DynamX and
 we recommend them to export file in <code>cluster</code> format to avoid
@@ -174,12 +172,71 @@ respect to selected measurement:</p>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">kin_dat</span>, <span class="st">"time_100"</span><span class="op">)</span><span class="op">=</span> <span class="va">time_100</span></span>
 <span>  </span></code></pre></div>
 <p>If FD is labeled differently, adjust the code.</p>
-<p>Calculated kin_dat can be used in following functions:</p>
-</div>
+<p>Calculated kin_dat can be used in e.q. create_fit_dataset() function.
+For more information check <code>Workflow</code> article.</p>
 </div>
 <div class="section level2">
-<h2 id="package">Package<a class="anchor" aria-label="anchor" href="#package"></a>
+<h2 id="hdexaminer">HDeXaminer<a class="anchor" aria-label="anchor" href="#hdexaminer"></a>
 </h2>
+<p>We do not have much experience with HDeXaminer, but we encountered
+data source labeled as HDeXaminer source in PRIDE. We want to discuss
+them briefly.</p>
+<p>If the file has following columns:</p>
+<pre><code><span><span class="co">#&gt;  [1] "Protein State" "Deut Time"     "Experiment"    "Start"        </span></span>
+<span><span class="co">#&gt;  [5] "End"           "Sequence"      "Charge"        "Search RT"    </span></span>
+<span><span class="co">#&gt;  [9] "Actual RT"     "# Spectra"     "Peak Width"    "m/z Shift"    </span></span>
+<span><span class="co">#&gt; [13] "Max Inty"      "Exp Cent"      "Theor Cent"    "Score"        </span></span>
+<span><span class="co">#&gt; [17] "Cent Diff"     "# Deut"        "Deut %"        "Confidence"</span></span></code></pre>
+<p>it can be processed with HaDeX::read_hdx() from the code level, as it
+requires additional action from the user. Then, this data can be used as
+described in the <code>Workflow</code> article.</p>
+<p>If the file has following columns:</p>
+<pre><code><span><span class="co">#&gt;  [1] "Protein State"      "Protein"            "Start"             </span></span>
+<span><span class="co">#&gt;  [4] " End"               "Sequence"           "Peptide Mass"      </span></span>
+<span><span class="co">#&gt;  [7] "RT (min)"           "Deut Time (sec)"    "maxD"              </span></span>
+<span><span class="co">#&gt; [10] "Theor #D"           "#D"                 "%D"                </span></span>
+<span><span class="co">#&gt; [13] "Conf Interval (#D)" "#Rep"               "Confidence"        </span></span>
+<span><span class="co">#&gt; [16] "Stddev"             "p"</span></span></code></pre>
+<p>we can transform in directly into uptake dat in just a few steps.
+Keep in mind that from this file format some information is missing
+(e.q. uncertainty):</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># select only necessary columns</span></span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, <span class="fl">8</span><span class="op">:</span><span class="fl">12</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co"># adjust column names</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"State"</span>, <span class="st">"Protein"</span>, <span class="st">"Start"</span>, <span class="st">"End"</span>, <span class="st">"Sequence"</span>, <span class="st">"MHP"</span>,  <span class="st">"Exposure"</span>, <span class="st">"MaxUptake"</span>, <span class="st">"theo_deut_uptake"</span>, <span class="st">"deut_uptake"</span>, <span class="st">"frac_deut_uptake"</span><span class="op">)</span></span>
+<span><span class="co"># change units</span></span>
+<span><span class="va">dat</span><span class="op">[</span><span class="st">"Exposure"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="st">"Exposure"</span><span class="op">]</span><span class="op">/</span><span class="fl">60</span></span>
+<span><span class="va">dat</span><span class="op">[</span><span class="st">"frac_deut_uptake"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="st">"frac_deut_uptake"</span><span class="op">]</span><span class="op">/</span><span class="fl">100</span></span>
+<span></span>
+<span><span class="co"># add ID</span></span>
+<span><span class="va">peptide_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">dat</span>, <span class="va">Sequence</span>, <span class="va">Start</span>, <span class="va">End</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">Start</span>, <span class="va">End</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>ID <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">kin_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge</a></span><span class="op">(</span><span class="va">dat</span>, <span class="va">peptide_list</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Sequence"</span>, <span class="st">"Start"</span>, <span class="st">"End"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">Start</span>, <span class="va">End</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># mock uncertainty for plots</span></span>
+<span><span class="va">kin_dat</span><span class="op">[</span><span class="st">"err_frac_deut_uptake"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
+<span><span class="va">kin_dat</span><span class="op">[</span><span class="st">"err_deut_uptake"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span></code></pre></div>
+<p>then, when we have the uptake data, if can be used directly in HRaDeX
+workflow:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># select one state for classification </span></span>
+<span><span class="va">kin_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">kin_dat</span>, <span class="va">State</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">kin_dat</span><span class="op">[[</span><span class="st">"State"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">)</span></span>
+<span></span>
+<span><span class="co"># create fits</span></span>
+<span><span class="va">fit_values_all</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_fit_dataset.html">create_fit_dataset</a></span><span class="op">(</span><span class="va">kin_dat</span>, <span class="fu"><a href="../reference/get_example_fit_k_params_2.html">get_example_fit_k_params_2</a></span><span class="op">(</span><span class="op">)</span>, fractional <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># example fit </span></span>
+<span><span class="va">tmp_id</span> <span class="op">=</span> <span class="fl">1</span></span>
+<span></span>
+<span><span class="va">fit_values</span> <span class="op">&lt;-</span> <span class="va">fit_values_all</span><span class="op">[</span><span class="va">fit_values_all</span><span class="op">[[</span><span class="st">"id"</span><span class="op">]</span><span class="op">]</span><span class="op">==</span><span class="va">tmp_id</span>, <span class="op">]</span></span>
+<span><span class="va">fit_dat</span> <span class="op">&lt;-</span> <span class="va">kin_dat</span><span class="op">[</span><span class="va">kin_dat</span><span class="op">[[</span><span class="st">"ID"</span><span class="op">]</span><span class="op">]</span><span class="op">==</span><span class="va">tmp_id</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/plot_fitted_uc.html">plot_fitted_uc</a></span><span class="op">(</span><span class="va">fit_dat</span>, <span class="va">fit_values</span>, fractional <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
