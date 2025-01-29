@@ -8,3 +8,5 @@ inst/doc
 *.pdf
 *.csv
 *.png
+*.svg
+*.eps

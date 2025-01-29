@@ -25,14 +25,12 @@ Although the HRaDeX application accepts only csv file exported from DynamX in `c
 
 In this article, we focus on processing on the file so it could be accepted into HRaDeX workflow. We do not discuss the content of the file, without minor comment addressing already calculated uptake data. 
 
-*Keep in mind that this guide is based on the file types we encountered. As there are many formats and local custom in labeling the data, this article should be treated as a hint how to start, and not finite tutorial. The user needs to be carefull and react accordingly.*
-
-## Application 
+*Keep in mind that this guide is based on the limited amount of file types from popular vendors. As there are many formats and local custom in labeling the data, this article should be treated as a hint how to start, and not finite tutorial. The user needs to be careful and react accordingly. In case of any doubt, feel free to contact us, we will be glad to help!*
 
 The best way to check if the file is suitable for the application is load in (using e.q. web-server) and see the file status. If the file is in wrong format, there should be appropriate message. 
 Another way is to use HaDeX::read_hdx() function. Be careful, as HaDeX::read_hdx() allows the use of specific files of HDeXaminer origin, but only from the code level, it is not implemented in the application.
 
-### DynamX cluster file
+## DynamX cluster file
 
 This is the preferable file format, that does not need any processing. The required columns are:
 
@@ -44,7 +42,7 @@ print(colnames)
 
 If the file have all required columns, it should be accepted by the HaDeX::read_hdx() function.
 
-### DynamX state file
+## DynamX state file
 
 If the user already have an exported file from DynamX in `state` format, we assume they have an access to DynamX and we recommend them to export file in `cluster` format to avoid any data processing. However, if this is impossible, we present how to mock missing information.
 
@@ -115,7 +113,80 @@ fd_dat <- filter(kin_dat, Exposure == time_100) %>%
 
 If FD is labeled differently, adjust the code.
 
-Calculated kin_dat can be used in following functions: 
+Calculated kin_dat can be used in e.q. create_fit_dataset() function. For more information check `Workflow` article.
 
-## Package
+## HDeXaminer
+
+We do not have much experience with HDeXaminer, but we encountered data source labeled as HDeXaminer source in PRIDE. We want to discuss them briefly.
+
+If the file has following columns:
+
+```{r, echo= FALSE}
+colnames <- c("Protein State",  "Deut Time", "Experiment", 
+                     "Start", "End", "Sequence", "Charge", "Search RT",
+                     "Actual RT", "# Spectra", "Peak Width", "m/z Shift",
+                     "Max Inty", "Exp Cent", "Theor Cent", "Score", "Cent Diff", 
+                     "# Deut", "Deut %", "Confidence")
+
+colnames
+
+```
+
+it can be processed with HaDeX::read_hdx() from the code level, as it requires additional action from the user. Then, this data can be used as described in the `Workflow` article.
+
+If the file has following columns:
+
+```{r, echo = FALSE}
+colnames <- c("Protein State", "Protein", "Start"," End", "Sequence", "Peptide Mass", "RT (min)", "Deut Time (sec)", "maxD", "Theor #D", "#D", "%D", "Conf Interval (#D)", "#Rep", "Confidence", "Stddev", "p")
+
+colnames
+
+```
+
+we can transform in directly into uptake dat in just a few steps. Keep in mind that from this file format some information is missing (e.q. uncertainty):
+
+```{r, eval = FALSE}
+# select only necessary columns
+dat <- dat[c(1:6, 8:12)]
+# adjust column names
+colnames(dat) <- c("State", "Protein", "Start", "End", "Sequence", "MHP",  "Exposure", "MaxUptake", "theo_deut_uptake", "deut_uptake", "frac_deut_uptake")
+# change units
+dat["Exposure"] <- dat["Exposure"]/60
+dat["frac_deut_uptake"] <- dat["frac_deut_uptake"]/100
+
+# add ID
+peptide_list <- select(dat, Sequence, Start, End) %>%
+  arrange(Start, End) %>%
+  unique() %>%
+  mutate(ID = 1:nrow(.))
+
+kin_dat <- merge(dat, peptide_list, by = c("Sequence", "Start", "End")) %>%
+  arrange(Start, End)
+
+# mock uncertainty for plots
+kin_dat["err_frac_deut_uptake"] <- 0
+kin_dat["err_deut_uptake"] <- 0
+
+```
+
+then, when we have the uptake data, if can be used directly in HRaDeX workflow:
+
+```{r, eval = FALSE}
+# select one state for classification 
+kin_dat <- filter(kin_dat, State == unique(kin_dat[["State"]])[1] )
+
+# create fits
+fit_values_all <- create_fit_dataset(kin_dat, get_example_fit_k_params_2(), fractional = T)
+
+# example fit 
+tmp_id = 1
+
+fit_values <- fit_values_all[fit_values_all[["id"]]==tmp_id, ]
+fit_dat <- kin_dat[kin_dat[["ID"]]==tmp_id, ]
+
+plot_fitted_uc(fit_dat, fit_values, fractional = T)
+
+```
+
+
 
