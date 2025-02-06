@@ -99,7 +99,27 @@ invalid - check that in fit_values_all param to be sure.</p>
 <span class="r-in"><span>                                     fractional <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">fit_dat</span> <span class="op">&lt;-</span> <span class="va">kin_dat</span><span class="op">[</span><span class="va">kin_dat</span><span class="op">[[</span><span class="st">"ID"</span><span class="op">]</span><span class="op">]</span> <span class="op">==</span> <span class="fl">54</span>, <span class="op">]</span></span></span>
 <span class="r-in"><span><span class="fu">calculate_uc_from_hires_peptide</span><span class="op">(</span><span class="va">fit_dat</span>, <span class="va">fit_values_all</span>, hires_method <span class="op">=</span> <span class="st">"weighted"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in reframe(., Protein = Protein, State = State, position = pos,     n_1 = weighted.mean(n_1, weight), k_1 = weighted.mean(k_1,         weight), n_2 = weighted.mean(n_2, weight), k_2 = weighted.mean(k_2,         weight), n_3 = weighted.mean(n_3, weight), k_3 = weighted.mean(k_3,         weight), k_est = weighted.mean(k_est, weight), class_name = NA,     n = n_1 + n_2 + n_3, color = rgb(n_1/n, n_2/n, n_3/n)):</span> could not find function "reframe"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     ID Exposure   Protein      Sequence Start End       State MaxUptake</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54  54    0.167 db_eEF1Ba AQYESKKAKKPAL   123 135 ALPHA_Gamma        11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 160 54    1.000 db_eEF1Ba AQYESKKAKKPAL   123 135 ALPHA_Gamma        11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 266 54    5.000 db_eEF1Ba AQYESKKAKKPAL   123 135 ALPHA_Gamma        11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 372 54   25.000 db_eEF1Ba AQYESKKAKKPAL   123 135 ALPHA_Gamma        11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 478 54  150.000 db_eEF1Ba AQYESKKAKKPAL   123 135 ALPHA_Gamma        11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 584 54 1440.000 db_eEF1Ba AQYESKKAKKPAL   123 135 ALPHA_Gamma        11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     frac_deut_uptake err_frac_deut_uptake deut_uptake err_deut_uptake</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54         1.0050906          0.005909147    6.914570      0.03778454</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 160        1.0088279          0.009030163    6.940281      0.06027198</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 266        1.0002711          0.007308584    6.881414      0.04801324</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 372        1.0146063          0.003834244    6.980033      0.02160040</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 478        0.9976205          0.006744683    6.863178      0.04394759</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 584        1.0000000          0.003067458    6.879549      0.01492188</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     hr_deut_uptake       hr_diff</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54       0.9920498  0.0130408257</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 160      1.0000000  0.0088278969</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 266      1.0000000  0.0002711289</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 372      1.0000000  0.0146062980</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 478      1.0000000 -0.0023795410</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 584      1.0000000  0.0000000000</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
