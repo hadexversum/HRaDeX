@@ -1,5 +1,5 @@
 ---
-title: "How to use the apps?"
+title: "GUI description"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{GUI description}
