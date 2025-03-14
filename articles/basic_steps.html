@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Workflow performance • HRaDeX</title>
+<title>GUI Basic steps • HRaDeX</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Workflow performance">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="GUI Basic steps">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -65,56 +65,54 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Workflow performance</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>GUI Basic steps</h1>
             
       
 
-      <div class="d-none name"><code>workflow_performance.Rmd</code></div>
+      <div class="d-none name"><code>basic_steps.Rmd</code></div>
     </div>
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://hadexversum.github.io/HRaDeX/">HRaDeX</a></span><span class="op">)</span></span></code></pre></div>
+<p>Here, we describe basic steps to pay attention to while using
+HRaDeXGUI. For more detailed description, check the helpers in the
+application (indicated by circled quesition marks next to elements) or
+read the documentation e.q. <code><a href="../articles/gui_guide.html">vignette("gui_guide")</a></code>.</p>
 <div class="section level2">
-<h2 id="how-is-hradex-perfoming">How is HRaDeX perfoming?<a class="anchor" aria-label="anchor" href="#how-is-hradex-perfoming"></a>
+<h2 id="upload-file">Upload file<a class="anchor" aria-label="anchor" href="#upload-file"></a>
 </h2>
-<div class="section level3">
-<h3 id="results-of-pride-datasets">Results of PRIDE datasets<a class="anchor" aria-label="anchor" href="#results-of-pride-datasets"></a>
-</h3>
-<div class="section level4">
-<h4 id="pxd057294">PXD057294<a class="anchor" aria-label="anchor" href="#pxd057294"></a>
-</h4>
+<p>Upload datafile and check the message below.</p>
+<p><img src="figures/hradex_upload_data.png" style="width:100.0%"></p>
 </div>
-<div class="section level4">
-<h4 id="pxd057066">PXD057066<a class="anchor" aria-label="anchor" href="#pxd057066"></a>
-</h4>
+<div class="section level2">
+<h2 id="check-the-selected-state">Check the selected state<a class="anchor" aria-label="anchor" href="#check-the-selected-state"></a>
+</h2>
+<p>HrRaDeX run single-state analysis, so make sure the correct state is
+chosen.</p>
+<p><img src="figures/hradex_check_state.png" style="width:100.0%"></p>
 </div>
-<div class="section level4">
-<h4 id="pxd057057">PXD057057<a class="anchor" aria-label="anchor" href="#pxd057057"></a>
-</h4>
+<div class="section level2">
+<h2 id="check-the-controls">Check the controls<a class="anchor" aria-label="anchor" href="#check-the-controls"></a>
+</h2>
+<p>As the recommended data format is fractional, make sure that the
+undeuterated and fully deuterated control are selected correctly.</p>
+<p><img src="figures/hradex_check_controls.png" style="width:100.0%"></p>
 </div>
-<div class="section level4">
-<h4 id="pxd056814">PXD056814<a class="anchor" aria-label="anchor" href="#pxd056814"></a>
-</h4>
+<div class="section level2">
+<h2 id="check-exchange-groups">Check exchange groups<a class="anchor" aria-label="anchor" href="#check-exchange-groups"></a>
+</h2>
+<p>Next, scroll down the settings panel and check if the exchange group
+limits are correct. You may change them, if the analysis results are
+unsatisfatory.</p>
+<p><img src="figures/hradex_check_groups.png" style="width:100.0%"></p>
 </div>
-<div class="section level4">
-<h4 id="pxd053893">PXD053893<a class="anchor" aria-label="anchor" href="#pxd053893"></a>
-</h4>
-</div>
-<div class="section level4">
-<h4 id="pxd039682">PXD039682<a class="anchor" aria-label="anchor" href="#pxd039682"></a>
-</h4>
-</div>
-<div class="section level4">
-<h4 id="pxd057902">PXD057902<a class="anchor" aria-label="anchor" href="#pxd057902"></a>
-</h4>
-</div>
-</div>
-<div class="section level3">
-<h3 id="effect-of-parameters-change">Effect of parameters change<a class="anchor" aria-label="anchor" href="#effect-of-parameters-change"></a>
-</h3>
-</div>
+<div class="section level2">
+<h2 id="run-the-analysis">Run the analysis<a class="anchor" aria-label="anchor" href="#run-the-analysis"></a>
+</h2>
+<p>If all the settings are acceptable, run the analysis by clicking the
+button.</p>
+<p><img src="figures/hradex_run.png" style="width:100.0%"></p>
+<p>Enjoy the results!</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
