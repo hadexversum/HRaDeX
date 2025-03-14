@@ -2,7 +2,7 @@
 title: "How to use the apps?"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{How to use the apps?}
+  %\VignetteIndexEntry{GUI description}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
