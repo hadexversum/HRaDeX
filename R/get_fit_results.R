@@ -220,7 +220,7 @@ detect_class <-  function(fit_dat, edge_times = NULL){
   # if((du_100 - du_1)/max_uptake < threshold &  du_1 / du_100 > 1 - threshold) return("immediate")
 
   accepted_fluctuation = 0.5 ## 0.5 Da doesnt significate exchange
-  if(du_100 < du_1 & !all(fit_dat[["deut_uptake"]] - du_100 < 0.5)) return("invalid_uc")
+  if(du_100 < du_1 & !all(fit_dat[["deut_uptake"]] - du_100 < 0.5, na.rm = TRUE)) return("invalid_uc")
 
   class_name
 
