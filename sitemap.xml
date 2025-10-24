@@ -19,6 +19,8 @@
 <url><loc>https://hadexversum.github.io/HRaDeX/reference/create_two_state_dataset.html</loc></url>
 <url><loc>https://hadexversum.github.io/HRaDeX/reference/create_uc_distance_dataset.html</loc></url>
 <url><loc>https://hadexversum.github.io/HRaDeX/reference/create_uc_from_hires_dataset.html</loc></url>
+<url><loc>https://hadexversum.github.io/HRaDeX/reference/export_chimera_commands.html</loc></url>
+<url><loc>https://hadexversum.github.io/HRaDeX/reference/get_dominant_class.html</loc></url>
 <url><loc>https://hadexversum.github.io/HRaDeX/reference/get_example_control.html</loc></url>
 <url><loc>https://hadexversum.github.io/HRaDeX/reference/get_example_fit_k_params.html</loc></url>
 <url><loc>https://hadexversum.github.io/HRaDeX/reference/get_example_fit_k_params_2.html</loc></url>
@@ -32,6 +34,7 @@
 <url><loc>https://hadexversum.github.io/HRaDeX/reference/index.html</loc></url>
 <url><loc>https://hadexversum.github.io/HRaDeX/reference/omit_amino.html</loc></url>
 <url><loc>https://hadexversum.github.io/HRaDeX/reference/plot_3d_structure_blank.html</loc></url>
+<url><loc>https://hadexversum.github.io/HRaDeX/reference/plot_3d_structure_dominant.html</loc></url>
 <url><loc>https://hadexversum.github.io/HRaDeX/reference/plot_3d_structure_hires.html</loc></url>
 <url><loc>https://hadexversum.github.io/HRaDeX/reference/plot_class_heatmap.html</loc></url>
 <url><loc>https://hadexversum.github.io/HRaDeX/reference/plot_color_distance.html</loc></url>
