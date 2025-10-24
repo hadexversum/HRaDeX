@@ -9,7 +9,7 @@ prepare_kin_dat(
   state = dat[["State"]][1],
   time_0 = min(dat[["Exposure"]]),
   time_100 = max(dat[["Exposure"]]),
-  replicate = F,
+  replicate = FALSE,
   FD = FALSE
 )
 }

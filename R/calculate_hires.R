@@ -13,7 +13,7 @@
 calculate_hires <- function(fit_values,
                             method = c("shortest", "weighted"),
                             protein_length = max(fit_values[["end"]]),
-                            fractional = F){
+                            fractional = FALSE){
 
   Protein = fit_values[["Protein"]][1]
   State = fit_values[["State"]][1]
