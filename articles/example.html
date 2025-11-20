@@ -128,7 +128,7 @@ of the plot enables a general view of the exchanged regions.</p>
 <span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span></code></pre></div>
-<p><img src="example_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
+<p><img src="example_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" width="672"></p>
 <p>Let’s suppose we aim for the comparative analysis of two biological
 states. In that case, we use the so-called Woods plot, with differences
 in uptake for each peptide and information on which differences are
@@ -145,7 +145,7 @@ plot, we only present the data for a single time point.</p>
 <span>                         time_t <span class="op">=</span> <span class="fl">150</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Differential plot in 150 min between eEF1Bα and eEF1Bα with eEF1Bγ"</span>,</span>
 <span>       y <span class="op">=</span> <span class="st">"Fractional DU"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="example_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
+<p><img src="example_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" width="672"></p>
 <p>This plot presents the results for the measurement done after 150 min
 of exchange. It shows one significant exchange region - between
 positions 5 and 50 and two regions with values barely above the
@@ -206,7 +206,7 @@ line is the slow component. Although all populations sum up to one, each
 population has its intensity that impacts the final classification.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_double_uc.html">plot_double_uc</a></span><span class="op">(</span><span class="va">example_kin_dat</span>, <span class="va">example_fit_dat</span><span class="op">)</span></span></code></pre></div>
-<p><img src="example_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
+<p><img src="example_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" width="672"></p>
 <p>The model parameters are shown below, and the resulting
 classification color is below the table.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -224,10 +224,10 @@ slow exchanging group is pushing the classification color towards blue,
 resulting in a violet-ish shade. The small addition of green leads to
 the subdued color. Below you can find a legend, to have an understanding
 of where in the color scale this classification result is located.</p>
-<p><img src="example_files/figure-html/unnamed-chunk-10-1.png" width="192"></p>
+<p><img src="example_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" width="192"></p>
 <p>Color legend:</p>
 <!-- ![](figures/rgb_plaster.png) -->
-<p><img src="figures/rgb_plaster.png" width="30%"></p>
+<p><img src="figures/rgb_plaster.png" class="r-plt" width="30%"></p>
 <p>After each peptide is assigned a color code, we aggregate the data to
 obtain the simplified high-resolution result. This mid-step towards
 high-resolution is also used as method verification. In this case, we
@@ -344,7 +344,7 @@ code</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

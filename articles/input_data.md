@@ -1,0 +1,195 @@
+# Input data
+
+``` r
+library(HRaDeX)
+library(HaDeX)
+library(dplyr)
+```
+
+Although the HRaDeX application accepts only csv file exported from
+DynamX in `cluster` format, it is not impossible to use HRaDeX package
+with other formats. Here, we present a little guide to mocking data.
+
+In this article, we focus on processing on the file so it could be
+accepted into HRaDeX workflow. We do not discuss the content of the
+file, without minor comment addressing already calculated uptake data.
+
+*Keep in mind that this guide is based on the limited amount of file
+types from popular vendors. As there are many formats and local custom
+in labeling the data, this article should be treated as a hint how to
+start, and not finite tutorial. The user needs to be careful and react
+accordingly. In case of any doubt, feel free to contact us, we will be
+glad to help!*
+
+The best way to check if the file is suitable for the application is
+load in (using e.q. web-server) and see the file status. If the file is
+in wrong format, there should be appropriate message. Another way is to
+use HaDeX::read_hdx() function. Be careful, as HaDeX::read_hdx() allows
+the use of specific files of HDeXaminer origin, but only from the code
+level, it is not implemented in the application.
+
+## DynamX cluster file
+
+This is the preferable file format, that does not need any processing.
+The required columns are:
+
+    #>  [1] "Protein"      "Start"        "End"          "Sequence"     "Modification"
+    #>  [6] "Fragment"     "MaxUptake"    "MHP"          "State"        "Exposure"    
+    #> [11] "File"         "z"            "RT"           "Inten"        "Center"
+
+If the file have all required columns, it should be accepted by the
+HaDeX::read_hdx() function.
+
+## DynamX state file
+
+If the user already have an exported file from DynamX in `state` format,
+we assume they have an access to DynamX and we recommend them to export
+file in `cluster` format to avoid any data processing. However, if this
+is impossible, we present how to mock missing information.
+
+    #>  [1] "Protein"      "Start"        "End"          "Sequence"     "Modification"
+    #>  [6] "Fragment"     "MaxUptake"    "MHP"          "State"        "Exposure"    
+    #> [11] "Center"       "Center SD"    "Uptake"       "Uptake SD"    "RT"          
+    #> [16] "RT SD"
+
+To go from here to desired format, there are some action needed:
+
+``` r
+
+dat <- read.csv(datafile)
+
+dat %>%
+    # mock columns
+    mutate(z = 1, 
+           Inten = 1, 
+           File = "")
+    # exclude unused columns
+    select(-Uptake, -`Uptake SD`, -`Center SD`, -`RT SD`)
+```
+
+Then, save the file and use it in the application.
+
+Other way is to use already made uptake calculations and use the uptake
+data directly in the workflow:
+
+``` r
+
+kin_dat <- dat %>%
+    # select only one state 
+    # exclude measurement without calculated uptake
+    filter(State == state,
+           !is.na(Uptake)) %>%
+    # rename to used convention 
+    rename(deut_uptake = Uptake,
+           err_deut_uptake = `Uptake SD`) %>%
+    # exclude unused columns
+    select(-Center, -`Center SD`, -RT, -`RT SD`, -Fragment)
+```
+
+This way we have uptake calculated in Daltons. As we recommend, the
+HRaDeX workflow works best on normalized data. If there is FD (labeled
+with `Exposure` value), here is how to normalize uptake with respect to
+selected measurement:
+
+``` r
+
+# select FD based on Exposure in time_100
+fd_dat <- filter(kin_dat, Exposure == time_100) %>%
+    arrange(Start, End) %>%
+    mutate(ID = 1:nrow(.))
+
+# normalize the uptake data and calculate uncertainty
+  kin_dat <- merge(kin_dat, fd_dat,
+               by = c("Protein", "Start", "End", "Sequence", "Modification", "MaxUptake", "MHP", "State"),
+               suffixes = c("", "_fd")) %>%
+    mutate(frac_deut_uptake = deut_uptake/deut_uptake_fd,
+           err_frac_deut_uptake = sqrt((err_deut_uptake/deut_uptake_fd)^2 + (deut_uptake*err_deut_uptake_fd/deut_uptake_fd^2)^2)) %>%
+    select(-Exposure_fd, -deut_uptake_fd, -err_deut_uptake_fd) %>%
+    filter(Exposure > time_0) %>%
+    arrange(Start, End, State, Exposure) %>%
+    select(ID, everything())
+
+  attr(kin_dat, "time_100")= time_100
+  
+```
+
+If FD is labeled differently, adjust the code.
+
+Calculated kin_dat can be used in e.q.
+[`create_fit_dataset()`](https://hadexversum.github.io/HRaDeX/reference/create_fit_dataset.md)
+function. For more information check
+[`vignette("workflow")`](https://hadexversum.github.io/HRaDeX/articles/workflow.md)
+article.
+
+## HDeXaminer
+
+We do not have much experience with HDeXaminer, but we encountered data
+source labeled as HDeXaminer source in PRIDE. We want to discuss them
+briefly.
+
+If the file has following columns:
+
+    #>  [1] "Protein State" "Deut Time"     "Experiment"    "Start"        
+    #>  [5] "End"           "Sequence"      "Charge"        "Search RT"    
+    #>  [9] "Actual RT"     "# Spectra"     "Peak Width"    "m/z Shift"    
+    #> [13] "Max Inty"      "Exp Cent"      "Theor Cent"    "Score"        
+    #> [17] "Cent Diff"     "# Deut"        "Deut %"        "Confidence"
+
+it can be processed with HaDeX::read_hdx() from the code level, as it
+requires additional action from the user. Then, this data can be used as
+described in the `Workflow` article.
+
+If the file has following columns:
+
+    #>  [1] "Protein State"      "Protein"            "Start"             
+    #>  [4] " End"               "Sequence"           "Peptide Mass"      
+    #>  [7] "RT (min)"           "Deut Time (sec)"    "maxD"              
+    #> [10] "Theor #D"           "#D"                 "%D"                
+    #> [13] "Conf Interval (#D)" "#Rep"               "Confidence"        
+    #> [16] "Stddev"             "p"
+
+we can transform in directly into uptake dat in just a few steps. Keep
+in mind that from this file format some information is missing (e.q.
+uncertainty):
+
+``` r
+# select only necessary columns
+dat <- dat[c(1:6, 8:12)]
+# adjust column names
+colnames(dat) <- c("State", "Protein", "Start", "End", "Sequence", "MHP",  "Exposure", "MaxUptake", "theo_deut_uptake", "deut_uptake", "frac_deut_uptake")
+# change units
+dat["Exposure"] <- dat["Exposure"]/60
+dat["frac_deut_uptake"] <- dat["frac_deut_uptake"]/100
+
+# add ID
+peptide_list <- select(dat, Sequence, Start, End) %>%
+  arrange(Start, End) %>%
+  unique() %>%
+  mutate(ID = 1:nrow(.))
+
+kin_dat <- merge(dat, peptide_list, by = c("Sequence", "Start", "End")) %>%
+  arrange(Start, End)
+
+# mock uncertainty for plots
+kin_dat["err_frac_deut_uptake"] <- 0
+kin_dat["err_deut_uptake"] <- 0
+```
+
+then, when we have the uptake data, if can be used directly in HRaDeX
+workflow:
+
+``` r
+# select one state for classification 
+kin_dat <- filter(kin_dat, State == unique(kin_dat[["State"]])[1] )
+
+# create fits
+fit_values_all <- create_fit_dataset(kin_dat, get_example_fit_k_params_2(), fractional = T)
+
+# example fit 
+tmp_id = 1
+
+fit_values <- fit_values_all[fit_values_all[["id"]]==tmp_id, ]
+fit_dat <- kin_dat[kin_dat[["ID"]]==tmp_id, ]
+
+plot_fitted_uc(fit_dat, fit_values, fractional = T)
+```

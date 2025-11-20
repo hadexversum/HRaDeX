@@ -1,0 +1,263 @@
+# GUI description
+
+HRaDeX is the package for the backend calculation and visualization. To
+make the solution more comfortable, we prepared dedicated applications.
+To use them, there are two function calls:
+
+``` r
+HRaDeX::run_hradex()
+HRaDeX::run_compahradex()
+```
+
+You can also use them online, here:
+[HRaDeX](https://hradex.mslab-ibb.pl/) and
+[compaHRaDeX](https://compahradex.mslab-ibb.pl/).
+
+Should you notice any inconveniences while using them, please let us
+know. The best way to contact us is to use the following email:
+<hadex@ibb.waw.pl>.
+
+## HRaDeX
+
+HRaDeX GUI is an application for classification process for one
+biological state at the time. The workflow is described in the dedicated
+article. Here we explain the elements of GUI, with regard to every
+parameter.
+
+### Settings
+
+#### Input file
+
+The required experimental file should be the `cluster file` from DynamX
+3.0 or 2.0. In the future there will be more options available, but
+currently only one is supported.
+
+That means that the necessary columns are as follows:
+
+| Column name  | Type       |
+|--------------|------------|
+| Protein      | chr        |
+| Start        | int        |
+| End          | int        |
+| Sequence     | chr        |
+| Modification | logi / chr |
+| Fragment     | logi / chr |
+| MaxUptake    | num        |
+| MHP          | num        |
+| State        | chr        |
+| Exposure     | num        |
+| File         | chr        |
+| z            | int        |
+| RT           | num        |
+| Inten        | num        |
+| Center       | num        |
+
+There is a message with the upload result. If none is provided by the
+user, there is loaded example file. The analysis is initiated by
+clicking the “Calculate things!” button.
+
+#### Uptake calculations
+
+##### Select state
+
+If there is more than one state in supplied data file, there is a
+possibility to select one. The classification process is done on only
+one state at the time. When state is reselected, and the process
+initiated by the button, previous results are overwritten.
+
+##### Omit residues
+
+The first residue is known to undergo fast back-exchange, and cannot
+cause the measured mass increase, as described in the literature
+[1](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3438223/),
+[2](https://pubmed.ncbi.nlm.nih.gov/8234247/). We offer a possibility to
+either omit the first residue (or first two) or not - depending on the
+user’s approach to the matter.
+
+##### Use replicate data
+
+The data in required format - `cluster` format, contains unaggregated
+centroid values for each spectrum - for every charge value of peptides
+in every technical replicate. The `use replicate data` option allows the
+use of data aggregated only on replicate level, not through them. Using
+this option, there are as many measurement points for each time point as
+there are replicates. Without this option, there is only one measurement
+point for each time point.
+
+#### Sequence
+
+##### Sequence from the data
+
+This is the sequence reconstructed only based on the experimental data.
+
+##### Sequence from the pdb file
+
+This is the sequence read from the pdb file.
+
+##### Move the start of the sequence
+
+If the sequence from experimental file is different than one from the
+pdb file, we can shift the position of peptides from experimental data.
+The shift value can be positivie - than there will be ‘no data’
+information at the beggining of the sequence. If the shift value is set
+to negative number, the data is shifted and cut. All the peptides with
+start position left to the shift, are disregarded as we cannot “cut”
+peptide.
+
+#### Deuterium uptake controls
+
+##### Non-deuterated control
+
+The time point of measurement associated with the an non-deuterated
+sample.
+
+##### Full deuterated control
+
+The time point of measurement associated with the an fully deuterated
+sample.
+
+##### Use as FD
+
+There are at least two approaches to the fully deuterated sample: 1) the
+measurement is done in the same conditions as measurement for time
+points, but in this case the time of exchange is long, commonly 24h. It
+is the same measurement as for different time points, and shown on the
+plot (with value 100% if using fractional values). 2) the sample is
+obtained in different experiment than other measurements, and cannot be
+treated as measurement as other. It is not shown on the uptake plot and
+is used only as the normalization value.
+
+Checking this box is equivalent with approach no. 2.
+
+##### Fractional values
+
+Fractional values are normalized with regard to the full deuterated
+sample, and shown as percentaged. If not chosen, the values are in
+daltons, but the requirement of sum of n equal to 1, is not valid.
+
+#### Workflow
+
+##### Select workflow
+
+There are multiple choices for workflow type. We advise using the
+3exp/2exp/1exp - in this case try all three models and select the best.
+If the data set contains sufficient time point number only to perform
+2-exponent fitting, the workflow 2exp/1exp should be selected to avoid
+unnecessary calculations.
+
+The detailed description of the fitted functions is in the workflow
+description article.
+
+#### Class definition
+
+##### Limits and boundaries
+
+The table contains the upper and lower limits for each of the exchange
+group, and initial values. The plot below the table shows graphical
+representation of the values - each color are represents the possible
+values based on the limits, and solid lines represents the initial
+values.
+
+The plotted values are D = 1 - exp(-kt), where k is the fitted exchange
+rate.
+
+##### Reset the values
+
+Clicking this button resets all of the values from the table to the
+default values.
+
+#### Fit options
+
+##### Number of iterations
+
+Maximal number of performed iterations during the fitting process.
+
+##### Method
+
+Used method is Levenberg-Marquardt nonlinear least squares algorithm.
+For more information check the used package
+[documentation](https://cran.r-project.org/web/packages/minpack.lm/minpack.lm.pdf).
+
+#### Structure
+
+If it is possible, there is a place to upload the PDB file with 3D
+structure of analysed protein. The high-resolution classification
+results can be presented on the given structure. It is not required in
+order to perform the classification process.
+
+### Tabs
+
+#### Overview
+
+This is the summary of the classification process.
+
+Classification results for peptides are aggregated into the residue
+level using selected method of aggregation. For more information check
+this
+[article](https://hadexversum.github.io/HRaDeX/articles/workflow%20description).
+
+The results are presented in the linear form. If PDB file is supplied,
+this results presented on the 3D structure are available in the tab
+`Structure`.
+
+#### Hires params
+
+This is the numerical data presented on the first plot in the `Overview`
+tab. The classification colors are presented in the `position` column.
+
+#### Fit params
+
+This table contains the parameters of fitted function for the peptides -
+based on their uptake curves. Upon clicking the row with selected
+peptide, the scaled uptake curve with fitted model is presented below
+the table, alongside the regular uptake curve.
+
+#### Plots
+
+In this tab the uptake plots for all of the peptides are presented one
+by one. It is particularly useful for getting the sense of accuracy of
+the fitting process and to have general overview of the method. It may
+take a while to be displayed, depending of the number of peptides in the
+supplied data file.
+
+#### Plots Data
+
+This table contains the numerical data used for plotting the uptake
+curves - but only experimental data! The parameters of the fitted
+functions are to be found in the `Fit params` tab.
+
+#### Structure
+
+If the file is provided, the high-resolution classification results can
+be presented on the 3D protein structure.
+
+#### About
+
+Basic information on the teamt that developed HRaDeX.
+
+## compaHRaDeX
+
+compaHRaDeX GUI is an application for comparison of the results of
+classification process (performed in HRaDeX) for two biological states
+at the same time.
+
+### Settings
+
+#### Input files
+
+Once you have processed two biological states using HRaDeX, there is a
+need for comparative analysis. What is necessary to perform one?
+
+- fit_data\_.csv and uc_data\_.csv for the first state
+- fit_data\_.csv and uc_data\_.csv for the second state
+- PDB file structure for the protein.
+
+fit_data\_.csv is to be found in the `Fit params` tab in HRaDeX, and
+uc_data\_.csv is in `UC Data` tab.
+
+Of course, you can perform comparative analysis providing only some of
+desired files, but then not all of the features will be available.
+
+#### Structure
+
+### Tabs

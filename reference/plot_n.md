@@ -1,0 +1,47 @@
+# Plots n values
+
+Plots the n values from fit parameters. When operating on fractional
+values, the n value should be close to 1 to ensure model legitimacy.
+When operating on values in daltons, the upper limit for the n value i
+max possible uptake calculated from the sequence, although rarely
+reached due to back-exchange.
+
+## Usage
+
+``` r
+plot_n(list_params, fractional = FALSE, interactive = FALSE)
+```
+
+## Arguments
+
+- list_params:
+
+  list of fit parameters
+
+- fractional:
+
+  ...
+
+- interactive:
+
+  ...
+
+## Value
+
+a ggplot2 object. Need of convertion to girafe for interactive mode.
+
+## See also
+
+create_fit_results
+
+## Examples
+
+``` r
+fit_k_params <- get_example_fit_k_params()
+control <- get_example_control()
+kin_dat <- prepare_kin_dat(alpha_dat)
+fit_values <- create_fit_dataset(kin_dat, control, fit_k_params)
+#> Error in rbind(deparse.level, ...): numbers of columns of arguments do not match
+plot_n(fit_values)
+#> Error: object 'fit_values' not found
+```
