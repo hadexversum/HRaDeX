@@ -17,7 +17,7 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Imports:
-    dplyr,
+    dplyr (>= 1.1.4),
     HaDeX2,
     glue,
     ggiraph,
