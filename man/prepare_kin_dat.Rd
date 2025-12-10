@@ -14,7 +14,7 @@ prepare_kin_dat(
 )
 }
 \arguments{
-\item{dat}{experimental data read by HaDeX::read_hdx}
+\item{dat}{experimental data read by HaDeX2::read_hdx}
 
 \item{state}{biological state}
 
@@ -22,9 +22,9 @@ prepare_kin_dat(
 
 \item{time_100}{maximal exchange control time point}
 
-\item{replicate}{idicator, if the replicate values should be provided, or aggregated}
+\item{replicate}{indicator, if the replicate values should be provided, or aggregated}
 
-\item{FD}{idicator, if the time_100 value shoul be used as fully deuterated control,
+\item{FD}{indicator, if the time_100 value should be used as fully deuterated control,
 only for normalization purposes, or left as time point of measurement}
 }
 \value{
@@ -40,5 +40,5 @@ head(kin_dat)
 
 }
 \seealso{
-HaDeX::read_hdx
+HaDeX2::read_hdx
 }

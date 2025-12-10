@@ -16,7 +16,7 @@ a data.frame with position values, Start and End.
 Created peptite list based on the provided data.frame.
 }
 \examples{
-dat <- HaDeX::read_hdx(...)
+dat <- HaDeX2::read_hdx(...)
 get_peptide_list(dat)
 
 }

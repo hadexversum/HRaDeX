@@ -1,5 +1,19 @@
 #' Export coloring commands for ChimeraX
 #'
+#' @params hires_params hires classification parameters
+#' prepared by calculate_hires function
+#' @params dominant indicator if only the dominant
+#' class color should be exported
+#' @param state biological state
+#' @param chain chain for which the coloring
+#' commands are created
+#'
+#' @description
+#' This function prepares the coloring commands for ChimeraX in a
+#' form of file that is downloaded as a results. If you wish only
+#' to create coloring commands in a form of text variable, see
+#' \link{\code{prepare_chimera_commands}} function.
+#'
 #' @examples
 #' fit_k_params <- get_example_fit_k_params()
 #' control <- get_example_control()

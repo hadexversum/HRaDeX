@@ -1,14 +1,14 @@
 #' Creates uptake data from mass measurements
 #'
-#' @importFrom HaDeX create_control_dataset create_kinetic_dataset create_state_uptake_dataset calculate_exp_masses_per_replicate
+#' @importFrom HaDeX2 create_control_dataset create_kinetic_dataset create_state_uptake_dataset calculate_exp_masses_per_replicate
 #' @importFrom dplyr %>% select filter mutate reframe
 #'
-#' @param dat experimental data read by HaDeX::read_hdx
+#' @param dat experimental data read by HaDeX2::read_hdx
 #' @param state biological state
 #' @param time_0 minimal exchange control time point
 #' @param time_100 maximal exchange control time point
-#' @param replicate idicator, if the replicate values should be provided, or aggregated
-#' @param FD idicator, if the time_100 value shoul be used as fully deuterated control,
+#' @param replicate indicator, if the replicate values should be provided, or aggregated
+#' @param FD indicator, if the time_100 value should be used as fully deuterated control,
 #' only for normalization purposes, or left as time point of measurement
 #'
 #' @description Function calculates deuterium uptake for each time point
@@ -16,7 +16,7 @@
 #'
 #' @return a data.frame object.
 #'
-#' @seealso HaDeX::read_hdx
+#' @seealso HaDeX2::read_hdx
 #'
 #' @examples
 #' kin_dat <- prepare_kin_dat(alpha_dat)
@@ -88,7 +88,7 @@ prepare_kin_dat <- function(dat,
 #'
 #' @return a data.frame object.
 #'
-#' @seealso HaDeX::read_hdx
+#' @seealso HaDeX2::read_hdx
 #'
 #' @examples
 #' rep_peptide_dat <- ...

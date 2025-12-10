@@ -21,8 +21,8 @@ are two peptides with the same position but different sequence, both sequences
 are shown in the final data.frame.
 }
 \examples{
-dat_1 <- HaDeX::read_hdx(...)
-dat_2 <- HaDeX::read_hdx(...)
+dat_1 <- HaDeX2::read_hdx(...)
+dat_2 <- HaDeX2::read_hdx(...)
 get_peptide_list_v2(dat_1, dat_2)
 
 }

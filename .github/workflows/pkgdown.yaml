@@ -43,8 +43,8 @@ jobs:
         run: devtools::install_github("swsoyee/r3dmol", upgrade = "never")
         shell: Rscript {0}
 
-      - name: Install HaDeX
-        run: devtools::install_github("hadexversum/HaDeX@dev_2", upgrade = "never")
+      - name: Install HaDeX2
+        run: devtools::install_github("hadexversum/HaDeX2", upgrade = "never")
         shell: Rscript {0}
 
       - name: Install HRaDeX

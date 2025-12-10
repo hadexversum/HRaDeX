@@ -34,5 +34,5 @@ calculate_replicate_state_uptake(rep_peptide_dat)
 
 }
 \seealso{
-HaDeX::read_hdx
+HaDeX2::read_hdx
 }

@@ -7,7 +7,7 @@
 #' @return a data.frame with position values, Start and End.
 #'
 #' @examples
-#' dat <- HaDeX::read_hdx(...)
+#' dat <- HaDeX2::read_hdx(...)
 #' get_peptide_list(dat)
 #'
 #' @export
@@ -32,8 +32,8 @@ get_peptide_list <- function(dat){
 #'
 #' @return a data.frame with sequence and position values.
 #' @examples
-#' dat_1 <- HaDeX::read_hdx(...)
-#' dat_2 <- HaDeX::read_hdx(...)
+#' dat_1 <- HaDeX2::read_hdx(...)
+#' dat_2 <- HaDeX2::read_hdx(...)
 #' get_peptide_list_v2(dat_1, dat_2)
 #'
 #' @export
