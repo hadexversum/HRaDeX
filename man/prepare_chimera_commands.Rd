@@ -29,7 +29,7 @@ kin_dat <- prepare_kin_dat(alpha_dat)
 fit_values <- create_fit_dataset(kin_dat = kin_dat, control = control, fit_k_params = fit_k_params, fractional = TRUE)
 hires_params <- calculate_hires(fit_values, method = "weighted", fractional = TRUE)
 
-prepare_chimera_commands(hires_params, chain = "G")
+prepare_chimera_commands(hires_params, chains = c("A", "G"))
 prepare_chimera_commands(hires_params, chain = "G", dominant = TRUE)
 
 }

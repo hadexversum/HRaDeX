@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 ```{r setup, message = FALSE, warning = FALSE}
 library(HRaDeX)
-library(HaDeX)
+library(HaDeX2)
 library(dplyr)
 ```
 
@@ -28,7 +28,7 @@ In this article, we focus on processing on the file so it could be accepted into
 *Keep in mind that this guide is based on the limited amount of file types from popular vendors. As there are many formats and local custom in labeling the data, this article should be treated as a hint how to start, and not finite tutorial. The user needs to be careful and react accordingly. In case of any doubt, feel free to contact us, we will be glad to help!*
 
 The best way to check if the file is suitable for the application is load in (using e.q. web-server) and see the file status. If the file is in wrong format, there should be appropriate message. 
-Another way is to use HaDeX::read_hdx() function. Be careful, as HaDeX::read_hdx() allows the use of specific files of HDeXaminer origin, but only from the code level, it is not implemented in the application.
+Another way is to use HaDeX2::read_hdx() function. Be careful, as HaDeX2::read_hdx() allows the use of specific files of HDeXaminer origin, but only from the code level, it is not implemented in the application.
 
 ## DynamX cluster file
 
@@ -40,7 +40,7 @@ colnames <- c("Protein", "Start", "End", "Sequence", "Modification", "Fragment",
 print(colnames)
 ```
 
-If the file have all required columns, it should be accepted by the HaDeX::read_hdx() function.
+If the file have all required columns, it should be accepted by the HaDeX2::read_hdx() function.
 
 ## DynamX state file
 
@@ -132,7 +132,7 @@ colnames
 
 ```
 
-it can be processed with HaDeX::read_hdx() from the code level, as it requires additional action from the user. Then, this data can be used as described in the `Workflow` article.
+it can be processed with HaDeX2::read_hdx() from the code level, as it requires additional action from the user. Then, this data can be used as described in the `Workflow` article.
 
 If the file has following columns:
 
