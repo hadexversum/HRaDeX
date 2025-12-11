@@ -39,7 +39,7 @@ a data.frame object.
 
 ## See also
 
-HaDeX::read_hdx
+HaDeX2::read_hdx
 
 ## Examples
 

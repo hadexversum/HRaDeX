@@ -20,7 +20,7 @@ prepare_kin_dat(
 
 - dat:
 
-  experimental data read by HaDeX::read_hdx
+  experimental data read by HaDeX2::read_hdx
 
 - state:
 
@@ -36,11 +36,11 @@ prepare_kin_dat(
 
 - replicate:
 
-  idicator, if the replicate values should be provided, or aggregated
+  indicator, if the replicate values should be provided, or aggregated
 
 - FD:
 
-  idicator, if the time_100 value shoul be used as fully deuterated
+  indicator, if the time_100 value should be used as fully deuterated
   control, only for normalization purposes, or left as time point of
   measurement
 
@@ -50,7 +50,7 @@ a data.frame object.
 
 ## See also
 
-HaDeX::read_hdx
+HaDeX2::read_hdx
 
 ## Examples
 

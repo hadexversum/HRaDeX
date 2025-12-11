@@ -28,9 +28,9 @@ a data.frame with sequence and position values.
 ## Examples
 
 ``` r
-dat_1 <- HaDeX::read_hdx(...)
+dat_1 <- HaDeX2::read_hdx(...)
 #> Error: '...' used in an incorrect context
-dat_2 <- HaDeX::read_hdx(...)
+dat_2 <- HaDeX2::read_hdx(...)
 #> Error: '...' used in an incorrect context
 get_peptide_list_v2(dat_1, dat_2)
 #> Error: object 'dat_1' not found

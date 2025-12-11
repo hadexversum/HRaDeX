@@ -2,7 +2,7 @@
 
 ``` r
 library(HRaDeX)
-library(HaDeX)
+library(HaDeX2)
 library(dplyr)
 ```
 
@@ -24,9 +24,9 @@ glad to help!*
 The best way to check if the file is suitable for the application is
 load in (using e.q. web-server) and see the file status. If the file is
 in wrong format, there should be appropriate message. Another way is to
-use HaDeX::read_hdx() function. Be careful, as HaDeX::read_hdx() allows
-the use of specific files of HDeXaminer origin, but only from the code
-level, it is not implemented in the application.
+use HaDeX2::read_hdx() function. Be careful, as HaDeX2::read_hdx()
+allows the use of specific files of HDeXaminer origin, but only from the
+code level, it is not implemented in the application.
 
 ## DynamX cluster file
 
@@ -38,7 +38,7 @@ The required columns are:
     #> [11] "File"         "z"            "RT"           "Inten"        "Center"
 
 If the file have all required columns, it should be accepted by the
-HaDeX::read_hdx() function.
+HaDeX2::read_hdx() function.
 
 ## DynamX state file
 
@@ -135,7 +135,7 @@ If the file has following columns:
     #> [13] "Max Inty"      "Exp Cent"      "Theor Cent"    "Score"        
     #> [17] "Cent Diff"     "# Deut"        "Deut %"        "Confidence"
 
-it can be processed with HaDeX::read_hdx() from the code level, as it
+it can be processed with HaDeX2::read_hdx() from the code level, as it
 requires additional action from the user. Then, this data can be used as
 described in the `Workflow` article.
 

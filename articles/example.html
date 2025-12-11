@@ -61,7 +61,7 @@
 
 
 
-<link href="example_files/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<link href="example_files/htmltools-fill-0.5.9/fill.css" rel="stylesheet">
 <script src="example_files/htmlwidgets-1.6.4/htmlwidgets.js"></script><link href="example_files/ggiraphjs-0.9.2/girafe.css" rel="stylesheet">
 <script src="example_files/ggiraphjs-0.9.2/girafe.js"></script><script src="example_files/girafe-binding-0.9.2/girafe.js"></script><script src="example_files/r3dmol-1.6.2/3Dmol-nojquery-min.js"></script><script src="example_files/r3dmol-binding-0.2.0/r3dmol.js"></script><div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
@@ -80,7 +80,7 @@
 <p>This document is an adapted version of the Supplement to the HRaDeX
 manuscript.</p>
 <p>Here we describe the exemplary step-by-step analysis of experimental
-data using the hadexversum family tools: <a href="https://hadex2.mslab-ibb.pl/" class="external-link">HaDeX</a>, <a href="https://hradex.mslab-ibb.pl/" class="external-link">HRaDeX</a> and <a href="https://compahradex.mslab-ibb.pl/" class="external-link">compaHRaDeX</a>.</p>
+data using the hadexversum family tools: <a href="https://hadex2.mslab-ibb.pl/" class="external-link">HaDeX2</a>, <a href="https://hradex.mslab-ibb.pl/" class="external-link">HRaDeX</a> and <a href="https://compahradex.mslab-ibb.pl/" class="external-link">compaHRaDeX</a>.</p>
 <p>The analyzed protein is the eEF1Bα subunit of the human
 guanine-nucleotide exchange factor (GEF) complex (eEF1B), measured in <a href="https://mslab-ibb.pl/" class="external-link">Mass Spectrometry Lab</a> in <a href="https://ibb.edu.pl/en/" class="external-link">Institute of Biochemistry and Biophysics
 Polish Academy of Sciences</a> and published by <a href="https://doi.org/10.1093/nar/gkac685" class="external-link">Bondarchuk et al</a>. In the
@@ -92,14 +92,14 @@ strict interpretations. For that purpose, we suggest contacting the
 research group that published original research on this topic.</p>
 </div>
 <div class="section level2">
-<h2 id="hadex">HaDeX<a class="anchor" aria-label="anchor" href="#hadex"></a>
+<h2 id="hadex2">HaDeX2<a class="anchor" aria-label="anchor" href="#hadex2"></a>
 </h2>
 <div class="section level3">
 <h3 id="general-information">General information<a class="anchor" aria-label="anchor" href="#general-information"></a>
 </h3>
-<p>HaDeX is a general-use tool for widely understood data analysis on
+<p>HaDeX2 is a general-use tool for widely understood data analysis on
 the peptide level. It provides many features for investigating directly
-the mass measurements and checking the experiment quality. HaDeX
+the mass measurements and checking the experiment quality. HaDeX2
 provides many methods of quality control of the experiment with in-depth
 analysis of measurements, uncertainty, and statistical significance. Not
 only commonly used forms of visualization are available, but also new
@@ -117,13 +117,13 @@ comparison plot. For readability purposes, on this type of plot, we can
 present the data only for a single time point. However, a quick glimpse
 of the plot enables a general view of the exchanged regions.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">HaDeX</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/HaDeX/man/plot_state_comparison.html" class="external-link">plot_state_comparison</a></span><span class="op">(</span><span class="va">uptake_dat</span>,</span>
+<code class="sourceCode R"><span><span class="fu">HaDeX2</span><span class="fu">::</span><span class="fu"><a href="https://hadexversum.github.io/HaDeX2/reference/plot_state_comparison.html" class="external-link">plot_state_comparison</a></span><span class="op">(</span><span class="va">uptake_dat</span>,</span>
 <span>                             fractional <span class="op">=</span> <span class="cn">T</span>,</span>
 <span>                             time_t <span class="op">=</span> <span class="fl">150</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Comparison plot for eEF1Bα"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use `linewidth` instead.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">HaDeX</span> package.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">HaDeX2</span> package.</span></span>
 <span><span class="co">#&gt;   Please report the issue to the authors.</span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
@@ -139,7 +139,7 @@ plot, we only present the data for a single time point.</p>
 <span>                                                  state_1 <span class="op">=</span> <span class="st">"Alpha_KSCN"</span>,</span>
 <span>                                                  state_2 <span class="op">=</span> <span class="st">"ALPHA_Gamma"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">HaDeX</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/HaDeX/man/plot_differential.html" class="external-link">plot_differential</a></span><span class="op">(</span>diff_p_uptake_dat <span class="op">=</span> <span class="va">diff_p_uptake_dat</span>,</span>
+<span><span class="fu">HaDeX2</span><span class="fu">::</span><span class="fu"><a href="https://hadexversum.github.io/HaDeX2/reference/plot_differential.html" class="external-link">plot_differential</a></span><span class="op">(</span>diff_p_uptake_dat <span class="op">=</span> <span class="va">diff_p_uptake_dat</span>,</span>
 <span>                         fractional <span class="op">=</span> <span class="cn">T</span>, </span>
 <span>                         show_houde_interval <span class="op">=</span> <span class="cn">T</span>, </span>
 <span>                         time_t <span class="op">=</span> <span class="fl">150</span><span class="op">)</span> <span class="op">+</span></span>
@@ -323,7 +323,7 @@ accounts for the whole time course.</p>
 <div class="section level2">
 <h2 id="availability">Availability<a class="anchor" aria-label="anchor" href="#availability"></a>
 </h2>
-<p>HaDeX is available as a <a href="https://hadex.mslab-ibb.pl/" class="external-link">web-server</a>, <a href="https://cran.r-project.org/web/packages/HaDeX/index.html" class="external-link">R
+<p>HaDeX2 is available as a <a href="https://hadex2.mslab-ibb.pl/" class="external-link">web-server</a>, <a href="https://cran.r-project.org/web/packages/HaDeX/index.html" class="external-link">R
 package</a>, and <a href="">standalone software</a>. The first version
 is already <a href="https://academic.oup.com/bioinformatics/article/36/16/4516/5862011" class="external-link">published</a>
 and the second version is in advanced state - <a href="https://hadex2.mslab-ibb.pl/" class="external-link">HaDeX2</a>.</p>

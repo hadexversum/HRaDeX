@@ -75,7 +75,7 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://hadexversum.github.io/HRaDeX/">HRaDeX</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">HaDeX</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://hadexversum.github.io/HaDeX2/" class="external-link">HaDeX2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></code></pre></div>
 <p>Although the HRaDeX application accepts only csv file exported from
 DynamX in <code>cluster</code> format, it is not impossible to use
@@ -94,9 +94,9 @@ will be glad to help!</em></p>
 <p>The best way to check if the file is suitable for the application is
 load in (using e.q. web-server) and see the file status. If the file is
 in wrong format, there should be appropriate message. Another way is to
-use HaDeX::read_hdx() function. Be careful, as HaDeX::read_hdx() allows
-the use of specific files of HDeXaminer origin, but only from the code
-level, it is not implemented in the application.</p>
+use HaDeX2::read_hdx() function. Be careful, as HaDeX2::read_hdx()
+allows the use of specific files of HDeXaminer origin, but only from the
+code level, it is not implemented in the application.</p>
 <div class="section level2">
 <h2 id="dynamx-cluster-file">DynamX cluster file<a class="anchor" aria-label="anchor" href="#dynamx-cluster-file"></a>
 </h2>
@@ -106,7 +106,7 @@ processing. The required columns are:</p>
 <span><span class="co">#&gt;  [6] "Fragment"     "MaxUptake"    "MHP"          "State"        "Exposure"    </span></span>
 <span><span class="co">#&gt; [11] "File"         "z"            "RT"           "Inten"        "Center"</span></span></code></pre>
 <p>If the file have all required columns, it should be accepted by the
-HaDeX::read_hdx() function.</p>
+HaDeX2::read_hdx() function.</p>
 </div>
 <div class="section level2">
 <h2 id="dynamx-state-file">DynamX state file<a class="anchor" aria-label="anchor" href="#dynamx-state-file"></a>
@@ -188,9 +188,9 @@ them briefly.</p>
 <span><span class="co">#&gt;  [9] "Actual RT"     "# Spectra"     "Peak Width"    "m/z Shift"    </span></span>
 <span><span class="co">#&gt; [13] "Max Inty"      "Exp Cent"      "Theor Cent"    "Score"        </span></span>
 <span><span class="co">#&gt; [17] "Cent Diff"     "# Deut"        "Deut %"        "Confidence"</span></span></code></pre>
-<p>it can be processed with HaDeX::read_hdx() from the code level, as it
-requires additional action from the user. Then, this data can be used as
-described in the <code>Workflow</code> article.</p>
+<p>it can be processed with HaDeX2::read_hdx() from the code level, as
+it requires additional action from the user. Then, this data can be used
+as described in the <code>Workflow</code> article.</p>
 <p>If the file has following columns:</p>
 <pre><code><span><span class="co">#&gt;  [1] "Protein State"      "Protein"            "Start"             </span></span>
 <span><span class="co">#&gt;  [4] " End"               "Sequence"           "Peptide Mass"      </span></span>

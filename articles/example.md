@@ -7,7 +7,7 @@ manuscript.
 
 Here we describe the exemplary step-by-step analysis of experimental
 data using the hadexversum family tools:
-[HaDeX](https://hadex2.mslab-ibb.pl/),
+[HaDeX2](https://hadex2.mslab-ibb.pl/),
 [HRaDeX](https://hradex.mslab-ibb.pl/) and
 [compaHRaDeX](https://compahradex.mslab-ibb.pl/).
 
@@ -25,13 +25,13 @@ We present the visualization methods of hadexversum, without making
 strict interpretations. For that purpose, we suggest contacting the
 research group that published original research on this topic.
 
-## HaDeX
+## HaDeX2
 
 ### General information
 
-HaDeX is a general-use tool for widely understood data analysis on the
+HaDeX2 is a general-use tool for widely understood data analysis on the
 peptide level. It provides many features for investigating directly the
-mass measurements and checking the experiment quality. HaDeX provides
+mass measurements and checking the experiment quality. HaDeX2 provides
 many methods of quality control of the experiment with in-depth analysis
 of measurements, uncertainty, and statistical significance. Not only
 commonly used forms of visualization are available, but also new methods
@@ -50,13 +50,13 @@ data only for a single time point. However, a quick glimpse of the plot
 enables a general view of the exchanged regions.
 
 ``` r
-HaDeX::plot_state_comparison(uptake_dat,
+HaDeX2::plot_state_comparison(uptake_dat,
                              fractional = T,
                              time_t = 150) +
   labs(title = "Comparison plot for eEF1Bα")
 #> Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 #> ℹ Please use `linewidth` instead.
-#> ℹ The deprecated feature was likely used in the HaDeX package.
+#> ℹ The deprecated feature was likely used in the HaDeX2 package.
 #>   Please report the issue to the authors.
 #> This warning is displayed once every 8 hours.
 #> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
@@ -76,7 +76,7 @@ diff_p_uptake_dat <- create_p_diff_uptake_dataset(alpha_dat,
                                                   state_1 = "Alpha_KSCN",
                                                   state_2 = "ALPHA_Gamma")
 
-HaDeX::plot_differential(diff_p_uptake_dat = diff_p_uptake_dat,
+HaDeX2::plot_differential(diff_p_uptake_dat = diff_p_uptake_dat,
                          fractional = T, 
                          show_houde_interval = T, 
                          time_t = 150) +
@@ -289,7 +289,7 @@ accounts for the whole time course.
 
 ## Availability
 
-HaDeX is available as a [web-server](https://hadex.mslab-ibb.pl/), [R
+HaDeX2 is available as a [web-server](https://hadex2.mslab-ibb.pl/), [R
 package](https://cran.r-project.org/web/packages/HaDeX/index.html), and
 [standalone software](https://hadexversum.github.io/HRaDeX/articles/).
 The first version is already

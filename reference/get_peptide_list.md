@@ -21,7 +21,7 @@ a data.frame with position values, Start and End.
 ## Examples
 
 ``` r
-dat <- HaDeX::read_hdx(...)
+dat <- HaDeX2::read_hdx(...)
 #> Error: '...' used in an incorrect context
 get_peptide_list(dat)
 #> Error: object 'dat' not found

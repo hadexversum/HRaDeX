@@ -92,6 +92,8 @@
   : Plots the uc difference type 2
 - [`plot_uc_real_dist()`](https://hadexversum.github.io/HRaDeX/reference/plot_uc_real_dist.md)
   : Plots the uc difference type 1
+- [`prepare_chimera_commands()`](https://hadexversum.github.io/HRaDeX/reference/prepare_chimera_commands.md)
+  : Prepare coloring commands for ChimeraX
 - [`prepare_diff_data()`](https://hadexversum.github.io/HRaDeX/reference/prepare_diff_data.md)
   : Prepares differential data
 - [`prepare_kin_dat()`](https://hadexversum.github.io/HRaDeX/reference/prepare_kin_dat.md)
