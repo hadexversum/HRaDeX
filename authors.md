@@ -10,13 +10,13 @@
 
 ## Citation
 
-Puchala W, Burdukiewicz M (2025). *HRaDeX: Uptake classification for
+Puchala W, Burdukiewicz M (2026). *HRaDeX: Uptake classification for
 HDXMS*. R package version 1.0, <https://hadexversum.github.io/HRaDeX/>.
 
     @Manual{,
       title = {HRaDeX: Uptake classification for HDXMS},
       author = {Weronika Puchala and Michal Burdukiewicz},
-      year = {2025},
+      year = {2026},
       note = {R package version 1.0},
       url = {https://hadexversum.github.io/HRaDeX/},
     }
