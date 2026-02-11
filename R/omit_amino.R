@@ -21,9 +21,8 @@ omit_amino <- function(dat,
 
   dat <- dat %>%
     mutate(Start = Start + omit,
-           MaxUptake = MaxUptake - omit,
+           MaxUptake = MaxUptake - omit + 1, ## if my just omit the first amino max uptake is the same
            Sequence = substring(Sequence, 1 + omit, nchar(Sequence)))
-  # TODO make it better, with regard to proline
 
   return(dat)
 
