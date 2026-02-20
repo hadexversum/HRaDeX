@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/620262215.svg)](https://doi.org/10.5281/zenodo.18718114)
+
 # HRaDeX
 
 HRaDeX is a part of tool family for analysing HDX-MS data, HaDeXversum. It is developed in Mass Spectrometry Lab in Institute of Biophysics and Biochemistry, Polish Acadamy of Sciences.
