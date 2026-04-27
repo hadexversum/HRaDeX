@@ -51,6 +51,8 @@ create_fit_dataset <- function(kin_dat,
 
   apply(peptide_list, 1, function(peptide){
 
+    # print(peptide)
+
     filter(kin_dat, Sequence == peptide[[1]],
                     Start == as.numeric(peptide[[2]]),
                     End == as.numeric(peptide[[3]])) %>%
