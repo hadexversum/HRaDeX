@@ -12,8 +12,39 @@
 
 calculate_hires <- function(fit_values,
                             method = c("shortest", "weighted"),
+                            if_convention = check_convention_usage(fit_values),
                             protein_length = max(fit_values[["end"]]),
                             fractional = FALSE){
+
+
+  hires_params <- if(if_convention){
+
+    calc_hires_with_convention(fit_values = fit_values,
+                               method = method,
+                               protein_length = protein_length,
+                               fractional = fractional)
+
+  } else {
+
+    calc_hires_no_convention(fit_values = fit_values,
+                             method = method,
+                             protein_length = protein_length,
+                             fractional = fractional)
+  }
+
+  attr(hires_params, "method") <- method
+
+  return(hires_params)
+
+
+
+}
+
+#' @noRd
+calc_hires_no_convention <- function(fit_values,
+                                     method,
+                                     protein_length,
+                                     fractional){
 
   Protein = fit_values[["Protein"]][1]
   State = fit_values[["State"]][1]
@@ -100,17 +131,17 @@ calculate_hires <- function(fit_values,
       if(nrow(tmp_params) == 0){
 
         res <- data.frame(Protein = Protein,
-                   State = State,
-                   position = pos,
-                   n_1 = NA,
-                   k_1 = NA,
-                   n_2 = NA,
-                   k_2 = NA,
-                   n_3 = NA,
-                   k_3 = NA,
-                   k_est = NA,
-                   class_name = NA,
-                   color = NA)
+                          State = State,
+                          position = pos,
+                          n_1 = NA,
+                          k_1 = NA,
+                          n_2 = NA,
+                          k_2 = NA,
+                          n_3 = NA,
+                          k_3 = NA,
+                          k_est = NA,
+                          class_name = NA,
+                          color = NA)
       } else {
 
         if(any(!is.na(tmp_params["class_name"]))){
@@ -118,17 +149,17 @@ calculate_hires <- function(fit_values,
           class_example <- tmp_params[!is.na(tmp_params[["class_name"]]), ][1, ]
 
           res <- data.frame(Protein = Protein,
-                     State = State,
-                     position = pos,
-                     n_1 = class_example[["n_1"]],
-                     k_1 = class_example[["k_1"]],
-                     n_2 = class_example[["n_2"]],
-                     k_2 = class_example[["k_3"]],
-                     n_3 = class_example[["n_3"]],
-                     k_3 = class_example[["k_3"]],
-                     k_est = class_example[["k_est"]],
-                     class_name = class_example[["class_name"]],
-                     color = class_example[["color"]])
+                            State = State,
+                            position = pos,
+                            n_1 = class_example[["n_1"]],
+                            k_1 = class_example[["k_1"]],
+                            n_2 = class_example[["n_2"]],
+                            k_2 = class_example[["k_3"]],
+                            n_3 = class_example[["n_3"]],
+                            k_3 = class_example[["k_3"]],
+                            k_est = class_example[["k_est"]],
+                            class_name = class_example[["class_name"]],
+                            color = class_example[["color"]])
 
         } else {
 
@@ -161,7 +192,7 @@ calculate_hires <- function(fit_values,
 
     }) %>% bind_rows()
 
-   }
+  }
 
   hires_params <- merge(hires_params_, residues, by = "position", all.x = TRUE)
 
@@ -181,10 +212,201 @@ calculate_hires <- function(fit_values,
     rbind(hires_params_p) %>%
     arrange(position)
 
-  attr(hires_params, "method") <- method
-
-  return(hires_params)
-
-
-
 }
+
+#' @noRd
+calc_hires_with_convention <- function(fit_values,
+                                       method,
+                                       protein_length,
+                                       fractional){
+  Protein = fit_values[["Protein"]][1]
+  State = fit_values[["State"]][1]
+
+  residues <- get_residue_positions(fit_values) %>%
+    filter(aa == toupper(aa))
+
+  ## new matrix
+
+  residues_matrix <- lapply(1:nrow(fit_values), function(i){
+
+    data.frame(id = fit_values[i, "id"],
+               pos = fit_values[i, "start"]:fit_values[i, "end"],
+               aa =  strsplit(fit_values[i, "sequence"], "")[[1]],
+               pep_bond_n = stringr::str_count(fit_values[i, "sequence"], "[A-Z]"))
+
+  }) %>% bind_rows() %>%
+    filter(aa == toupper(aa))
+
+  ##
+
+  hires_params_ <- NULL
+
+  if(method == "shortest"){
+
+    hires_params_ <- lapply(seq(1:protein_length), function(v_pos){
+
+      if(fractional){
+
+        tmp_params <- residues_matrix %>%
+          filter(pos == v_pos) %>%
+          merge(., fit_values, by = c("id")) %>%
+          filter(n_1 + n_2 + n_3 < 1.25)
+
+      } else {
+
+        tmp_params <- residues_matrix %>%
+          filter(pos == v_pos) %>%
+          merge(., fit_values, by = c("id")) %>%
+          filter(n_1 + n_2 + n_3 - max_uptake <= 0)
+
+
+      }
+
+      tmp_params <- tmp_params %>%
+        filter(!class_name %in% c("invalid", "invalid_uc")) %>%
+        arrange(nchar(sequence), class_name) %>%
+        .[1, ]
+
+      if(nrow(tmp_params) == 0){
+
+        data.frame(Protein = Protein,
+                   State = State,
+                   position = pos,
+                   n_1 = NA,
+                   k_1 = NA,
+                   n_2 = NA,
+                   k_2 = NA,
+                   n_3 = NA,
+                   k_3 = NA,
+                   k_est = NA,
+                   class_name = NA,
+                   color = NA)
+      } else {
+
+        data.frame(Protein = Protein,
+                   State = State,
+                   position = pos,
+                   n_1 = tmp_params[["n_1"]],
+                   k_1 = tmp_params[["k_1"]],
+                   n_2 = tmp_params[["n_2"]],
+                   k_2 = tmp_params[["k_2"]],
+                   n_3 = tmp_params[["n_3"]],
+                   k_3 = tmp_params[["k_3"]],
+                   k_est = tmp_params[["k_est"]],
+                   class_name = tmp_params[["class_name"]],
+                   color = tmp_params[["color"]])
+      }
+
+    }) %>% bind_rows()
+
+  }
+
+  if(method == "weighted"){
+
+    hires_params_ <- lapply(seq(1:protein_length), function(pos){
+
+      if(fractional){
+
+        tmp_params <- residues_matrix %>%
+          filter(pos == v_pos) %>%
+          merge(., fit_values, by = c("id")) %>%
+          filter(n_1 + n_2 + n_3 < 1.25)
+
+      } else {
+
+        tmp_params <- residues_matrix %>%
+          filter(pos == v_pos) %>%
+          merge(., fit_values, by = c("id")) %>%
+          filter(n_1 + n_2 + n_3 - max_uptake <= 0)
+
+
+      }
+
+
+      if(nrow(tmp_params) == 0){
+
+        res <- data.frame(Protein = Protein,
+                          State = State,
+                          position = pos,
+                          n_1 = NA,
+                          k_1 = NA,
+                          n_2 = NA,
+                          k_2 = NA,
+                          n_3 = NA,
+                          k_3 = NA,
+                          k_est = NA,
+                          class_name = NA,
+                          color = NA)
+      } else {
+
+        if(any(!is.na(tmp_params["class_name"]))){
+
+          class_example <- tmp_params[!is.na(tmp_params[["class_name"]]), ][1, ]
+
+          res <- data.frame(Protein = Protein,
+                            State = State,
+                            position = pos,
+                            n_1 = class_example[["n_1"]],
+                            k_1 = class_example[["k_1"]],
+                            n_2 = class_example[["n_2"]],
+                            k_2 = class_example[["k_3"]],
+                            n_3 = class_example[["n_3"]],
+                            k_3 = class_example[["k_3"]],
+                            k_est = class_example[["k_est"]],
+                            class_name = class_example[["class_name"]],
+                            color = class_example[["color"]])
+
+        } else {
+
+          res <- tmp_params %>%
+            mutate(length = nchar(sequence),
+                   weight = 1/max_uptake/sum(1/max_uptake)) %>%
+            reframe(Protein = Protein,
+                    State = State,
+                    position = pos,
+                    n_1 = weighted.mean(n_1, weight),
+                    k_1 = weighted.mean(k_1, weight),
+                    n_2 = weighted.mean(n_2, weight),
+                    k_2 = weighted.mean(k_2, weight),
+                    n_3 = weighted.mean(n_3, weight),
+                    k_3 = weighted.mean(k_3, weight),
+                    k_est = weighted.mean(k_est, weight),
+                    class_name = NA,
+                    n = n_1 + n_2 + n_3,
+                    color = rgb(n_1/n, n_2/n, n_3/n)) %>%
+            unique(.) %>%
+            select(-n)
+
+        }
+
+
+
+      }
+
+      res
+
+    }) %>% bind_rows()
+
+  }
+
+
+  hires_params_p <- hires_params %>%
+    filter(aa == "P") %>%
+    mutate(n_1 = 0,
+           k_1 = 0,
+           n_2 = 0,
+           k_2 = 0,
+           n_3 = 0,
+           k_3 = 0,
+           k_est = 0,
+           class_name = "none",
+           color = "#000000")
+
+  hires_params <- filter(hires_params, aa!="P" | is.na(aa)) %>%
+    rbind(hires_params_p) %>%
+    arrange(position)
+
+  }
+
+
+
