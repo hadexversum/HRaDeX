@@ -32,6 +32,8 @@ calculate_hires <- function(fit_values,
                              fractional = fractional)
   }
 
+
+
   attr(hires_params, "method") <- method
 
   return(hires_params)
@@ -271,7 +273,7 @@ calc_hires_with_convention <- function(fit_values,
 
         data.frame(Protein = Protein,
                    State = State,
-                   position = pos,
+                   position = v_pos,
                    n_1 = NA,
                    k_1 = NA,
                    n_2 = NA,
@@ -285,7 +287,7 @@ calc_hires_with_convention <- function(fit_values,
 
         data.frame(Protein = Protein,
                    State = State,
-                   position = pos,
+                   position = v_pos,
                    n_1 = tmp_params[["n_1"]],
                    k_1 = tmp_params[["k_1"]],
                    n_2 = tmp_params[["n_2"]],
@@ -303,7 +305,7 @@ calc_hires_with_convention <- function(fit_values,
 
   if(method == "weighted"){
 
-    hires_params_ <- lapply(seq(1:protein_length), function(pos){
+    hires_params_ <- lapply(seq(1:protein_length), function(v_pos){
 
       if(fractional){
 
@@ -327,7 +329,7 @@ calc_hires_with_convention <- function(fit_values,
 
         res <- data.frame(Protein = Protein,
                           State = State,
-                          position = pos,
+                          position = v_pos,
                           n_1 = NA,
                           k_1 = NA,
                           n_2 = NA,
@@ -345,7 +347,7 @@ calc_hires_with_convention <- function(fit_values,
 
           res <- data.frame(Protein = Protein,
                             State = State,
-                            position = pos,
+                            position = v_pos,
                             n_1 = class_example[["n_1"]],
                             k_1 = class_example[["k_1"]],
                             n_2 = class_example[["n_2"]],
@@ -363,7 +365,7 @@ calc_hires_with_convention <- function(fit_values,
                    weight = 1/max_uptake/sum(1/max_uptake)) %>%
             reframe(Protein = Protein,
                     State = State,
-                    position = pos,
+                    position = v_pos,
                     n_1 = weighted.mean(n_1, weight),
                     k_1 = weighted.mean(k_1, weight),
                     n_2 = weighted.mean(n_2, weight),
@@ -390,6 +392,8 @@ calc_hires_with_convention <- function(fit_values,
   }
 
 
+  hires_params <- merge(hires_params_, residues, by = "position", all.x = TRUE)
+
   hires_params_p <- hires_params %>%
     filter(aa == "P") %>%
     mutate(n_1 = 0,
@@ -405,6 +409,7 @@ calc_hires_with_convention <- function(fit_values,
   hires_params <- filter(hires_params, aa!="P" | is.na(aa)) %>%
     rbind(hires_params_p) %>%
     arrange(position)
+
 
   }
 

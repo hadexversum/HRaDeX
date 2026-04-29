@@ -44,6 +44,8 @@ check_convention_usage <- function(dat){
 get_sequence_bonds <- function(sequence,
                                threshold = 0.3){
 
+  data(hrates)
+
   residues <- strsplit(sequence, "")[[1]]
 
   res <- lapply(1:length(residues), function(i){
@@ -52,15 +54,15 @@ get_sequence_bonds <- function(sequence,
     if(i == 1) {
       tolower(residues[i])
     } else if(i == 2) {
-      if(coalesce(rate_n[residues[1], residues[2]], 0) < threshold) tolower(residues[i])
+      if(coalesce(HRaDeX::rate_n[residues[1], residues[2]], 0) < threshold) tolower(residues[i])
       else residues[i]
     } else if(residues[i] == "P"){
       tolower(residues[i])
     } else if(i == length(residues)){
-      if(coalesce(rate_c[residues[i], residues[i-1]], 0) < threshold) tolower(residues[i])
+      if(coalesce(HRaDeX::rate_c[residues[i], residues[i-1]], 0) < threshold) tolower(residues[i])
       else residues[i]
     } else {
-      if(coalesce(rate_m[residues[i-1], residues[i]], 0) < threshold) tolower(residues[i])
+      if(coalesce(HRaDeX::rate_m[residues[i-1], residues[i]], 0) < threshold) tolower(residues[i])
       else residues[i]
     }
   }) %>%
@@ -106,6 +108,8 @@ create_sequence_list <- function(dat,
 #' Replace sequence with sequences within convention
 #'
 #' @param dat data with sequences to be replaced
+#'
+#' @importFrom dplyr rename
 #'
 #' @description The original peptide sequences are
 #' replaced with the peptide convention - described in
