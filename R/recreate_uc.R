@@ -141,21 +141,23 @@ create_uc_from_hires_dataset <- function(kin_dat,
 #' fit_dat <- kin_dat[kin_dat[["ID"]]==3, ]
 #' fit_values_all <- create_fit_dataset(kin_dat, control = get_example_control(),
 #'                                      fit_k_params = get_example_fit_k_params(),
-#'                                      fractional = T)
+#'                                      fractional = TRUE)
 #' recreate_uc(fit_dat, fit_values_all, hires_method = "shortest")
 #'
 #' @export
 recreate_uc <- function(fit_dat, ## uc filtered dat
                         fit_values_all, ## fit unfiltered
                         fractional = TRUE,
-                        hires_method = c("shortest", "weighted")){
+                        hires_method = c("shortest", "weighted"),
+                        interactive = FALSE,
+                        if_girafe = FALSE){
 
   peptide_sequence <- unique(fit_dat[["Sequence"]])
   if(length(peptide_sequence) > 1) stop("More than one peptide!")
   peptide_start <- unique(fit_dat[["Start"]])
   peptide_end <- unique(fit_dat[["End"]])
 
-  hires <- calculate_hires(fit_values_all, method = hires_method, fractional = T)
+  hires <- calculate_hires(fit_values =fit_values_all, method = hires_method, fractional = TRUE)
 
   fit_values <- filter(fit_values_all,
                        sequence == peptide_sequence,
@@ -176,8 +178,24 @@ recreate_uc <- function(fit_dat, ## uc filtered dat
   if(fractional){label_y <- "Fractional DU"
   } else { label_y <- "Deuterium Uptake [Da]"}
 
+  geom_point_selected <- if(interactive){
+    ggiraph::geom_point_interactive(aes(x = Exposure, y = frac_deut_uptake,
+                                       tooltip = glue(
+                                         "Sequence: {Sequence}
+                                           Position: {Start}-{End}
+                                           DU: {round(deut_uptake, 2)} [Da]
+                                           Err(DU): {round(err_deut_uptake, 2)} [Da]
+                                           Frac DU: {round(frac_deut_uptake, 2)} [%]
+                                           Err(Frac DU): {round(err_frac_deut_uptake, 2)} [%]"),
+                                       shape = "experimental"))
+
+  } else {
+
+    geom_point(aes(x = Exposure, y = frac_deut_uptake, shape = "experimental"))
+  }
+
   uc_plot <- ggplot(fit_dat) +
-    geom_point(aes(x = Exposure, y = frac_deut_uptake, shape = "experimental")) +
+    geom_point_selected +
     geom_linerange(aes(ymin = frac_deut_uptake - err_frac_deut_uptake,
                       ymax = frac_deut_uptake + err_frac_deut_uptake,
                       x = Exposure)) +
@@ -186,9 +204,7 @@ recreate_uc <- function(fit_dat, ## uc filtered dat
     scale_x_log10() +
     labs(title = paste0(peptide_sequence, " ", peptide_start, "-", peptide_end, ", method: ", hires_method),
          y = label_y,
-         x = "Exposure [min]")
-
-  uc_plot +
+         x = "Exposure [min]") +
     stat_function(fun = function(x){peptide_hr[['n_1']]*(1-exp(-peptide_hr[['k_1']]*x)) + peptide_hr[['n_2']]*(1-exp(-peptide_hr[['k_2']]*x)) + peptide_hr[['n_3']]*(1-exp(-peptide_hr[['k_3']]*x))
     }, aes(color = "recovered")) +
     stat_function(fun = function(x){fit_values[['n_1']]*(1-exp(-fit_values[['k_1']]*x)) + fit_values[['n_2']]*(1-exp(-fit_values[['k_2']]*x)) + fit_values[['n_3']]*(1-exp(-fit_values[['k_3']]*x))
@@ -198,6 +214,12 @@ recreate_uc <- function(fit_dat, ## uc filtered dat
     scale_shape_manual(name = "",
                        values = c(16)) +
     theme(legend.position = "bottom")
+
+  if(if_girafe){
+    girafe(ggobj = uc_plot)
+  } else {
+    return(uc_plot)
+  }
 }
 
 
@@ -262,7 +284,7 @@ calculate_recovered_uc_rmse <- function(rec_uc_dat,
 #' kin_dat <- prepare_kin_dat(alpha_dat, state = "Alpha_KSCN")
 #' fit_values_all <- create_fit_dataset(kin_dat, control = get_example_control(),
 #'                                      fit_k_params = get_example_fit_k_params(),
-#'                                      fractional = T)
+#'                                      fractional = TRUE)
 #' rec_uc_dat <- create_uc_from_hires_dataset(kin_dat,
 #'                                            fit_values_all,
 #'                                            hires_method = "shortest")
@@ -272,7 +294,9 @@ calculate_recovered_uc_rmse <- function(rec_uc_dat,
 #'
 #' @export
 plot_recovered_uc_coverage <- function(rec_uc_rmse_dat,
-                                       style = c("coverage", "butterfly")){
+                                       style = c("coverage", "butterfly"),
+                                       interactive = FALSE,
+                                       if_girafe = FALSE){
 
   if(style == "coverage"){
 
@@ -297,10 +321,20 @@ plot_recovered_uc_coverage <- function(rec_uc_rmse_dat,
 
     rec_uc_rmse_dat[["ID"]] <- levels
 
+    geom_rect_chosen <- if(interactive){
+      geom_rect_interactive(aes(fill = rmse,
+                                tooltip = glue("Sequence: {Sequence}
+                                               Position: {Start}-{End}
+                                               RMSE: {round(rmse, 3)}" )), color = "black")
+    } else {
+      geom_rect(aes(fill = rmse), color = "black")
+    }
+
+
     plt <- ggplot(data = rec_uc_rmse_dat,
            mapping = aes(xmin = Start, xmax = End + 1,
                          ymin = ID - 1 + 0.05 , ymax = ID - 0.05)) +
-      geom_rect(aes(fill = rmse), color = "black") +
+      geom_rect_chosen +
       scale_fill_gradient("RMSE", low = "white", high = "red") +
       labs(title = "",
            x = "Position",
