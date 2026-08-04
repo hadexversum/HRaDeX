@@ -1,8 +1,8 @@
 #' Prepare coloring commands for ChimeraX
 #'
-#' @params hires_params hires classification parameters
+#' @param hires_params hires classification parameters
 #' prepared by calculate_hires function
-#' @params dominant indicator if only the dominant
+#' @param dominant indicator if only the dominant
 #' class colour should be exported
 #' @param state biological state
 #' @param chain chain for which the coloring

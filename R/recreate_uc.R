@@ -43,16 +43,30 @@ calculate_uc_from_hires_peptide <- function(fit_dat, ## uc filtered dat
                        start == peptide_start,
                        end == peptide_end)
 
-  peptide_hr <- filter(hires_dat,
-                       position >= peptide_start,
-                       position <= peptide_end,
-                       aa!='P') %>%
+  ## rewritting to avoid small letters
+
+  peptide_hr <- data.frame(aa = strsplit(peptide_sequence, "")[[1]],
+                           position = peptide_start:peptide_end) %>%
+    filter(aa == toupper(aa)) %>%
+    merge(hires_dat) %>%
+    filter(aa!="P") %>%
     summarise(n_1 = mean(n_1),
               k_1 = mean(k_1),
               n_2 = mean(n_2),
               k_2 = mean(k_2),
               n_3 = mean(n_3),
               k_3 = mean(k_3))
+
+  # peptide_hr <- filter(hires_dat,
+  #                      position >= peptide_start,
+  #                      position <= peptide_end,
+  #                      aa!='P') %>%
+  #   summarise(n_1 = mean(n_1),
+  #             k_1 = mean(k_1),
+  #             n_2 = mean(n_2),
+  #             k_2 = mean(k_2),
+  #             n_3 = mean(n_3),
+  #             k_3 = mean(k_3))
 
   exp_3 <- function(x){
     peptide_hr[['n_1']]*(1-exp(-peptide_hr[['k_1']]*x)) + peptide_hr[['n_2']]*(1-exp(-peptide_hr[['k_2']]*x)) + peptide_hr[['n_3']]*(1-exp(-peptide_hr[['k_3']]*x))

@@ -12,6 +12,12 @@ prepare_chimera_commands(
 )
 }
 \arguments{
+\item{hires_params}{hires classification parameters
+prepared by calculate_hires function}
+
+\item{dominant}{indicator if only the dominant
+class colour should be exported}
+
 \item{state}{biological state}
 
 \item{chain}{chain for which the coloring
