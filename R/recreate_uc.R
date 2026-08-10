@@ -116,7 +116,8 @@ create_uc_from_hires_dataset <- function(kin_dat,
 
   hires_dat <- calculate_hires(fit_values_all, method = hires_method, fractional = fractional)
 
-  res <- lapply(1:nrow(fit_values_all), function(i){
+  res <- lapply(1:nrow(peptide_list), function(i){
+
 
     fit_dat <- kin_dat[kin_dat[["ID"]]==i, ]
 
