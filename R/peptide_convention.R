@@ -94,13 +94,31 @@ get_sequence_bonds <- function(sequence,
 create_sequence_list <- function(dat,
                                  threshold = 0.3){
 
-  peptide_list <- dat %>%
-    select(Sequence, Start, End) %>%
-    unique(.) %>%
-    rowwise() %>%
-    mutate(seq_bond = get_sequence_bonds(sequence = Sequence,
-                                         threshold = threshold),
-           n_bonds = stringr::str_count(seq_bond, "[A-Z]"))
+  peptide_list <- if("Sequence" %in% colnames(dat)){
+
+     dat %>%
+      select(Sequence, Start, End) %>%
+      unique(.) %>%
+      rowwise() %>%
+      mutate(seq_bond = get_sequence_bonds(sequence = Sequence,
+                                           threshold = threshold),
+             n_bonds = stringr::str_count(seq_bond, "[A-Z]"))
+
+  } else if ("sequence" %in% colnames(dat)) {
+
+    dat %>%
+      select(sequence, start, end) %>%
+      unique(.) %>%
+      rowwise() %>%
+      mutate(seq_bond = get_sequence_bonds(sequence = sequence,
+                                           threshold = threshold),
+             n_bonds = stringr::str_count(seq_bond, "[A-Z]"))
+
+  } else {
+    stop("No sequence column!")
+  }
+
+
 
   return(peptide_list)
 }
@@ -129,12 +147,27 @@ replace_sequences <- function(dat,
   new_peptide_list <- create_sequence_list(dat,
                                            threshold = threshold)
 
-  fin <- merge(dat, new_peptide_list, by = c("Sequence", "Start", "End")) %>%
+  fin <- if("Sequence" %in% colnames(dat)){
+
+    merge(dat, new_peptide_list, by = c("Sequence", "Start", "End")) %>%
     select(-Sequence, -MaxUptake) %>%
     rename(Sequence = seq_bond,
            MaxUptake = n_bonds) %>%
     select(Sequence, everything()) %>%
     arrange(Start, End)
+
+  } else if ("sequence" %in% colnames(dat)){
+
+    merge(dat, new_peptide_list, by = c("sequence", "start", "end")) %>%
+      select(-sequence, -max_uptake) %>%
+      rename(sequence = seq_bond,
+             max_uptake = n_bonds) %>%
+      select(sequence, everything()) %>%
+      arrange(start, end)
+
+  } else {
+      stop("Wrong data supplied!")
+    }
 
   return(fin)
 }
