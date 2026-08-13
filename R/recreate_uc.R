@@ -183,7 +183,7 @@ recreate_uc <- function(fit_dat, ## uc filtered dat
   peptide_hr <- data.frame(aa = strsplit(peptide_sequence, "")[[1]],
              position = peptide_start:peptide_end) %>%
     filter(aa == toupper(aa)) %>%
-    merge(hires_dat) %>%
+    merge(hires) %>%
     filter(aa!="P") %>%
     summarise(n_1 = mean(n_1),
               k_1 = mean(k_1),
