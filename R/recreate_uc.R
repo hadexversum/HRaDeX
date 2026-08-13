@@ -179,16 +179,29 @@ recreate_uc <- function(fit_dat, ## uc filtered dat
                        start == peptide_start,
                        end == peptide_end)
 
-  peptide_hr <- filter(hires,
-                       position >= peptide_start,
-                       position <= peptide_end,
-                       aa!='P') %>%
+
+  peptide_hr <- data.frame(aa = strsplit(peptide_sequence, "")[[1]],
+             position = peptide_start:peptide_end) %>%
+    filter(aa == toupper(aa)) %>%
+    merge(hires_dat) %>%
+    filter(aa!="P") %>%
     summarise(n_1 = mean(n_1),
               k_1 = mean(k_1),
               n_2 = mean(n_2),
               k_2 = mean(k_2),
               n_3 = mean(n_3),
               k_3 = mean(k_3))
+
+  # peptide_hr <- filter(hires,
+  #                      position >= peptide_start,
+  #                      position <= peptide_end,
+  #                      aa!='P') %>%
+  #   summarise(n_1 = mean(n_1),
+  #             k_1 = mean(k_1),
+  #             n_2 = mean(n_2),
+  #             k_2 = mean(k_2),
+  #             n_3 = mean(n_3),
+  #             k_3 = mean(k_3))
 
   if(fractional){label_y <- "Fractional DU"
   } else { label_y <- "Deuterium Uptake [Da]"}
