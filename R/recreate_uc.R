@@ -172,7 +172,7 @@ recreate_uc <- function(fit_dat, ## uc filtered dat
   peptide_start <- unique(fit_dat[["Start"]])
   peptide_end <- unique(fit_dat[["End"]])
 
-  hires <- calculate_hires(fit_values =fit_values_all, method = hires_method, fractional = TRUE)
+  hires <- calculate_hires(fit_values = fit_values_all, method = hires_method, fractional = fractional)
 
   fit_values <- filter(fit_values_all,
                        sequence == peptide_sequence,
@@ -238,7 +238,9 @@ recreate_uc <- function(fit_dat, ## uc filtered dat
     stat_function(fun = function(x){fit_values[['n_1']]*(1-exp(-fit_values[['k_1']]*x)) + fit_values[['n_2']]*(1-exp(-fit_values[['k_2']]*x)) + fit_values[['n_3']]*(1-exp(-fit_values[['k_3']]*x))
     }, aes(color = "fitted")) +
     scale_colour_manual(name = "",
-                        values = c("blue", "red")) +
+                        values = c("recovered" = "red", "fitted" = "blue"),
+                        breaks = c("recovered", "fitted"),
+                        drop   = FALSE) +
     scale_shape_manual(name = "",
                        values = c(16)) +
     theme(legend.position = "bottom")
