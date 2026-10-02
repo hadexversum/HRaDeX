@@ -32,6 +32,7 @@ fit_2_exp <- function(fit_dat,
     groups = NA
     rss <- 99999
     bic <- 99999
+    rmse <- 99999
 
     tryCatch({
 
@@ -59,6 +60,7 @@ fit_2_exp <- function(fit_dat,
 
       rss <-  sum(residuals(mod)^2)
       bic <- stats::AIC(mod, k = log(nrow(fit_dat)))
+      rmse <- sqrt(mean(residuals(mod)^2))
       n_1 <- coef(mod)["n_1"]
       k_1 <- coef(mod)["k_1"]
       n_2 <- coef(mod)["n_2"]
@@ -78,6 +80,7 @@ fit_2_exp <- function(fit_dat,
                k_2 = k_2,
                rss = rss,
                bic = bic,
+               rmse = rmse,
                groups = groups)
 
   }) %>% bind_rows() %>% arrange(bic) %>% .[1, ]
@@ -96,6 +99,7 @@ fit_2_exp <- function(fit_dat,
                k_3 = -1,
                rss = 99999,
                bic = 99999,
+               rmse = 99999,
                class_name = NA,
                k_est = NA,
                fitted = NA,
@@ -155,6 +159,7 @@ fix_2_exp_result_v2 <- function(fit_dat,
              k_3 = k_3,
              rss = fit_2_res[["rss"]],
              bic = fit_2_res[["bic"]],
+             rmse = fit_2_res[["rmse"]],
              class_name = NA,
              k_est = (n_1*k_1 + n_2*k_2 + n_3*k_3)/n,
              fitted = 2,
@@ -213,6 +218,7 @@ fix_2_exp_result <- function(fit_dat,
              k_3 = k_3,
              rss = fit_2_res[["rss"]],
              bic = fit_2_res[["bic"]],
+             rmse = fit_2_res[["rmse"]],
              class_name = NA,
              fitted = 2,
              color = rgb(n_1, n_2, n_3)
