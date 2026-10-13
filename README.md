@@ -26,3 +26,7 @@ HRaDeX can be downloaded directly from GitHub repository:
 # install.packages("devtools")
 devtools::install_github("hadexversum/HRaDeX")
 ```
+
+This project was supported by the **National Science Centre Poland**, SONATA 19 grant [**2023/51/D/NZ7/02847**]. 
+
+[![National Science Centre Poland](https://github.com/BioGenies/amyloid-database-list/blob/main/docs/ncn_logo.png){width=600}](https://ncn.gov.pl/en) 
