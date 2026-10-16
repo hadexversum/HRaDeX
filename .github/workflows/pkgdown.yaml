@@ -36,19 +36,19 @@ jobs:
           sudo apt-get -y install libmagick++-dev
 
       - name: Install devtools
-        run: install.packages(c("devtools", "pkgdown"))
+        run: install.packages(c("pak", "pkgdown"))
         shell: Rscript {0}
 
       - name: Install r3dmol
-        run: devtools::install_github("swsoyee/r3dmol", upgrade = "never")
+        run: pak::pak("swsoyee/r3dmol") 
         shell: Rscript {0}
 
       - name: Install HaDeX2
-        run: devtools::install_github("hadexversum/HaDeX2", upgrade = "never")
+        run: pak::pak("hadexversum/HaDeX2")
         shell: Rscript {0}
 
       - name: Install HRaDeX
-        run: devtools::install_github("hadexversum/HRaDeX", upgrade = "never")
+        run: pak::pak("hadexversum/HRaDeX")
         shell: Rscript {0}
 
       - name: Build site
