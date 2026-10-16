@@ -18,6 +18,14 @@ export_chimera_commands(
 
 ## Arguments
 
+- hires_params:
+
+  hires classification parameters prepared by calculate_hires function
+
+- dominant:
+
+  indicator if only the dominant class color should be exported
+
 - state:
 
   biological state

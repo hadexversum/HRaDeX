@@ -1,6 +1,7 @@
 # Workflow performance
 
 ``` r
+
 library(HRaDeX)
 ```
 

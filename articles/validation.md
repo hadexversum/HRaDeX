@@ -15,6 +15,7 @@ Let’s start with running the analysis, using exemplary
 [data](https://doi.org/10.1093/nar/gkac685), and default parameters.
 
 ``` r
+
 protein_length <- 224 + 1 ## as r3dmol counts differently
 
 # calucalting deuterium uptake for the alpha component
@@ -58,6 +59,7 @@ satisfactory.
 Here we present the results for one, selected peptide DVAAF:
 
 ``` r
+
 example_fit_dat
 #>    id   Protein      State sequence start end max_uptake       n_1      k_1
 #> 1 106 db_eEF1Ba Alpha_KSCN    DVAAF   217 221          4 0.4973596 9.334779
@@ -68,6 +70,7 @@ example_fit_dat
 ```
 
 ``` r
+
 plot_double_uc(example_kin_dat, example_fit_dat)
 ```
 
@@ -117,6 +120,7 @@ The C- and N-terminus parts of the protein show the consistency of
 region classification.
 
 ``` r
+
 HRaDeX::plot_cov_class(fit_values)
 ```
 
@@ -140,6 +144,7 @@ The comparison of recovered deuterium uptake and experimental deuterium
 uptake can be presented on the plot:
 
 ``` r
+
 recreate_uc(example_kin_dat, fit_values, hires_method = "weighted")
 #> Warning in stat_function(fun = function(x) {: All aesthetics have length 1, but the data has 6 rows.
 #> ℹ Please consider using `annotate()` or provide this layer with data containing
@@ -162,6 +167,7 @@ But judging goodness by the eye is not sufficient. We need a more
 objective criterion - RMSE.
 
 ``` r
+
 # recreating the uptake values for peptides
 rec_uc_dat_alpha <- create_uc_from_hires_dataset(kin_dat,
                                                 fit_values,
@@ -179,6 +185,7 @@ The calculated RMSE for each peptide can be presented in two forms:
     structure.
 
 ``` r
+
 plot_recovered_uc_coverage(rec_uc_rmse_dat_alpha, style = "butterfly")
 ```
 
@@ -189,6 +196,7 @@ plot_recovered_uc_coverage(rec_uc_rmse_dat_alpha, style = "butterfly")
     presented on the protein sequence.
 
 ``` r
+
 plot_recovered_uc_coverage(rec_uc_rmse_dat_alpha, style = "coverage")
 ```
 

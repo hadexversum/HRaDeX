@@ -1,6 +1,7 @@
 # Input data
 
 ``` r
+
 library(HRaDeX)
 library(HaDeX2)
 library(dplyr)
@@ -56,6 +57,7 @@ To go from here to desired format, there are some action needed:
 
 ``` r
 
+
 dat <- read.csv(datafile)
 
 dat %>%
@@ -73,6 +75,7 @@ Other way is to use already made uptake calculations and use the uptake
 data directly in the workflow:
 
 ``` r
+
 
 kin_dat <- dat %>%
     # select only one state 
@@ -92,6 +95,7 @@ with `Exposure` value), here is how to normalize uptake with respect to
 selected measurement:
 
 ``` r
+
 
 # select FD based on Exposure in time_100
 fd_dat <- filter(kin_dat, Exposure == time_100) %>%
@@ -153,6 +157,7 @@ in mind that from this file format some information is missing (e.q.
 uncertainty):
 
 ``` r
+
 # select only necessary columns
 dat <- dat[c(1:6, 8:12)]
 # adjust column names
@@ -179,6 +184,7 @@ then, when we have the uptake data, if can be used directly in HRaDeX
 workflow:
 
 ``` r
+
 # select one state for classification 
 kin_dat <- filter(kin_dat, State == unique(kin_dat[["State"]])[1] )
 

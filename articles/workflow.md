@@ -52,10 +52,12 @@ The experimental data from the csv file is processed and aggregated.
 Firstly, the deuterium uptake curve is prepared. It is a function of
 deuterium uptake in time, with values defined as:
 
-$$D_{t} = m_{t} - m_{0}$$
+``` math
+    D_t = m_t - m_0
+```
 
-where $D_{t}$ is deuterium uptake in time $t$ in daltons, $m_{t}$ is
-mass of the peptide measured in time $t$ and $m_{0}$ is mass of
+where $`D_t`$ is deuterium uptake in time $`t`$ in daltons, $`m_t`$ is
+mass of the peptide measured in time $`t`$ and $`m_0`$ is mass of
 undeuterated peptide.
 
 Then, the uptake curve is normalized. The values are scaled according to
@@ -64,11 +66,13 @@ fully deuterated control (difference explained below) is the maximal
 experimental deuterium uptake with 100% deuterium uptake. This can be
 calculated in two ways:
 
-$$D_{t,sc} = \frac{D_{t}}{D_{100}} = \frac{m_{t} - m_{0}}{m_{100} - m_{0}}$$
+``` math
+    D_{t, sc} = \frac{D_t}{D_{100}} = \frac{m_t - m_0}{m_{100} - m_0}
+```
 
 This form of the uptake curve is used for the fitting process. Because
 of this, we can operate using percentages for populations (denoted as
-$n_{i}$, the fraction of exchangeable hydrogens) undergoing different
+$`n_i`$, the fraction of exchangeable hydrogens) undergoing different
 exchange patterns, and disregard the back-exchange problem for a while.
 
 *Comment on the difference between treating the last time point of
@@ -90,7 +94,7 @@ For the peptide to be labeled as **none exchange**, has to fulfill
 defined requirements:
 
 - the uptake level \[Da\] in the last time point of measurement
-  ($D_{100}$) is lower than 1 Da,
+  ($`D_{100}`$) is lower than 1 Da,
 - the thoretical deuterium uptake in the last time point of measurement
   (scaled with respect to maximal possible uptake calculated from the
   sequence) is lower than 10%.
@@ -101,8 +105,8 @@ visualization.
 
 For the peptide to be disqualified from the fitting process and labeled
 by **invalid** there has to be lack of sufficient number of time points.
-It is crucial for the peptide to have valid measurements for $t_{0}$ and
-$t_{100}$, as otherwise it prevents the normalization of values and
+It is crucial for the peptide to have valid measurements for $`t_0`$ and
+$`t_100`$, as otherwise it prevents the normalization of values and
 causes the falsyfication of data. The missing of one or two time points
 of measurement (apart from controls) causes the use of two- or one-
 component model, but does not prevent the fitting process.
@@ -117,16 +121,18 @@ the modeling hydrogen-deuterium exchange, the pioneering article of
 Zhang and Smith , we expect the process of deuterium exchange for the
 peptide to be described as a three-component equation *x*}:
 
-$$D = n_{1} \cdot \left( 1 - exp\left( - k_{1} \cdot t \right) \right) + n_{2} \cdot \left( 1 - exp\left( - k_{2} \cdot t \right) \right) + n_{3} \cdot \left( 1 - exp\left( - k_{3} \cdot t \right) \right)$$
-where $n_{i}$ indicates the population of i-th group and $k_{i}$ is the
+``` math
+D = n_1 \cdot (1 - exp(-k_1 \cdot t)) + n_2 \cdot (1-exp(-k_2 \cdot t)) + n_3 \cdot (1 - exp(-k_3 \cdot t)) 
+```
+where $`n_i`$ indicates the population of i-th group and $`k_i`$ is the
 exchange rate of i-th group. Moreover, we assume:
 
-- $n_{1}$, $k_{1}$ - fast exchange (red)
-- $n_{2}$, $k_{2}$ - medium exchange (green)
-- $n_{3}$, $k_{3}$ - slow exchange (blue)
+- $`n_1`$, $`k_1`$ - fast exchange (red)
+- $`n_2`$, $`k_2`$ - medium exchange (green)
+- $`n_3`$, $`k_3`$ - slow exchange (blue)
 
-Ideally, $n_{1} + n_{2} + n_{3} = 1$. In this equation, we have six
-unknown parameters that need to be found.
+Ideally, $`n_1 + n_2 + n_3 = 1`$. In this equation, we have six unknown
+parameters that need to be found.
 
 Unfortunately, the authors of this paper did not provide boundaries for
 each exchange group. The ranges proposed by us, according to our
@@ -138,9 +144,9 @@ classes, as it may lead to misclassification.
 
 |         | lower | upper |
 |---------|-------|-------|
-| $k_{1}$ | 1     | 30    |
-| $k_{2}$ | 0.1   | 1     |
-| $k_{3}$ | 0     | 0.1   |
+| $`k_1`$ | 1     | 30    |
+| $`k_2`$ | 0.1   | 1     |
+| $`k_3`$ | 0     | 0.1   |
 
 The Zhang & Smith equation describes a theoretical situation, which may
 not occur during every experiment. Thus, we prepared different workflows
@@ -159,22 +165,22 @@ Available workflows:
   using function *x* with ranges specified in table *x*}. For the
   peptides with unsatisfactory results, we look for only one component
   function (described below). The selection of better results is made by
-  comparing the $R^{2}$ values.
+  comparing the $`R^2`$ values.
 - 2exp/1exp - the starting point is the two-component function
   (described below), and then the one-component function. The decision
   process is the same as in the previous point.
 - 3exp/2exp/1exp - all of the variants of the fitting process are
-  prepared and the best is chosen based on the $BIC$ value.
+  prepared and the best is chosen based on the $`BIC`$ value.
 
 #### 3exp fit
 
 The fitting function is described as Zhang & Smith equation *x*, with
 initial values:
 
-- $n_{1} = n_{2} = n_{3} = 0.33$
-- $k_{1} = 1$
-- $k_{2} = 0.1$
-- $k_{3} = 0.01$
+- $`n_1 = n_2 = n_3 = 0.33`$
+- $`k_1 = 1`$
+- $`k_2 = 0.1`$
+- $`k_3 = 0.01`$
 
 The boundaries for the values are as described in table *x*.
 
@@ -184,21 +190,24 @@ The number of unknown parameters is 6.
 
 The two-component fitting function, is described as follows:
 
-$$D = n_{1} \cdot \left( 1 - exp\left( - k_{1} \cdot t \right) \right) + n_{2} \cdot \left( 1 - exp\left( - k_{2} \cdot t \right) \right)$$
+``` math
+D = n_1 \cdot (1 - exp(-k_1 \cdot t)) + n_2 \cdot (1-exp(-k_2 \cdot t)) 
+```
 
-Where $1$ and $2$ are two of three exchange groups defined for the Zhang
-& Smith equation. We perform three fitting processes (for each group
-combination) and select the best result comparing the $R^{2}$ value.
-That means we look for the fit using $k_{1}$ with $k_{2}$, $k_{2}$ with
-$k_{3}$, or $k_{1}$ with $k_{3}$ and select one as the answer.
+Where $`1`$ and $`2`$ are two of three exchange groups defined for the
+Zhang & Smith equation. We perform three fitting processes (for each
+group combination) and select the best result comparing the $`R^2`$
+value. That means we look for the fit using $`k_1`$ with $`k_2`$,
+$`k_2`$ with $`k_3`$, or $`k_1`$ with $`k_3`$ and select one as the
+answer.
 
-The initial value for $n_{1}$ and $n_{2}$ is 0.5. The initial values for
-$k$ are the same with analogical cases from the three-component equation
-(see section *x*).
+The initial value for $`n_1`$ and $`n_2`$ is 0.5. The initial values for
+$`k`$ are the same with analogical cases from the three-component
+equation (see section *x*).
 
-In this case, we assume that $n_{1}$ of hydrogen particles are
-undergoing the exchange with $k_{1}$ exchange rate, an $n_{2}$ with
-exchange rate $k_{2}$.
+In this case, we assume that $`n_1`$ of hydrogen particles are
+undergoing the exchange with $`k_1`$ exchange rate, an $`n_2`$ with
+exchange rate $`k_2`$.
 
 The number of unknown parameters is 4.
 
@@ -206,18 +215,20 @@ The number of unknown parameters is 4.
 
 The fitting function is described as follows:
 
-$$D = n \cdot \left( 1 - exp( - k \cdot t) \right)$$
+``` math
+D = n \cdot (1 - exp(-k \cdot t))  
+```
 
 In this case, we assume that all of the hydrogen particles in the
 peptide are undergoing the exchange in a similar way. Ideally with
-$n \sim 1$.
+$`n \sim 1`$.
 
 The initial values for the fit:
 
-- $n = 1$
-- $k = 1$
-- upper boundary of $k$ = upper boundary of $k_{1}$
-- lower boundary of $k$ = lower boundary of $k_{3}$
+- $`n = 1`$
+- $`k = 1`$
+- upper boundary of $`k`$ = upper boundary of $`k_1`$
+- lower boundary of $`k`$ = lower boundary of $`k_3`$
 
 The number of unknown parameters is 2.
 
@@ -238,12 +249,14 @@ TODO: n, k, rgb, interpretation
 
 ### Calculation of estimed exchange rate k
 
-As we are working on normalized values and each value $n_{i}$ is within
+As we are working on normalized values and each value $`n_i`$ is within
 the limits of (0, 1), whe can treat them somehow as a probability of
-getting $k_{i}$. Then, we can caluclate the estimate k value, aggrgating
+getting $`k_i`$. Then, we can caluclate the estimate k value, aggrgating
 all of the fit parameters into one value:
 
-$$k_{exp} = \sum\limits^{i}n_{i} \cdot k_{i}$$
+``` math
+k_{exp} = \sum^i n_i \cdot k_i
+```
 
 ### High resolution results
 
@@ -265,21 +278,27 @@ the first residue is done in different step if demanded by the user. The
 aggregation of values is done on a subset of already filtered data.
 
 For each residue there is a subset of peptides covering said residue.
-Then, the final $n_{i,agg}$ is calculated from the subset of $n_{i}$,
+Then, the final $`n_{i, agg}`$ is calculated from the subset of $`n_i`$,
 with weights inverse proportional to the max uptake of peptide
-($mu_{i}$) - the shortest the peptide the highest the possibility that
+($`mu_i`$) - the shortest the peptide the highest the possibility that
 the uptake took place in said residue:
 
-$$w_{i} = \frac{\frac{1}{mu_{i}}}{\sum\limits^{i}\frac{1}{mu_{i}}}$$
+``` math
+w_i = \frac{\frac{1}{mu_i}}{\sum^i \frac{1}{mu_i}}
+```
 
-Then, the $n_{i}$ is a weighted average of set of $n_{i}$.
+Then, the \$n_i%\$ is a weighted average of set of $`n_i`$.
 
-$$n_{i,agg} = \frac{\sum\limits^{i}w_{i} \cdot n_{i}}{\sum\limits^{i}w_{i}}$$
-There is a possibility that $n_{i,agg}$ obtained that way exceeds the
+``` math
+n_{i, agg} = \frac{\sum^i w_i \cdot n_i}{\sum^i w_i}
+```
+There is a possibility that $`n_{i, agg}`$ obtained that way exceeds the
 limit of 1. Then, we normalize the values, to get the sense of
 proportionality.
 
-$$n_{i,agg.scaled} = \frac{n_{i,agg}}{\sum\limits^{i}n_{i,agg}}$$
+``` math
+n_{i, agg.scaled} = \frac{n_{i, agg}}{\sum^i n_{i, agg}}
+```
 
 This way, we have the right values to obtain the RGB color value.
 

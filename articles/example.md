@@ -50,6 +50,7 @@ data only for a single time point. However, a quick glimpse of the plot
 enables a general view of the exchanged regions.
 
 ``` r
+
 HaDeX2::plot_state_comparison(uptake_dat,
                              fractional = T,
                              time_t = 150) +
@@ -72,6 +73,7 @@ statistically significant for the desired level. As for the comparison
 plot, we only present the data for a single time point.
 
 ``` r
+
 diff_p_uptake_dat <- create_p_diff_uptake_dataset(alpha_dat,
                                                   state_1 = "Alpha_KSCN",
                                                   state_2 = "ALPHA_Gamma")
@@ -119,6 +121,7 @@ sufficient and the fit results are very good, with small rss. The
 default parameters are as follows:
 
 ``` r
+
 # get_example_fit_k_params()
 fit_k_params_2
 #>     start lower upper
@@ -150,6 +153,7 @@ line is the slow component. Although all populations sum up to one, each
 population has its intensity that impacts the final classification.
 
 ``` r
+
 plot_double_uc(example_kin_dat, example_fit_dat)
 ```
 
@@ -159,6 +163,7 @@ The model parameters are shown below, and the resulting classification
 color is below the table.
 
 ``` r
+
 example_fit_dat
 #>    id   Protein      State sequence start end max_uptake       n_1      k_1
 #> 1 106 db_eEF1Ba Alpha_KSCN    DVAAF   217 221          4 0.4973596 9.334779
@@ -189,6 +194,7 @@ see that the peptides in regions are classified similarly, and the data
 aggregation is justified.
 
 ``` r
+
 HRaDeX::plot_cov_class(fit_values)
 ```
 
@@ -199,6 +205,7 @@ the workflow. Here, we use the “weighted” approach.
 The classification of the whole sequence is presented below.
 
 ``` r
+
 HRaDeX::plot_hires(hires_params)
 ```
 
@@ -207,6 +214,7 @@ quite satisfying. Adding the spatial information, obtained from
 different sources, provides additional depth to our analysis.
 
 ``` r
+
 HRaDeX::plot_3d_structure_hires(pdb_file_path = "../data/Model_eEF1Balpha.pdb",
                                 hires_params = hires_params)
 ```
@@ -242,6 +250,7 @@ one on the bottom and the second one on the top. We can see with bore
 eye the regions of difference.
 
 ``` r
+
 HRaDeX::plot_two_states(hires_params, hires_params_2)
 ```
 
@@ -251,6 +260,7 @@ simple distance between populations used to obtain the classification
 color.
 
 ``` r
+
 two_states <- HRaDeX::create_two_state_dataset(hires_params, hires_params_2)
 HRaDeX::plot_color_distance(two_states)
 ```
@@ -261,6 +271,7 @@ second region 140-155, and third 200-210, roughly estimating. Choosing
 difference on the 3D structure, as presented below.
 
 ``` r
+
 color_positions <- HRaDeX::prepare_diff_data(two_states,
                                              "dist",
                                              0.2)
@@ -276,6 +287,7 @@ a rough estimate of the exchange rate based on the parameters of the
 model, as defined in the workflow description article.
 
 ``` r
+
 HRaDeX::plot_k_distance(two_states)
 #> Warning: Removed 4 rows containing missing values or values outside the scale range
 #> (`geom_point()`).

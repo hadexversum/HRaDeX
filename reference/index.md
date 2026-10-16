@@ -8,12 +8,16 @@
   : Calculcate uptake
 - [`calculate_uc_from_hires_peptide()`](https://hadexversum.github.io/HRaDeX/reference/calculate_uc_from_hires_peptide.md)
   : Recovers deuterium uptake from hi-res parameters
+- [`check_convention_usage()`](https://hadexversum.github.io/HRaDeX/reference/check_convention_usage.md)
+  : check if supplied data uses convention
 - [`compare_aggregation_methods()`](https://hadexversum.github.io/HRaDeX/reference/compare_aggregation_methods.md)
   : Compare aggregation methods
 - [`create_fit_dataset()`](https://hadexversum.github.io/HRaDeX/reference/create_fit_dataset.md)
   : Create fits for the whole peptide pool
 - [`create_replicate_state_uptake_dataset()`](https://hadexversum.github.io/HRaDeX/reference/create_replicate_state_uptake_dataset.md)
   : Creates deuterium uptake replicate dataset
+- [`create_sequence_list()`](https://hadexversum.github.io/HRaDeX/reference/create_sequence_list.md)
+  : Create peptide sequence list
 - [`create_two_state_dataset()`](https://hadexversum.github.io/HRaDeX/reference/create_two_state_dataset.md)
   : Creates dataset with merged hires parameters for two states.
 - [`create_uc_distance_dataset()`](https://hadexversum.github.io/HRaDeX/reference/create_uc_distance_dataset.md)
@@ -40,6 +44,8 @@
   : Provides a peptide list
 - [`get_residue_positions()`](https://hadexversum.github.io/HRaDeX/reference/get_residue_positions.md)
   : Get a data table with positions and residues
+- [`get_sequence_bonds()`](https://hadexversum.github.io/HRaDeX/reference/get_sequence_bonds.md)
+  : Rewrites the sequence based on the exchanging bonds
 - [`get_uc_distance()`](https://hadexversum.github.io/HRaDeX/reference/get_uc_distance.md)
   : Calculates the uc distance for uptake curve
 - [`hradexify()`](https://hadexversum.github.io/HRaDeX/reference/hradexify.md)
@@ -78,6 +84,8 @@
   : Plots map of params
 - [`plot_recovered_uc_coverage()`](https://hadexversum.github.io/HRaDeX/reference/plot_recovered_uc_coverage.md)
   : Plots recovered DU rmse
+- [`plot_recreated_uc()`](https://hadexversum.github.io/HRaDeX/reference/plot_recreated_uc.md)
+  : Plot recovered values among experimental ones
 - [`plot_rss_hist()`](https://hadexversum.github.io/HRaDeX/reference/plot_rss_hist.md)
   : Histogram of fit rss values
 - [`plot_singular_uc()`](https://hadexversum.github.io/HRaDeX/reference/plot_singular_uc.md)
@@ -98,5 +106,9 @@
   : Prepares differential data
 - [`prepare_kin_dat()`](https://hadexversum.github.io/HRaDeX/reference/prepare_kin_dat.md)
   : Creates uptake data from mass measurements
+- [`recreate_fit_values()`](https://hadexversum.github.io/HRaDeX/reference/recreate_fit_values.md)
+  : Recreating fit values for peptide from hires values
 - [`recreate_uc()`](https://hadexversum.github.io/HRaDeX/reference/recreate_uc.md)
   : Plots recovered DU of a peptide
+- [`replace_sequences()`](https://hadexversum.github.io/HRaDeX/reference/replace_sequences.md)
+  : Replace sequence with sequences within convention

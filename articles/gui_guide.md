@@ -5,6 +5,7 @@ make the solution more comfortable, we prepared dedicated applications.
 To use them, there are two function calls:
 
 ``` r
+
 HRaDeX::run_hradex()
 HRaDeX::run_compahradex()
 ```
