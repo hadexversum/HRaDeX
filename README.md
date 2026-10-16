@@ -1,4 +1,5 @@
-[![DOI](https://zenodo.org/badge/620262215.svg)](https://doi.org/10.5281/zenodo.18718114)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18718115.svg)](zenodo)
+
 
 # HRaDeX
 
@@ -26,3 +27,7 @@ HRaDeX can be downloaded directly from GitHub repository:
 # install.packages("devtools")
 devtools::install_github("hadexversum/HRaDeX")
 ```
+This project was supported by the **National Science Centre Poland**. Weronika Puchała and Michał Dadlez acknowledge funding from the National Science Centre Poland, PRELUDIUM BIS 1 [2019/35/O/NZ2/03745]. Michał Burdukiewicz acknowledges funding from the National Science Centre Poland, SONATA 19 [2023/51/D/NZ7/02847]. Weronika Puchała acknowledges funding from the Polish National Agency for Academic Exchange [PPN/STA/2021/1/00025].
+
+[<img src="https://github.com/BioGenies/amyloid-database-list/blob/main/docs/ncn_logo.png" width="600"
+alt="National Science Centre Poland" />](https://ncn.gov.pl/en)
