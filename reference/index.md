@@ -2,6 +2,8 @@
 
 ## All functions
 
+- [`calculate_hires()`](https://hadexversum.github.io/HRaDeX/reference/calculate_hires.md)
+  : Calculate hires values from peptide data
 - [`calculate_recovered_uc_rmse()`](https://hadexversum.github.io/HRaDeX/reference/calculate_recovered_uc_rmse.md)
   : Calculate rmse of recovered deuterium uptake
 - [`calculate_replicate_state_uptake()`](https://hadexversum.github.io/HRaDeX/reference/calculate_replicate_state_uptake.md)

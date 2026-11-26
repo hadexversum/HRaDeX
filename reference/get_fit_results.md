@@ -74,8 +74,8 @@ fit_k_params <- get_example_fit_k_params()
 get_fit_results(fit_dat, fit_k_params)
 #>       Protein       State    sequence start end max_uptake       n_1     k_1
 #> n_1 db_eEF1Ba ALPHA_Gamma GFGDLKSPAGL     1  11          9 0.4770774 5.87002
-#>           n_2       k_2       n_3        k_3          rss      bic class_name
-#> n_1 0.3216569 0.1471729 0.2012657 0.01783039 2.773339e-32 -417.157         NA
-#>        k_est fitted   color
-#> n_1 2.851382      3 #7A5233
+#>           n_2       k_2       n_3        k_3          rss      bic       rmse
+#> n_1 0.3216569 0.1471729 0.2012657 0.01783039 2.773339e-32 -417.157 6.7987e-17
+#>     class_name    k_est fitted   color
+#> n_1         NA 2.851382      3 #7A5233
 ```

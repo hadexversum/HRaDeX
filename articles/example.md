@@ -167,10 +167,10 @@ color is below the table.
 example_fit_dat
 #>    id   Protein      State sequence start end max_uptake       n_1      k_1
 #> 1 106 db_eEF1Ba Alpha_KSCN    DVAAF   217 221          4 0.4973596 9.334779
-#>         n_2 k_2       n_3        k_3          rss       bic class_name    k_est
-#> 1 0.1422129   1 0.3623463 0.06211225 7.381055e-06 -52.08054         NA 4.798254
-#>   fitted   color
-#> 1      3 #7F245C
+#>         n_2 k_2       n_3        k_3          rss       bic        rmse
+#> 1 0.1422129   1 0.3623463 0.06211225 7.381055e-06 -52.08054 0.001109133
+#>   class_name    k_est fitted   color
+#> 1         NA 4.798254      3 #7F245C
 ```
 
 As we can see, the population of the fast-exchanging group is the
