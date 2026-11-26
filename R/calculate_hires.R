@@ -1,3 +1,5 @@
+#' Calculate hires values from peptide data
+#'
 #' @importFrom dplyr reframe
 #'
 #' @examples
@@ -12,7 +14,8 @@
 #' @export
 
 calculate_hires <- function(fit_values,
-                            method = c("shortest", "weighted", "weighted_by_rmse"),
+                            method = c("shortest", "weighted", "weighted_by_rss",
+                                       "weighted_by_log_rss"),
                             if_convention = check_convention_usage(fit_values),
                             protein_length = max(fit_values[["end"]]),
                             fractional = FALSE){
@@ -55,6 +58,8 @@ calc_hires_no_convention <- function(fit_values,
   residues <- get_residue_positions(fit_values)
 
   hires_params_ <- NULL
+
+  ## shortest
 
   if(method == "shortest"){
 
@@ -111,6 +116,8 @@ calc_hires_no_convention <- function(fit_values,
     }) %>% bind_rows()
 
   }
+
+  ## weighted
 
   if(method == "weighted"){
 
@@ -197,11 +204,15 @@ calc_hires_no_convention <- function(fit_values,
 
   }
 
-  if(method == "weighted_by_rmse"){
+  ## weighted by rss
+
+  if(method == "weighted_by_rss"){
 
     ## CHECK
 
     hires_params_ <- lapply(seq(1:protein_length), function(pos){
+
+      print(pos) ##
 
       if(fractional){
 
@@ -253,23 +264,60 @@ calc_hires_no_convention <- function(fit_values,
 
         } else {
 
-          res <- tmp_params %>%
-            mutate(weight = 1/rmse/sum(1/rmse)) %>%
-            reframe(Protein = Protein,
-                    State = State,
-                    position = pos,
-                    n_1 = weighted.mean(n_1, weight),
-                    k_1 = weighted.mean(k_1, weight),
-                    n_2 = weighted.mean(n_2, weight),
-                    k_2 = weighted.mean(k_2, weight),
-                    n_3 = weighted.mean(n_3, weight),
-                    k_3 = weighted.mean(k_3, weight),
-                    k_est = weighted.mean(k_est, weight),
-                    class_name = NA,
-                    n = n_1 + n_2 + n_3,
-                    color = rgb(n_1/n, n_2/n, n_3/n)) %>%
-            unique(.) %>%
-            select(-n)
+          res <- tryCatch({
+
+            tmp_params %>%
+              mutate(weight = 1/rss/sum(1/rss)) %>%
+              reframe(Protein = Protein,
+                      State = State,
+                      position = pos,
+                      n_1 = weighted.mean(n_1, weight),
+                      k_1 = weighted.mean(k_1, weight),
+                      n_2 = weighted.mean(n_2, weight),
+                      k_2 = weighted.mean(k_2, weight),
+                      n_3 = weighted.mean(n_3, weight),
+                      k_3 = weighted.mean(k_3, weight),
+                      k_est = weighted.mean(k_est, weight),
+                      class_name = NA,
+                      n = n_1 + n_2 + n_3,
+                      color = rgb(n_1/n, n_2/n, n_3/n)) %>%
+              unique(.) %>%
+              select(-n)
+
+          }, error = function(e){
+
+            data.frame(Protein = Protein,
+                       State = State,
+                       position = pos,
+                       n_1 = NA,
+                       k_1 = NA,
+                       n_2 = NA,
+                       k_2 = NA,
+                       n_3 = NA,
+                       k_3 = NA,
+                       k_est = NA,
+                       class_name = "aggregation_error",
+                       color = NA)
+
+          })
+
+          # res <- tmp_params %>%
+          #   mutate(weight = 1/rmse/sum(1/rmse)) %>%
+          #   reframe(Protein = Protein,
+          #           State = State,
+          #           position = pos,
+          #           n_1 = weighted.mean(n_1, weight),
+          #           k_1 = weighted.mean(k_1, weight),
+          #           n_2 = weighted.mean(n_2, weight),
+          #           k_2 = weighted.mean(k_2, weight),
+          #           n_3 = weighted.mean(n_3, weight),
+          #           k_3 = weighted.mean(k_3, weight),
+          #           k_est = weighted.mean(k_est, weight),
+          #           class_name = NA,
+          #           n = n_1 + n_2 + n_3,
+          #           color = rgb(n_1/n, n_2/n, n_3/n)) %>%
+          #   unique(.) %>%
+          #   select(-n)
 
         }
 
@@ -282,6 +330,135 @@ calc_hires_no_convention <- function(fit_values,
     }) %>% bind_rows()
 
   }
+
+  ## weighted by log10 rss
+
+  if(method == "weighted_by_log_rss"){
+
+    ## CHECK
+
+    hires_params_ <- lapply(seq(1:protein_length), function(pos){
+
+      print(pos) ##
+
+      if(fractional){
+
+        tmp_params <- fit_values %>%
+          filter(start <= pos & pos <= end & n_1 + n_2 + n_3 < 1.25)
+
+
+      } else {
+
+        tmp_params <- fit_values %>%
+          filter(start <= pos & pos <= end & n_1 + n_2 + n_3 - max_uptake <= 0)
+
+
+      }
+
+
+      if(nrow(tmp_params) == 0){
+
+        res <- data.frame(Protein = Protein,
+                          State = State,
+                          position = pos,
+                          n_1 = NA,
+                          k_1 = NA,
+                          n_2 = NA,
+                          k_2 = NA,
+                          n_3 = NA,
+                          k_3 = NA,
+                          k_est = NA,
+                          class_name = NA,
+                          color = NA)
+      } else {
+
+        if(any(!is.na(tmp_params["class_name"]))){
+
+          class_example <- tmp_params[!is.na(tmp_params[["class_name"]]), ][1, ]
+
+          res <- data.frame(Protein = Protein,
+                            State = State,
+                            position = pos,
+                            n_1 = class_example[["n_1"]],
+                            k_1 = class_example[["k_1"]],
+                            n_2 = class_example[["n_2"]],
+                            k_2 = class_example[["k_3"]],
+                            n_3 = class_example[["n_3"]],
+                            k_3 = class_example[["k_3"]],
+                            k_est = class_example[["k_est"]],
+                            class_name = class_example[["class_name"]],
+                            color = class_example[["color"]])
+
+        } else {
+
+          res <- tryCatch({
+
+            tmp_params %>%
+              mutate(weight = 1/log10(rss)/sum(1/log10(rss))) %>%
+              reframe(Protein = Protein,
+                      State = State,
+                      position = pos,
+                      n_1 = weighted.mean(n_1, weight),
+                      k_1 = weighted.mean(k_1, weight),
+                      n_2 = weighted.mean(n_2, weight),
+                      k_2 = weighted.mean(k_2, weight),
+                      n_3 = weighted.mean(n_3, weight),
+                      k_3 = weighted.mean(k_3, weight),
+                      k_est = weighted.mean(k_est, weight),
+                      class_name = NA,
+                      n = n_1 + n_2 + n_3,
+                      color = rgb(n_1/n, n_2/n, n_3/n)) %>%
+              unique(.) %>%
+              select(-n)
+
+          }, error = function(e){
+
+            data.frame(Protein = Protein,
+                       State = State,
+                       position = pos,
+                       n_1 = NA,
+                       k_1 = NA,
+                       n_2 = NA,
+                       k_2 = NA,
+                       n_3 = NA,
+                       k_3 = NA,
+                       k_est = NA,
+                       class_name = "aggregation_error",
+                       color = NA)
+
+          })
+
+          # res <- tmp_params %>%
+          #   mutate(weight = 1/rmse/sum(1/rmse)) %>%
+          #   reframe(Protein = Protein,
+          #           State = State,
+          #           position = pos,
+          #           n_1 = weighted.mean(n_1, weight),
+          #           k_1 = weighted.mean(k_1, weight),
+          #           n_2 = weighted.mean(n_2, weight),
+          #           k_2 = weighted.mean(k_2, weight),
+          #           n_3 = weighted.mean(n_3, weight),
+          #           k_3 = weighted.mean(k_3, weight),
+          #           k_est = weighted.mean(k_est, weight),
+          #           class_name = NA,
+          #           n = n_1 + n_2 + n_3,
+          #           color = rgb(n_1/n, n_2/n, n_3/n)) %>%
+          #   unique(.) %>%
+          #   select(-n)
+
+        }
+
+
+
+      }
+
+      res
+
+    }) %>% bind_rows()
+
+  }
+
+  ##
 
   hires_params <- merge(hires_params_, residues, by = "position", all.x = TRUE)
 
@@ -330,6 +507,8 @@ calc_hires_with_convention <- function(fit_values,
 
   hires_params_ <- NULL
 
+  ## shortest
+
   if(method == "shortest"){
 
     hires_params_ <- lapply(seq(1:protein_length), function(v_pos){
@@ -389,6 +568,8 @@ calc_hires_with_convention <- function(fit_values,
     }) %>% bind_rows()
 
   }
+
+  ## weighted
 
   if(method == "weighted"){
 
@@ -478,7 +659,9 @@ calc_hires_with_convention <- function(fit_values,
 
   }
 
-  if(method == "weighted_by_rmse"){
+  ## weighted by rss
+
+  if(method == "weighted_by_rss"){
     ## CHECK
 
     hires_params_ <- lapply(seq(1:protein_length), function(v_pos){
@@ -536,8 +719,10 @@ calc_hires_with_convention <- function(fit_values,
 
         } else {
 
-          res <- tmp_params %>%
-            mutate(weight = 1/rmse/sum(1/rmse)) %>%
+          res <- tryCatch({
+
+            tmp_params %>%
+            mutate(weight = 1/rss/sum(1/rss)) %>%
             reframe(Protein = Protein,
                     State = State,
                     position = v_pos,
@@ -554,6 +739,22 @@ calc_hires_with_convention <- function(fit_values,
             unique(.) %>%
             select(-n)
 
+          }, error = function(e){
+
+            data.frame(Protein = Protein,
+                       State = State,
+                       position = v_pos,
+                       n_1 = NA,
+                       k_1 = NA,
+                       n_2 = NA,
+                       k_2 = NA,
+                       n_3 = NA,
+                       k_3 = NA,
+                       k_est = NA,
+                       class_name = "aggregation_error",
+                       color = NA)
+          })
+
         }
 
 
@@ -564,6 +765,115 @@ calc_hires_with_convention <- function(fit_values,
 
     }) %>% bind_rows()
   }
+
+  ## weighted by log10 rss
+
+  if(method == "weighted_by_rss"){
+    ## CHECK
+
+    hires_params_ <- lapply(seq(1:protein_length), function(v_pos){
+
+      if(fractional){
+
+        tmp_params <- residues_matrix %>%
+          filter(pos == v_pos) %>%
+          merge(., fit_values, by = c("id")) %>%
+          filter(n_1 + n_2 + n_3 < 1.25)
+
+      } else {
+
+        tmp_params <- residues_matrix %>%
+          filter(pos == v_pos) %>%
+          merge(., fit_values, by = c("id")) %>%
+          filter(n_1 + n_2 + n_3 - max_uptake <= 0)
+
+
+      }
+
+
+      if(nrow(tmp_params) == 0){
+
+        res <- data.frame(Protein = Protein,
+                          State = State,
+                          position = v_pos,
+                          n_1 = NA,
+                          k_1 = NA,
+                          n_2 = NA,
+                          k_2 = NA,
+                          n_3 = NA,
+                          k_3 = NA,
+                          k_est = NA,
+                          class_name = NA,
+                          color = NA)
+      } else {
+
+        if(any(!is.na(tmp_params["class_name"]))){
+
+          class_example <- tmp_params[!is.na(tmp_params[["class_name"]]), ][1, ]
+
+          res <- data.frame(Protein = Protein,
+                            State = State,
+                            position = v_pos,
+                            n_1 = class_example[["n_1"]],
+                            k_1 = class_example[["k_1"]],
+                            n_2 = class_example[["n_2"]],
+                            k_2 = class_example[["k_3"]],
+                            n_3 = class_example[["n_3"]],
+                            k_3 = class_example[["k_3"]],
+                            k_est = class_example[["k_est"]],
+                            class_name = class_example[["class_name"]],
+                            color = class_example[["color"]])
+
+        } else {
+
+          res <- tryCatch({
+
+            tmp_params %>%
+              mutate(weight = 1/log10(rss)/sum(1/log10(rss))) %>%
+              reframe(Protein = Protein,
+                      State = State,
+                      position = v_pos,
+                      n_1 = weighted.mean(n_1, weight),
+                      k_1 = weighted.mean(k_1, weight),
+                      n_2 = weighted.mean(n_2, weight),
+                      k_2 = weighted.mean(k_2, weight),
+                      n_3 = weighted.mean(n_3, weight),
+                      k_3 = weighted.mean(k_3, weight),
+                      k_est = weighted.mean(k_est, weight),
+                      class_name = NA,
+                      n = n_1 + n_2 + n_3,
+                      color = rgb(n_1/n, n_2/n, n_3/n)) %>%
+              unique(.) %>%
+              select(-n)
+
+          }, error = function(e){
+
+            data.frame(Protein = Protein,
+                       State = State,
+                       position = v_pos,
+                       n_1 = NA,
+                       k_1 = NA,
+                       n_2 = NA,
+                       k_2 = NA,
+                       n_3 = NA,
+                       k_3 = NA,
+                       k_est = NA,
+                       class_name = "aggregation_error",
+                       color = NA)
+          })
+
+        }
+
+
+
+      }
+
+      res
+
+    }) %>% bind_rows()
+  }
+
+  ##
 
   hires_params <- merge(hires_params_, residues, by = "position", all.x = TRUE)
 
