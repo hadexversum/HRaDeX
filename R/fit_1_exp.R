@@ -17,6 +17,7 @@ fit_1_exp <- function(fit_dat,
   n_1 = k_1 = -1
   rss <- 99999
   bic <- 99999
+  rmse <- 99999
 
   max_uptake <- fit_dat[["MaxUptake"]][1]
 
@@ -51,6 +52,7 @@ fit_1_exp <- function(fit_dat,
 
     rss <- sum(residuals(mod)^2)
     bic <- stats::AIC(mod, k = log(nrow(fit_dat)))
+    rmse <- sqrt(mean(residuals(mod)^2))
     n_1 <- coef(mod)["n_1"]
     k_1 <- coef(mod)["k_1"]
   }, error = function(e){
@@ -71,6 +73,7 @@ fit_1_exp <- function(fit_dat,
                k_3 = -1,
                rss = 99999,
                bic = 99999,
+               rmse = 99999,
                class_name = NA,
                k_est = NA,
                fitted = NA,
@@ -82,6 +85,7 @@ fit_1_exp <- function(fit_dat,
                      k = k_1[[1]],
                      rss = rss,
                      bic = bic,
+                     rmse = rmse,
                      fit_k_params = fit_k_params,
                      max_uptake = max_uptake)
   }
@@ -93,6 +97,7 @@ fix_1_exp_result <- function(fit_dat,
                              k,
                              rss,
                              bic,
+                             rmse,
                              fit_k_params,
                              max_uptake){
 
@@ -127,6 +132,7 @@ fix_1_exp_result <- function(fit_dat,
              k_3 = k_3,
              rss = rss,
              bic = bic,
+             rmse = rmse,
              class_name = NA,
              k_est = (n_1*k_1 + n_2*k_2 + n_3*k_3)/n,
              fitted = 1,

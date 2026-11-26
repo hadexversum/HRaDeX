@@ -183,6 +183,7 @@ fix_class_result <- function(fit_dat,
              k_3 = k_3,
              rss = NA,
              bic = NA,
+             rmse = NA,
              class_name = class_name,
              fitted = 0,
              color = color)
